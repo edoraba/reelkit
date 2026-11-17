@@ -87,12 +87,12 @@ tools/           binaries downloaded by bootstrap (gitignored, root only)
 
 ## Phase status
 
-| Phase                     | Status                                                                                              |
-| ------------------------- | --------------------------------------------------------------------------------------------------- |
-| 0 Foundations             | Pipeline done on 2026-11-17. Demo style to be redone: too close to the reference (D-013)            |
-| 1 Voice and text          | To do, after the new visual direction. Start with the TTS listening test (D-003)                    |
-| 2 Mascot                  | Invoice roll, A4 variant chosen (D-016). To do: full rig, pose library, expressions, Rhubarb mouths |
-| 3 Scenes and audio        | To do                                                                                               |
-| 4 Covers and carousels    | To do                                                                                               |
-| 5 Planner                 | To do                                                                                               |
-| 6 Autonomy and publishing | To do                                                                                               |
+| Phase                     | Status                                                                                                                                                                                                                                                   |
+| ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0 Foundations             | Done 2026-11-17: pipeline, visual system (D-015), mascot (D-016, D-018) in sticker style (D-019), full test reel (`pnpm render:test-reels`). The old `Demo` composition is legacy (provisional mascot, lime box): remove or rebuild it on the new system |
+| 1 Voice and text          | Next. Start with the TTS listening test (D-003): needs `GEMINI_API_KEY` in `.env` from a Google project with no billing account                                                                                                                          |
+| 2 Mascot                  | Invoice roll A4, sticker finish. To do: full rig and layer ids, pose library, expressions, Rhubarb mouths                                                                                                                                                |
+| 3 Scenes and audio        | To do                                                                                                                                                                                                                                                    |
+| 4 Covers and carousels    | To do                                                                                                                                                                                                                                                    |
+| 5 Planner                 | To do                                                                                                                                                                                                                                                    |
+| 6 Autonomy and publishing | To do                                                                                                                                                                                                                                                    |
