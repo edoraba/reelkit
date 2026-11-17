@@ -96,3 +96,7 @@ Requested by Edoardo. Everything written in the repository is in English (code, 
 Edoardo picked two of the four D-013 proposals and asked to keep both: **quadretti** (squared paper, binder tabs) and **scontrino** (torn receipt strip, mono rows). They alternate inside a reel and across reels, on changing backgrounds (blue, paper, sky, graphite, stamp colors). Key word highlight: yellow marker or pen underline, both kept. The lime box is retired. Details in `guidelines/brand.md`, "Visual system".
 
 The mascot is open again: Edoardo asked for many alternatives, from close to the current invoice sheet to very different ideas, including some derived from the logo (`pnpm render:mascots`).
+
+## D-016 Mascot direction: the receipt reshaped into an invoice (2026-11-17, open)
+
+From the 14 candidates Edoardo picked **05 Receipt**, asking to make it read more like an invoice while keeping the dot eyes, the small mouth and the rolled paper on top. `InvoiceRoll` (`packages/video/src/mascot/InvoiceRoll.tsx`) does that: straight edges instead of the torn zigzag, a FATTURA header, table rows with amounts, a blue TOT pill, pen-doodle limbs in the background `pen` color. Four variants are compared in motion with `pnpm render:invoice-roll`: slim (closest to 05), A4 proportions, blue header band, scroll rolled at both ends with a TD17 stamp. The variant choice is still open; the chosen one replaces the provisional `Mascot` and gets the full phase 2 rig.

@@ -26,20 +26,21 @@ Repo that generates vertical reels, covers, carousels and post texts for **Refat
 
 ## Commands
 
-| Command               | What it does                                                                                                               |
-| --------------------- | -------------------------------------------------------------------------------------------------------------------------- |
-| `pnpm install`        | Dependencies and pre-commit hook                                                                                           |
-| `pnpm bootstrap`      | Downloads ffmpeg, Rhubarb, whisper.cpp + model, Remotion browser into `tools/`. Idempotent. `--only`, `--model`, `--force` |
-| `pnpm tools:check`    | Status of the binaries and the Git LFS hooks                                                                               |
-| `pnpm studio`         | Remotion Studio                                                                                                            |
-| `pnpm render:demo`    | 5 s test render to `packages/video/out/demo.mp4`                                                                           |
-| `pnpm render:fontlab` | Font set comparison in `packages/video/out/fontlab.png`                                                                    |
-| `pnpm render:lab`     | Visual direction proposals and highlight options in `packages/video/out/lab/`                                              |
-| `pnpm render:mascots` | Mascot candidate sheets in `packages/video/out/lab/mascots-*.png`                                                          |
-| `pnpm brand:contrast` | Token hex values and WCAG contrast of the text/background pairs                                                            |
-| `pnpm typecheck`      | Types of the whole monorepo                                                                                                |
-| `pnpm guard`          | Pre-commit checks on staged files                                                                                          |
-| `pnpm lfs:usage`      | Git LFS usage compared with the free quota                                                                                 |
+| Command                    | What it does                                                                                                               |
+| -------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| `pnpm install`             | Dependencies and pre-commit hook                                                                                           |
+| `pnpm bootstrap`           | Downloads ffmpeg, Rhubarb, whisper.cpp + model, Remotion browser into `tools/`. Idempotent. `--only`, `--model`, `--force` |
+| `pnpm tools:check`         | Status of the binaries and the Git LFS hooks                                                                               |
+| `pnpm studio`              | Remotion Studio                                                                                                            |
+| `pnpm render:demo`         | 5 s test render to `packages/video/out/demo.mp4`                                                                           |
+| `pnpm render:fontlab`      | Font set comparison in `packages/video/out/fontlab.png`                                                                    |
+| `pnpm render:lab`          | Visual direction proposals and highlight options in `packages/video/out/lab/`                                              |
+| `pnpm render:mascots`      | Mascot candidate sheets in `packages/video/out/lab/mascots-*.png`                                                          |
+| `pnpm render:invoice-roll` | Motion test of the invoice roll mascot variants in `packages/video/out/lab/invoice-roll.mp4`                               |
+| `pnpm brand:contrast`      | Token hex values and WCAG contrast of the text/background pairs                                                            |
+| `pnpm typecheck`           | Types of the whole monorepo                                                                                                |
+| `pnpm guard`               | Pre-commit checks on staged files                                                                                          |
+| `pnpm lfs:usage`           | Git LFS usage compared with the free quota                                                                                 |
 
 Render the demo with another font set (from `packages/video`):
 
