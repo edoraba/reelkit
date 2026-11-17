@@ -4,6 +4,7 @@ import './brand/fonts';
 import { Demo, DEMO_DURATION, demoDefaultProps } from './compositions/Demo';
 import { FontLab, FONTLAB_HEIGHT } from './compositions/FontLab';
 import { HighlightLab, HIGHLIGHT_LAB_HEIGHT } from './lab/HighlightLab';
+import { InvoiceRollLab, INVOICE_ROLL_LAB_DURATION } from './lab/InvoiceRollLab';
 import { MascotLab, MASCOT_SHEETS, sheetHeight, type MascotSheet } from './lab/mascots/MascotLab';
 import { Proposal, PROPOSALS } from './lab/Proposals';
 
@@ -17,6 +18,14 @@ export const RemotionRoot: React.FC = () => (
       width={formats.reel.width}
       height={formats.reel.height}
       defaultProps={demoDefaultProps}
+    />
+    <Composition
+      id="InvoiceRollLab"
+      component={InvoiceRollLab}
+      durationInFrames={INVOICE_ROLL_LAB_DURATION}
+      fps={formats.reel.fps}
+      width={formats.reel.width}
+      height={formats.reel.height}
     />
     <Still id="FontLab" component={FontLab} width={1080} height={FONTLAB_HEIGHT} />
     <Still id="HighlightLab" component={HighlightLab} width={1080} height={HIGHLIGHT_LAB_HEIGHT} />

@@ -8,7 +8,8 @@
     "render:fontlab": "remotion still FontLab out/fontlab.png",
     "typecheck": "tsc -p tsconfig.json",
     "render:lab": "remotion still Proposal-registro out/lab/registro.png && remotion still Proposal-quadretti out/lab/quadretti.png && remotion still Proposal-scontrino out/lab/scontrino.png && remotion still Proposal-minimal out/lab/minimal.png && remotion still HighlightLab out/lab/highlights.png",
-    "render:mascots": "remotion still MascotLab-close out/lab/mascots-close.png && remotion still MascotLab-other out/lab/mascots-other.png"
+    "render:mascots": "remotion still MascotLab-close out/lab/mascots-close.png && remotion still MascotLab-other out/lab/mascots-other.png",
+    "render:invoice-roll": "remotion render InvoiceRollLab out/lab/invoice-roll.mp4"
   },
   "dependencies": {
     "@reelkit/brand": "workspace:*",

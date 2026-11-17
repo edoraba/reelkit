@@ -13,6 +13,8 @@ export interface Pose {
 export const poses = {
   neutral: { armL: [24, -12], armR: [-24, 12] },
   'arms-up': { armL: [122, 34], armR: [-122, -34] },
+  /** Right arm raised; the character adds the hand oscillation on top. */
+  wave: { armL: [24, -12], armR: [-145, -25] },
 } as const satisfies Record<string, Pose>;
 
 export type PoseName = keyof typeof poses;
@@ -24,6 +26,8 @@ export interface PoseCue {
   mouth?: MouthShape;
   /** Raise the brows (surprise, excitement). */
   browsUp?: boolean;
+  /** Eye shape: open (default) or happy arcs. */
+  eyes?: 'open' | 'happy';
 }
 
 const ANTICIPATION_FRAMES = 3;
