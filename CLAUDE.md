@@ -37,6 +37,7 @@ Repo that generates vertical reels, covers, carousels and post texts for **Refat
 | `pnpm render:lab`          | Visual direction proposals and highlight options in `packages/video/out/lab/`                                              |
 | `pnpm render:mascots`      | Mascot candidate sheets in `packages/video/out/lab/mascots-*.png`                                                          |
 | `pnpm render:invoice-roll` | Motion test of the invoice roll mascot variants in `packages/video/out/lab/invoice-roll.mp4`                               |
+| `pnpm render:styles`       | The mascot in 18 rendering styles in `packages/video/out/lab/styles-*.png`                                                 |
 | `pnpm brand:contrast`      | Token hex values and WCAG contrast of the text/background pairs                                                            |
 | `pnpm typecheck`           | Types of the whole monorepo                                                                                                |
 | `pnpm guard`               | Pre-commit checks on staged files                                                                                          |

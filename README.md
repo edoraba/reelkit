@@ -30,6 +30,7 @@ pnpm render:demo
 | `pnpm render:lab`          | Visual direction proposals in `packages/video/out/lab/`                                      |
 | `pnpm render:mascots`      | Mascot candidate sheets in `packages/video/out/lab/mascots-*.png`                            |
 | `pnpm render:invoice-roll` | Motion test of the invoice roll mascot variants in `packages/video/out/lab/invoice-roll.mp4` |
+| `pnpm render:styles`       | The mascot in 18 rendering styles in `packages/video/out/lab/styles-*.png`                   |
 | `pnpm brand:contrast`      | Hex values of the tokens and WCAG contrast of each text/background pair                      |
 | `pnpm lfs:usage`           | Git LFS space used compared with the free quota                                              |
 | `pnpm typecheck`           | Type check of the whole monorepo                                                             |
