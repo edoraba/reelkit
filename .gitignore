@@ -1,0 +1,31 @@
+# dependencies and build
+node_modules/
+.turbo/
+build/
+dist/
+*.tsbuildinfo
+
+# external binaries downloaded by `pnpm bootstrap` (root only: packages/*/src/tools is code)
+/tools/
+
+# renders that are not post outputs (demo, font lab, scratch)
+packages/video/out/
+
+# auto-review frames and caches
+content/posts/*/review/
+.remotion/
+
+# SFX and music whose license forbids redistribution (re-downloaded from manifest)
+assets/sfx/local/
+assets/music/local/
+
+# secrets
+.env
+.env.*
+!.env.example
+
+# OS and editors
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

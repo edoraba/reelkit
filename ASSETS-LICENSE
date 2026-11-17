@@ -1,0 +1,21 @@
+Refattura brand assets: all rights reserved
+
+Copyright (c) 2026 Edoardo Baravaglio. All rights reserved.
+
+The MIT license in LICENSE does NOT apply to the following, which may not be
+copied, modified, redistributed or used to identify another product or service
+without written permission:
+
+- assets/brand/            Refattura logo and logotype
+- packages/video/src/mascot/   the Refattura mascot (artwork, rig and poses)
+- assets/icons/            original illustrations and icons
+- content/                 scripts, captions, voice tracks, videos, covers and
+                           carousel slides published for Refattura
+
+Third-party assets keep their own licenses:
+
+- assets/fonts/*           SIL Open Font License 1.1, see the OFL.txt next to
+                           each font
+- assets/sfx/, assets/music/   license and source of each file are recorded in
+                           the manifest.json of the folder; files whose license
+                           forbids redistribution are not committed

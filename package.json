@@ -1,0 +1,35 @@
+{
+  "name": "reelkit",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.29.2",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "bootstrap": "tsx packages/pipeline/src/cli.ts bootstrap",
+    "tools:check": "tsx packages/pipeline/src/cli.ts check",
+    "studio": "pnpm --filter @reelkit/video studio",
+    "render:demo": "pnpm --filter @reelkit/video render:demo",
+    "render:fontlab": "pnpm --filter @reelkit/video render:fontlab",
+    "brand:contrast": "tsx packages/brand/scripts/contrast.ts",
+    "lfs:usage": "tsx scripts/lfs-usage.ts",
+    "guard": "tsx scripts/guard.ts",
+    "typecheck": "turbo run typecheck && tsc -p tsconfig.json",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "postinstall": "simple-git-hooks"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "pnpm exec tsx scripts/guard.ts",
+    "preserveUnused": true
+  },
+  "devDependencies": {
+    "@types/node": "^22.19.0",
+    "prettier": "^3.10.1",
+    "simple-git-hooks": "^2.14.0",
+    "tsx": "^4.23.15",
+    "turbo": "^2.11.11",
+    "typescript": "~5.9.3"
+  }
+}
