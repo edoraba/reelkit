@@ -7,6 +7,7 @@ import { HighlightLab, HIGHLIGHT_LAB_HEIGHT } from './lab/HighlightLab';
 import { InvoiceRollLab, INVOICE_ROLL_LAB_DURATION } from './lab/InvoiceRollLab';
 import { MascotLab, MASCOT_SHEETS, sheetHeight, type MascotSheet } from './lab/mascots/MascotLab';
 import { Proposal, PROPOSALS } from './lab/Proposals';
+import { StyleLab, STYLE_SHEETS, styleSheetHeight } from './lab/StyleLab';
 
 export const RemotionRoot: React.FC = () => (
   <>
@@ -46,6 +47,16 @@ export const RemotionRoot: React.FC = () => (
         component={MascotLab}
         width={1080}
         height={sheetHeight(sheet)}
+        defaultProps={{ sheet }}
+      />
+    ))}
+    {Array.from({ length: STYLE_SHEETS }, (_, sheet) => (
+      <Still
+        key={sheet}
+        id={`StyleLab-${sheet + 1}`}
+        component={StyleLab}
+        width={1080}
+        height={styleSheetHeight(sheet)}
         defaultProps={{ sheet }}
       />
     ))}
