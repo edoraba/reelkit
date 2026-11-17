@@ -4,7 +4,7 @@ import { fontsOf } from '../brand/fonts';
 import { InvoiceRoll } from '../mascot/InvoiceRoll';
 import { GraphPaper } from '../textures/Paper';
 import { INVOICE_ROLL_LAB_DURATION, MOTION_CUES, MOTION_TALK, motionGaze } from './InvoiceRollLab';
-import { Sticker } from './StyleLab';
+import { StickerFilter as Sticker } from '../mascot/StickerFilter';
 
 /**
  * Motion test of the two shortlisted mascot styles (01 flat outline, 02 sticker) on three

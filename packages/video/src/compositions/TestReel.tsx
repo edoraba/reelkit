@@ -17,7 +17,7 @@ import { Logo } from '../components/Logo';
 import { Dashes, Receipt } from '../components/Receipt';
 import { PopWords, RevealText, type RevealWord } from '../components/RevealText';
 import { BinderTabs } from '../headers/Headers';
-import { Sticker } from '../lab/StyleLab';
+import { StickerFilter } from '../mascot/StickerFilter';
 import { InvoiceRoll, type TalkSpan } from '../mascot/InvoiceRoll';
 import type { PoseCue } from '../mascot/poses';
 import { Stamp } from '../stickers/Stamp';
@@ -476,7 +476,7 @@ export const TestReel: React.FC<TestReelProps> = ({ mascotStyle }) => {
         pen={sticker ? refattura.inkBlue : bg.pen}
         defs={
           sticker ? (
-            <Sticker id="reelsticker" radius={12} color={refattura.sheetWhite} />
+            <StickerFilter id="reelsticker" radius={12} color={refattura.sheetWhite} />
           ) : undefined
         }
         filter={sticker ? 'url(#reelsticker)' : undefined}
