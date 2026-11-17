@@ -80,12 +80,12 @@ tools/           binari scaricati da bootstrap (gitignored, solo alla radice)
 
 ## Stato delle fasi
 
-| Fase                        | Stato                                                                            |
-| --------------------------- | -------------------------------------------------------------------------------- |
-| 0 Fondamenta                | Fatta il 2026-11-17, in attesa che Edoardo veda il render e approvi le guideline |
-| 1 Voce e testo              | Da fare. Partire dalla prova d'ascolto TTS (D-003)                               |
-| 2 Mascotte                  | Da fare                                                                          |
-| 3 Scene e audio             | Da fare                                                                          |
-| 4 Cover e caroselli         | Da fare                                                                          |
-| 5 Planner                   | Da fare                                                                          |
-| 6 Autonomia e pubblicazione | Da fare                                                                          |
+| Fase                        | Stato                                                                                          |
+| --------------------------- | ---------------------------------------------------------------------------------------------- |
+| 0 Fondamenta                | Pipeline fatta il 2026-11-17. Stile della demo da rifare: troppo simile al riferimento (D-013) |
+| 1 Voce e testo              | Da fare, dopo la nuova direzione visiva. Partire dalla prova d'ascolto TTS (D-003)             |
+| 2 Mascotte                  | Da fare. La mascotte provvisoria è solo un punto di partenza, va rilavorata molto              |
+| 3 Scene e audio             | Da fare                                                                                        |
+| 4 Cover e caroselli         | Da fare                                                                                        |
+| 5 Planner                   | Da fare                                                                                        |
+| 6 Autonomia e pubblicazione | Da fare                                                                                        |

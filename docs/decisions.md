@@ -71,3 +71,9 @@ Aggiunti due colori che l'app non usa, da approvare in `guidelines/brand.md`:
 
 - `lime` per il box di evidenziazione e gli sticker;
 - `sky`, azzurro vicino al tono chiaro del logotipo, come sfondo chiaro secondario e colore degli arti della mascotte (il blu dell'inchiostro spariva sullo sfondo blu).
+
+## D-013 Identità visiva propria, non quella di match.creativelab (2026-11-17, aperta)
+
+Feedback di Edoardo sul primo render: troppe caratteristiche identiche a match.creativelab, e il `lime` forse troppo acceso per Refattura. Nessun template Remotion o codice di terzi è stato usato: la somiglianza viene dall'aver preso alla lettera alcuni segni citati nel brief e visti nello screenshot di riferimento (box lime ruotato con ombra, barra segmentata con etichetta, cono di luce, griglia di punti, arti a tubo con mani bianche).
+
+Regola da subito (in `guidelines/brand.md`): dal riferimento si prendono i meccanismi, mai i segni. La nuova direzione visiva è da decidere con Edoardo prima della Fase 1; la demo della Fase 0 resta come prova tecnica della pipeline, non come stile.

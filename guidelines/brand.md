@@ -2,13 +2,28 @@
 
 > **BOZZA del 2026-11-17, da approvare.** Finché Edoardo non la approva, nessuna generazione la usa come regola definitiva. Ogni feedback ricorrente diventa una regola scritta qui.
 
-Riferimento stilistico: la grammatica visiva di match.creativelab (kinetic typography, mascotte su cono di luce, mockup, sticker, SFX), mai la sua identità. Palette, mascotte, font e testi sono di Refattura.
+Riferimento stilistico: la grammatica visiva di match.creativelab (ritmo, testo che segue la voce, mascotte che reagisce, mockup che illustrano la frase, SFX), mai la sua identità. Palette, mascotte, font e testi sono di Refattura.
+
+### Distanza dal riferimento (feedback di Edoardo, 2026-11-17)
+
+Il primo render di prova somigliava troppo a match.creativelab. Regola: dal riferimento si prendono i **meccanismi** (cosa succede e quando), mai i **segni** (come appare). Non si usano:
+
+- il box lime ruotato con ombra nera come evidenziazione;
+- la griglia di punti sullo sfondo;
+- il cono di luce sotto la mascotte;
+- arti a tubo con mani bianche a guanto;
+- l'etichetta capitolo nel formato `01 / 03 · TITOLO` sotto una barra segmentata;
+- in generale, qualsiasi elemento che si riconosca come "loro" a colpo d'occhio.
+
+Ogni segno visivo deve nascere dal mondo di Refattura (carta, registro, inchiostro blu, timbri). Direzione in discussione: vedi `docs/decisions.md` D-013.
 
 Fonte dei token: `refattura/DESIGN.md`, copiati in `packages/brand/src/tokens.ts`. Nel codice i colori si prendono sempre da `@reelkit/brand`, mai scritti a mano.
 
 ## Palette
 
 L'app Refattura è calma: un inchiostro blu, carta fredda, tre timbri di stato. I reel hanno bisogno di più energia, quindi usano la stessa base con due aggiunte (`lime`, `sky`) e un cambio di sfondo per ogni concetto.
+
+> **`lime` in discussione** (Edoardo, 2026-11-17): forse troppo acceso per Refattura. Non usarlo in contenuti nuovi finché non si sceglie l'alternativa (D-013).
 
 | Nome           | OKLCH                | Hex     | Ruolo nei reel                                 |
 | -------------- | -------------------- | ------- | ---------------------------------------------- |
