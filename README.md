@@ -28,6 +28,7 @@ pnpm render:demo
 | `pnpm render:demo`    | 5-second test render to `packages/video/out/demo.mp4`                   |
 | `pnpm render:fontlab` | Font set comparison in `packages/video/out/fontlab.png`                 |
 | `pnpm render:lab`     | Visual direction proposals in `packages/video/out/lab/`                 |
+| `pnpm render:mascots` | Mascot candidate sheets in `packages/video/out/lab/mascots-*.png`       |
 | `pnpm brand:contrast` | Hex values of the tokens and WCAG contrast of each text/background pair |
 | `pnpm lfs:usage`      | Git LFS space used compared with the free quota                         |
 | `pnpm typecheck`      | Type check of the whole monorepo                                        |

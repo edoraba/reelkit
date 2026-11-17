@@ -15,7 +15,23 @@ The first test render looked too much like match.creativelab. Rule: take the **m
 - the chapter label in the `01 / 03 · TITOLO` format under a segmented bar;
 - in general, any element that is recognizable as "theirs" at a glance.
 
-Every visual sign must come from the world of Refattura (paper, ledger, ink blue, stamps). Direction under discussion: see `docs/decisions.md` D-013.
+Every visual sign must come from the world of Refattura (paper, ledger, ink blue, stamps).
+
+### Visual system: squared paper and receipts (chosen by Edoardo, 2026-11-17, D-015)
+
+Two scene families, alternated inside the same reel and across reels:
+
+- **Quadretti** (squared paper): a full-frame squared-paper texture, binder tabs as chapter header, big type on the paper. Good for explanations, rules, steps.
+- **Scontrino** (receipt): a torn receipt strip over a plain background, rows in DM Mono, a pen circle or a stamp on the slip. Good for amounts, costs, counts, totals, "what you lose".
+
+Backgrounds change between scenes and between reels: blue, paper (white), sky, graphite, and the stamp colors when the concept calls for them. Both families work on every background; the paper strip and the squared texture keep the look consistent while the color changes.
+
+Highlighting the key word:
+
+- **yellow marker** (`markerYellow` behind the word, dark text) on light backgrounds and on the receipt;
+- **pen underline** (hand-drawn stroke under the word) on blue and dark backgrounds.
+
+The rotated lime box is retired. Not chosen: ruled ledger paper with margin, minimal flat counter (kept in `pnpm render:lab` for reference only).
 
 Token source: `refattura/DESIGN.md`, copied to `packages/brand/src/tokens.ts`. In code, colors always come from `@reelkit/brand`, never written by hand.
 
@@ -23,7 +39,7 @@ Token source: `refattura/DESIGN.md`, copied to `packages/brand/src/tokens.ts`. I
 
 The Refattura app is calm: one ink blue, cool paper, three status stamps. Reels need more energy, so they use the same base with two additions (`lime`, `sky`) and a background change for each concept.
 
-> **`lime` under discussion** (Edoardo, 2026-11-17): perhaps too bright for Refattura. Do not use it in new content until the alternative is chosen (D-013).
+> **`lime` retired** (Edoardo, 2026-11-17): too bright for Refattura. Replaced by `markerYellow` and the pen underline (D-015). Do not use it in new content.
 
 | Name                       | OKLCH                | Hex     | Role in the reels                                          |
 | -------------------------- | -------------------- | ------- | ---------------------------------------------------------- |

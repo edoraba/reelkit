@@ -72,7 +72,7 @@ Added two colors that the app does not use, to be approved in `guidelines/brand.
 - `lime` for the highlight box and the stickers;
 - `sky`, a light blue close to the light tone of the logotype, as a secondary light background and as the mascot's limb color (the ink blue disappeared against the blue background).
 
-## D-013 Own visual identity, not that of match.creativelab (2026-11-17, open)
+## D-013 Own visual identity, not that of match.creativelab (2026-11-17, closed by D-015)
 
 Edoardo's feedback on the first render: too many features identical to match.creativelab, and `lime` perhaps too bright for Refattura. No Remotion template or third-party code was used: the resemblance comes from taking literally some signs mentioned in the brief and seen in the reference screenshot (rotated lime box with shadow, segmented bar with label, light cone, dot grid, tube limbs with white hands).
 
@@ -90,3 +90,9 @@ A separate sheet compares the lime replacements (yellow marker, light blue marke
 ## D-014 Repository language is English (2026-11-17)
 
 Requested by Edoardo. Everything written in the repository is in English (code, identifiers, comments, docs, README, guidelines, CLAUDE.md, decisions, commit messages, branch names and PR text), as stated in the CLAUDE.md rule. Published content stays in Italian (voice scripts, on-screen text, captions, hashtags, cover titles, rubric names, and Italian examples quoted in the guidelines) because the audience is Italian.
+
+## D-015 Visual system: squared paper and receipts (2026-11-17)
+
+Edoardo picked two of the four D-013 proposals and asked to keep both: **quadretti** (squared paper, binder tabs) and **scontrino** (torn receipt strip, mono rows). They alternate inside a reel and across reels, on changing backgrounds (blue, paper, sky, graphite, stamp colors). Key word highlight: yellow marker or pen underline, both kept. The lime box is retired. Details in `guidelines/brand.md`, "Visual system".
+
+The mascot is open again: Edoardo asked for many alternatives, from close to the current invoice sheet to very different ideas, including some derived from the logo (`pnpm render:mascots`).
