@@ -1,0 +1,23 @@
+{
+  "name": "@reelkit/pipeline",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "cli": "tsx src/cli.ts",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@reelkit/schema": "workspace:*",
+    "@remotion/install-whisper-cpp": "4.0.544",
+    "@remotion/renderer": "4.0.544",
+    "extract-zip": "^2.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.19.0",
+    "tsx": "^4.23.15",
+    "typescript": "~5.9.3"
+  }
+}
