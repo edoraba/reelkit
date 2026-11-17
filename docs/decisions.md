@@ -106,3 +106,5 @@ From the 14 candidates Edoardo picked **05 Receipt**, asking to make it read mor
 ## D-017 Mascot rendering style (2026-11-17, open)
 
 Edoardo asked to try the chosen mascot in many rendering styles, white outlines included. `InvoiceRoll` now takes a `look` (colors, stroke widths, cel shading, roll shine), a `layer` (all, fills only, lines only) and SVG `defs`/`filter`, so a style is data and print-like looks are composed from two offset layers. `pnpm render:styles` renders 18 styles: flat outline (today), sticker, soft sticker, white outline, blue invoice, line art, blueprint, cartoon, comic, risograph, watercolor, pencil sketch, rubber stamp, paper cut-out, clay 3D, neon, pixel art, chalk. The style choice is open.
+
+Motion test of the two shortlisted styles (01 flat outline, 02 sticker) on blue, paper and graphite: `pnpm render:style-motion`. On graphite the flat outline disappears into the background while the sticker border keeps the silhouette; on paper the sticker border is subtle and the shadow carries it.

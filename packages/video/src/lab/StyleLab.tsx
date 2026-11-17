@@ -52,7 +52,7 @@ const Char: React.FC<CharProps> = ({ dx = 0, dy = 0, blend, opacity, rotate = 0,
 
 // ------------------------------------------------------------------------------- SVG filters
 
-const Sticker: React.FC<{ id: string; radius: number; color: string; shadow?: number }> = ({
+export const Sticker: React.FC<{ id: string; radius: number; color: string; shadow?: number }> = ({
   id,
   radius,
   color,

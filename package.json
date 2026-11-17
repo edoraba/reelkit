@@ -16,6 +16,7 @@
     "render:mascots": "pnpm --filter @reelkit/video render:mascots",
     "render:invoice-roll": "pnpm --filter @reelkit/video render:invoice-roll",
     "render:styles": "pnpm --filter @reelkit/video render:styles",
+    "render:style-motion": "pnpm --filter @reelkit/video render:style-motion",
     "brand:contrast": "tsx packages/brand/scripts/contrast.ts",
     "lfs:usage": "tsx scripts/lfs-usage.ts",
     "guard": "tsx scripts/guard.ts",

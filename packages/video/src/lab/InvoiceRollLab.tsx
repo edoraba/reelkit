@@ -24,25 +24,30 @@ const CELLS: Record<InvoiceRollVariant, { label: string; bg: BackgroundName; gri
   scroll: { label: 'D · Scroll', bg: 'ink', grid: false },
 };
 
-const CUES: PoseCue[] = [
+/** Shared motion test timeline: idle, wave, fake talking, arms up with happy eyes. */
+export const MOTION_CUES: PoseCue[] = [
   { at: 0, pose: 'neutral' },
   { at: 30, pose: 'wave' },
   { at: 74, pose: 'neutral' },
   { at: 138, pose: 'arms-up', mouth: 'open', eyes: 'happy' },
 ];
-const TALK: TalkSpan[] = [{ from: 82, to: 132 }];
+export const MOTION_TALK: TalkSpan[] = [{ from: 82, to: 132 }];
 
+/** Eyes follow the wave, then the camera, then look up when cheering. */
+export function motionGaze(frame: number): { x: number; y: number } {
+  if (frame >= 30 && frame < 74) return { x: 0.5, y: -0.2 };
+  if (frame >= 138) return { x: 0, y: -0.4 };
+  return { x: 0, y: 0 };
+}
+
+const CUES = MOTION_CUES;
+const TALK = MOTION_TALK;
 const fonts = fontsOf('brand');
 const CHAR_W = 400;
 
 export const InvoiceRollLab: React.FC = () => {
   const frame = useCurrentFrame();
-  const gaze =
-    frame >= 30 && frame < 74
-      ? { x: 0.5, y: -0.2 }
-      : frame >= 138
-        ? { x: 0, y: -0.4 }
-        : { x: 0, y: 0 };
+  const gaze = motionGaze(frame);
   return (
     <AbsoluteFill style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
       {INVOICE_ROLL_VARIANTS.map((v) => {

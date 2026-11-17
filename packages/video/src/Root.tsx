@@ -8,6 +8,7 @@ import { InvoiceRollLab, INVOICE_ROLL_LAB_DURATION } from './lab/InvoiceRollLab'
 import { MascotLab, MASCOT_SHEETS, sheetHeight, type MascotSheet } from './lab/mascots/MascotLab';
 import { Proposal, PROPOSALS } from './lab/Proposals';
 import { StyleLab, STYLE_SHEETS, styleSheetHeight } from './lab/StyleLab';
+import { StyleMotionLab, STYLE_MOTION_DURATION } from './lab/StyleMotionLab';
 
 export const RemotionRoot: React.FC = () => (
   <>
@@ -24,6 +25,14 @@ export const RemotionRoot: React.FC = () => (
       id="InvoiceRollLab"
       component={InvoiceRollLab}
       durationInFrames={INVOICE_ROLL_LAB_DURATION}
+      fps={formats.reel.fps}
+      width={formats.reel.width}
+      height={formats.reel.height}
+    />
+    <Composition
+      id="StyleMotionLab"
+      component={StyleMotionLab}
+      durationInFrames={STYLE_MOTION_DURATION}
       fps={formats.reel.fps}
       width={formats.reel.width}
       height={formats.reel.height}
