@@ -111,7 +111,14 @@ Scale in px for the 1080×1920 format:
 
 ## Mascot
 
-The current mascot is **provisional** (Phase 0): an invoice sheet with a folded corner and a face; arms, hands and legs are pen doodles drawn in the `pen` color of the background (ink blue on light, white or light blue on dark). The definitive one is supplied by Edoardo and must follow the layer naming below.
+The mascot is the **invoice roll, A4 variant** (chosen by Edoardo, D-016), code in `packages/video/src/mascot/InvoiceRoll.tsx`:
+
+- an A4 invoice sheet (1:1.41) with straight edges, a "FATTURA" header with the number "N.12", table rows (description left, amount right) and a blue "TOT" pill;
+- a roll of paper on top, with a spiral at the left end: it squashes for a moment at every pose change and sways with the idle;
+- dot eyes (blink squashes them, happy turns them into arcs) and a small mouth;
+- arms, loop hands and legs are pen doodles in the `pen` color of the background (ink blue on light, white or light blue on dark).
+
+The old provisional `Mascot` (sheet with folded corner and round eyes) stays only in the Phase 0 demo until the demo is restyled.
 
 Personality (proposal):
 
@@ -119,37 +126,33 @@ Personality (proposal):
 - practical: when there is a problem, it already has the solution in its pocket;
 - expressive but not hysterical: it reacts, it does not shout.
 
-What it never does: mock people who make mistakes, cry, appear sad at the end, touch or cover the text, make vulgar gestures, appear without the light cone in the central scenes.
+What it never does: mock people who make mistakes, cry, appear sad at the end, touch or cover the text, make vulgar gestures.
 
 Name: to be decided.
 
 ### Poses and expressions
 
-Poses (full library in Phase 2): `neutral`, `arms-up`, `point-left`, `point-up`, `shrug`, `thinking`, `wave`, `facepalm`, `celebrate`. In Phase 0 `neutral` and `arms-up` exist.
+Poses (full library in Phase 2): `neutral`, `arms-up`, `point-left`, `point-up`, `shrug`, `thinking`, `wave`, `facepalm`, `celebrate`. Today `neutral`, `arms-up` and `wave` exist.
 
-Expressions (Phase 2): `happy`, `worried`, `skeptical`, `surprised`, combining eyebrows, eyelids and resting mouth.
+Expressions (Phase 2): `happy`, `worried`, `skeptical`, `surprised`. With dot eyes and no eyebrows, expressions come from eye shape (round, squashed, arcs), mouth, roll and arm pose. Today `happy` (arc eyes) exists.
 
 ### SVG layer naming
 
-Every animated part is a `<g>` group with this `id`. An SVG exported from Figma with the same layer names attaches to the rig without code changes. ViewBox 400×600, feet at y 580.
+Every animated part is a `<g>` group with this `id`. An SVG exported from Figma with the same layer names attaches to the rig without code changes. ViewBox 400×600, feet at y 566. Target contract for the invoice roll; Phase 2 aligns `InvoiceRoll.tsx` and `rig.ts` to it (today `rig.ts` still describes the old provisional mascot).
 
-| id                           | Content                                     | Pivot (rotation)            |
-| ---------------------------- | ------------------------------------------- | --------------------------- |
-| `mascot`                     | the whole character                         | 200, 580 (feet)             |
-| `leg-l`, `leg-r`             | leg and shoe                                | hip                         |
-| `body`                       | sheet, arms, head (breathes)                | 200, 472 (bottom edge)      |
-| `arm-l-upper`, `arm-r-upper` | upper arm, contains the forearm             | shoulder 88,262 and 312,262 |
-| `arm-l-lower`, `arm-r-lower` | forearm, contains the hand                  | elbow                       |
-| `hand-l`, `hand-r`           | hand                                        | wrist                       |
-| `sheet`                      | the sheet with folded corner and lines      |                             |
-| `head`                       | the face area                               |                             |
-| `eye-l`, `eye-r`             | white of the eye                            | eye center                  |
-| `pupil-l`, `pupil-r`         | pupil (follows the gaze)                    |                             |
-| `lid-l`, `lid-r`             | eyelid (blink)                              |                             |
-| `brow-l`, `brow-r`           | eyebrow                                     |                             |
-| `mouth`                      | mouth (Rhubarb shapes A-H and X in Phase 2) | 200, 284                    |
-
-The contract lives in `packages/video/src/mascot/rig.ts`.
+| id                           | Content                                                | Pivot (rotation)              |
+| ---------------------------- | ------------------------------------------------------ | ----------------------------- |
+| `mascot`                     | the whole character                                    | 200, 566 (feet)               |
+| `leg-l`, `leg-r`             | pen leg and foot                                       | hip                           |
+| `body`                       | sheet, roll, arms and face (breathes)                  | 200, 470 (bottom edge)        |
+| `roll`                       | rolled paper on top (squash on pose change, idle sway) | roll center                   |
+| `arm-l-upper`, `arm-r-upper` | pen upper arm, contains the forearm                    | shoulders at mid sheet height |
+| `arm-l-lower`, `arm-r-lower` | pen forearm, contains the hand                         | elbow                         |
+| `hand-l`, `hand-r`           | loop hand                                              | wrist                         |
+| `sheet`                      | A4 sheet: FATTURA header, number, table rows, TOT pill |                               |
+| `head`                       | the face area                                          |                               |
+| `eye-l`, `eye-r`             | dot eye (blink, happy arcs, gaze offset)               | eye center                    |
+| `mouth`                      | mouth (Rhubarb shapes A-H and X in Phase 2)            | under the eyes                |
 
 ## Illustration style
 

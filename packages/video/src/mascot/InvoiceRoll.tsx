@@ -8,7 +8,8 @@ import { poseAt, type PoseCue } from './poses';
 /**
  * Mascot candidate 05 reshaped into an invoice (Edoardo, 2026-11-17): rolled paper on top,
  * dot eyes and small mouth from the receipt, but straight edges, an invoice header, table
- * rows with amounts and a total. Four variants to compare; viewBox 400 x 600 like rig.ts.
+ * rows with amounts and a total. viewBox 400 x 600 like rig.ts.
+ * The chosen mascot is the `a4` variant (D-016); the other three stay for the motion test lab.
  */
 export const INVOICE_ROLL_VARIANTS = ['slim', 'a4', 'header', 'scroll'] as const;
 export type InvoiceRollVariant = (typeof INVOICE_ROLL_VARIANTS)[number];
@@ -54,7 +55,8 @@ export interface TalkSpan {
 }
 
 export interface InvoiceRollProps {
-  variant: InvoiceRollVariant;
+  /** Defaults to `a4`, the variant chosen by Edoardo (D-016). */
+  variant?: InvoiceRollVariant;
   width: number;
   cues: PoseCue[];
   /** Frame spans where the mouth moves as if speaking (preview of lip sync). */
@@ -149,7 +151,7 @@ const Roll: React.FC<{ x1: number; x2: number; cy: number; h: number }> = ({ x1,
 );
 
 export const InvoiceRoll: React.FC<InvoiceRollProps> = ({
-  variant,
+  variant = 'a4',
   width,
   cues,
   talk = [],

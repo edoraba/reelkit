@@ -97,6 +97,8 @@ Edoardo picked two of the four D-013 proposals and asked to keep both: **quadret
 
 The mascot is open again: Edoardo asked for many alternatives, from close to the current invoice sheet to very different ideas, including some derived from the logo (`pnpm render:mascots`).
 
-## D-016 Mascot direction: the receipt reshaped into an invoice (2026-11-17, open)
+## D-016 Mascot: the receipt reshaped into an invoice, A4 variant (2026-11-17)
 
 From the 14 candidates Edoardo picked **05 Receipt**, asking to make it read more like an invoice while keeping the dot eyes, the small mouth and the rolled paper on top. `InvoiceRoll` (`packages/video/src/mascot/InvoiceRoll.tsx`) does that: straight edges instead of the torn zigzag, a FATTURA header, table rows with amounts, a blue TOT pill, pen-doodle limbs in the background `pen` color. Four variants are compared in motion with `pnpm render:invoice-roll`: slim (closest to 05), A4 proportions, blue header band, scroll rolled at both ends with a TD17 stamp. The variant choice is still open; the chosen one replaces the provisional `Mascot` and gets the full phase 2 rig.
+
+**Chosen (2026-11-17):** the plain **A4** variant (B), without the blue header band. `InvoiceRoll` now defaults to `a4`. It replaces the provisional `Mascot` in new scenes; the full rig (pose library, expressions, Rhubarb mouths, layer ids from `guidelines/brand.md`) is phase 2 work.
