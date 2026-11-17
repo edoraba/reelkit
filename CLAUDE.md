@@ -33,6 +33,7 @@ Repo that generates vertical reels, covers, carousels and post texts for **Refat
 | `pnpm tools:check`         | Status of the binaries and the Git LFS hooks                                                                               |
 | `pnpm studio`              | Remotion Studio                                                                                                            |
 | `pnpm render:demo`         | 5 s test render to `packages/video/out/demo.mp4`                                                                           |
+| `pnpm render:test-reels`   | Two full test reels (mascot styles 01 and 02) in `packages/video/out/test-reel-*.mp4`                                      |
 | `pnpm render:fontlab`      | Font set comparison in `packages/video/out/fontlab.png`                                                                    |
 | `pnpm render:lab`          | Visual direction proposals and highlight options in `packages/video/out/lab/`                                              |
 | `pnpm render:mascots`      | Mascot candidate sheets in `packages/video/out/lab/mascots-*.png`                                                          |

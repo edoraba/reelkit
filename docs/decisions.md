@@ -108,3 +108,9 @@ From the 14 candidates Edoardo picked **05 Receipt**, asking to make it read mor
 Edoardo asked to try the chosen mascot in many rendering styles, white outlines included. `InvoiceRoll` now takes a `look` (colors, stroke widths, cel shading, roll shine), a `layer` (all, fills only, lines only) and SVG `defs`/`filter`, so a style is data and print-like looks are composed from two offset layers. `pnpm render:styles` renders 18 styles: flat outline (today), sticker, soft sticker, white outline, blue invoice, line art, blueprint, cartoon, comic, risograph, watercolor, pencil sketch, rubber stamp, paper cut-out, clay 3D, neon, pixel art, chalk. The style choice is open.
 
 Motion test of the two shortlisted styles (01 flat outline, 02 sticker) on blue, paper and graphite: `pnpm render:style-motion`. On graphite the flat outline disappears into the background while the sticker border keeps the silhouette; on paper the sticker border is subtle and the shadow carries it.
+
+## D-018 Mascot header and full test reels (2026-11-17)
+
+Edoardo asked to replace "FATTURA" with "REFATTURA", to put the logo mark where "N.12" was, both faded, and to keep the blue pill without the "TOT" text. Done in `InvoiceRoll` (`look.headerOpacity`, default 0.4; `LogoMark` moved to `packages/video/src/brand/`).
+
+`TestReel` is the first full reel with placeholder copy (25 s, no audio yet): hook on squared blue paper, problem on a receipt, rule and solution on squared paper with binder tabs, A/B question, close with logo, tagline and CTA. Words appear one by one, the highlighter sweeps and the pen draws, stamps slam in. Rendered with both shortlisted mascot styles to compare them in context: `pnpm render:test-reels`. Copy is placeholder and was kept to statements that are true in general (reverse charge on foreign services is integrated with a TD17); real scripts follow `guidelines/generation.md`.

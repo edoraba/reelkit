@@ -26,6 +26,7 @@ pnpm render:demo
 | -------------------------- | ------------------------------------------------------------------------------------------------- |
 | `pnpm studio`              | Remotion Studio to preview the compositions                                                       |
 | `pnpm render:demo`         | 5-second test render to `packages/video/out/demo.mp4`                                             |
+| `pnpm render:test-reels`   | Two full test reels (mascot styles 01 and 02) in `packages/video/out/test-reel-*.mp4`             |
 | `pnpm render:fontlab`      | Font set comparison in `packages/video/out/fontlab.png`                                           |
 | `pnpm render:lab`          | Visual direction proposals in `packages/video/out/lab/`                                           |
 | `pnpm render:mascots`      | Mascot candidate sheets in `packages/video/out/lab/mascots-*.png`                                 |

@@ -113,7 +113,7 @@ Scale in px for the 1080×1920 format:
 
 The mascot is the **invoice roll, A4 variant** (chosen by Edoardo, D-016), code in `packages/video/src/mascot/InvoiceRoll.tsx`:
 
-- an A4 invoice sheet (1:1.41) with straight edges, a "FATTURA" header with the number "N.12", table rows (description left, amount right) and a blue "TOT" pill;
+- an A4 invoice sheet (1:1.41) with straight edges, a faint "REFATTURA" header with the faint logo mark on the right (both at 40% opacity, the face leads), table rows (description left, amount right) and a blue pill bottom right with no text;
 - a roll of paper on top, with a spiral at the left end: it squashes for a moment at every pose change and sways with the idle;
 - dot eyes (blink squashes them, happy turns them into arcs) and a small mouth;
 - arms, loop hands and legs are pen doodles in the `pen` color of the background (ink blue on light, white or light blue on dark).
