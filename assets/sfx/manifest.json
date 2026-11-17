@@ -1,0 +1,4 @@
+{
+  "$comment": "CC0 or redistributable SFX only. Fields per file: tag, file, durationMs, impactMs, variants, license, source. See guidelines/generation.md.",
+  "files": []
+}
