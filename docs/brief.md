@@ -1,101 +1,103 @@
-# Refattura Reels: prompt iniziale per Claude Code
+# Refattura Reels: initial prompt for Claude Code
+
+Translated from the Italian original on 2026-11-17.
 
 Nov 17, 2026 · @Edoardo
 
-## Ruolo e obiettivo
+## Role and goal
 
-Costruisci da zero un repo che genera in automatico reel verticali per Instagram e TikTok, copertine e caroselli per **Refattura**, un SaaS italiano di autofatturazione e rifatturazione. Il repo deve essere pilotabile interamente da te (Claude Code): dato un argomento o un calendario, produci script, voce, animazione, SFX, copertina e testo del post senza interventi manuali, fermandoti solo al gate di approvazione prima della pubblicazione.
+Build from scratch a repo that automatically generates vertical reels for Instagram and TikTok, covers and carousels for **Refattura**, an Italian SaaS for self-invoicing and re-invoicing (autofatturazione and rifatturazione). The repo must be fully drivable by you (Claude Code): given a topic or a calendar, you produce script, voice, animation, SFX, cover and post text without manual intervention, stopping only at the approval gate before publishing.
 
-Prima di scrivere codice, leggi tutto questo documento, poi proponi un piano per la Fase 0 (vedi ultima sezione) e attendi conferma. Lavora per fasi piccole e verificabili: ogni fase termina con un render reale che puoi ispezionare.
+Before writing code, read this whole document, then propose a plan for Phase 0 (see the last section) and wait for confirmation. Work in small, verifiable phases: every phase ends with a real render that you can inspect.
 
-Il progetto è personale, gestito da una sola persona, su repo pubblico GitHub. Tutto gira in locale su un PC o su un server personale: nessun servizio a pagamento, nessun account che richieda una carta di credito o un profilo di fatturazione, nessun hosting di terzi per il render. Ogni servizio esterno deve poter solo rifiutare le richieste oltre il limite gratuito, mai addebitarle.
+The project is personal, run by a single person, on a public GitHub repo. Everything runs locally on a PC or a personal server: no paid services, no account that requires a credit card or a billing profile, no third-party hosting for rendering. Every external service must only be able to refuse requests beyond the free limit, never charge them.
 
-## Riferimento stilistico
+## Style reference
 
-Il riferimento è il profilo Instagram match.creativelab: prendine la grammatica visiva, non l'identità. Palette, mascotte, font e testi di Refattura devono essere originali. Dall'analisi di due reel (2:00 e 0:55, 720×1280, 30 fps) emergono questi pattern da replicare come sistema:
+The reference is the Instagram profile match.creativelab: take its visual grammar, not its identity. Palette, mascot, fonts and texts of Refattura must be original. From the analysis of two reels (2:00 and 0:55, 720×1280, 30 fps) these patterns emerge, to be replicated as a system:
 
-- **Kinetic typography.** Il parlato appare a schermo come testo grande in un grotesk pesante. Due varianti: una parola alla volta al centro, oppure righe brevi da 2-4 parole con la parola corrente evidenziata in un box colorato (stile karaoke).
-- **Ritmo.** Un cambio di scena ogni 2-3 secondi circa; il colore di sfondo cambia quando cambia il concetto, da una palette fissa di 5-6 colori.
-- **Mascotte al centro.** Un personaggio su un cono di luce, mai statico: idle continuo (respiro, ammiccamento), pose diverse a seconda del beat (braccia alzate, indica, scrolla le spalle) e lip sync sulla voce.
-- **UI mockup sopra la mascotte.** Bolle di chat, notifiche, calendari, termometri, contatori numerici su griglie di punti, card A/B: illustrano la frase in corso.
-- **Sticker ricorrenti.** Parola chiave in box lime ruotato con ombra, pill con etichette, timbri in font scritto a mano, testo barrato e corretto, fumetti.
-- **Struttura a capitoli.** Barra di avanzamento segmentata in alto con etichetta del capitolo (es. 01/05 IL PROBLEMA), oppure header fisso con il titolo del reel.
-- **SFX ovunque.** Ogni ingresso, uscita e concetto ha il suo suono.
-- **Arco narrativo.** Hook con domanda, problema, sviluppo, domanda al pubblico (A o B nei commenti), CTA, tagline e logo.
-- **Copertine.** Kicker in corsivo a mano in alto (nome della rubrica), titolo enorme con una parola evidenziata, illustrazione centrale, mascotte in un angolo. Rubriche ricorrenti e alternanza di colori pensata sulla griglia del feed.
+- **Kinetic typography.** The speech appears on screen as large text in a heavy grotesque. Two variants: one word at a time in the center, or short lines of 2-4 words with the current word highlighted in a colored box (karaoke style).
+- **Rhythm.** A scene change roughly every 2-3 seconds; the background color changes when the concept changes, from a fixed palette of 5-6 colors.
+- **Mascot in the center.** A character on a light cone, never static: continuous idle (breathing, blinking), different poses depending on the beat (arms up, pointing, shrugging) and lip sync on the voice.
+- **UI mockups above the mascot.** Chat bubbles, notifications, calendars, thermometers, numeric counters on dot grids, A/B cards: they illustrate the sentence in progress.
+- **Recurring stickers.** Keyword in a rotated lime box with shadow, pills with labels, stamps in a handwritten font, struck-through and corrected text, speech bubbles.
+- **Chapter structure.** Segmented progress bar at the top with the chapter label (e.g. 01/05 IL PROBLEMA), or a fixed header with the reel title.
+- **SFX everywhere.** Every entrance, exit and concept has its own sound.
+- **Narrative arc.** Hook with a question, problem, development, question to the audience (A or B in the comments), CTA, tagline and logo.
+- **Covers.** Handwritten italic kicker at the top (rubric name), huge title with one highlighted word, central illustration, mascot in a corner. Recurring rubrics and color alternation designed around the feed grid.
 
-## Stack e vincoli
+## Stack and constraints
 
-| Area | Scelta | Note |
+| Area | Choice | Notes |
 | --- | --- | --- |
-| Linguaggio | TypeScript strict, pnpm, Turborepo | Prettier, Zod per tutti gli schemi |
-| Video, cover, caroselli | Remotion | Licenza gratuita valida per uso individuale |
-| Planner e anteprima griglia | Next.js locale + shadcn/ui | Nessun deploy, gira su localhost |
-| Script e piano editoriale | Claude Code stesso | Nessuna chiamata API a LLM dal codice |
-| Voce | Gemini TTS (gemini-3.1-flash-tts-preview) sul free tier della Gemini API | Chiave di Google AI Studio senza fatturazione: oltre i limiti risponde 429, nessun addebito possibile. Modello in preview: fallback offline Kokoro e Piper |
-| Timestamp parole | whisper.cpp via `@remotion/install-whisper-cpp` | Locale, modello `medium` o `small` per l'italiano |
-| Lip sync | Rhubarb Lip Sync, modalità fonetica | Fallback: apertura bocca da ampiezza audio |
-| Audio | ffmpeg | Analisi transienti, loudness, mix |
+| Language | TypeScript strict, pnpm, Turborepo | Prettier, Zod for all schemas |
+| Video, covers, carousels | Remotion | Free license valid for individual use |
+| Planner and grid preview | Local Next.js + shadcn/ui | No deploy, runs on localhost |
+| Script and editorial plan | Claude Code itself | No LLM API calls from the code |
+| Voice | Gemini TTS (gemini-3.1-flash-tts-preview) on the Gemini API free tier | Google AI Studio key without billing: beyond the limits it answers 429, no charge possible. Model in preview: offline fallback Kokoro and Piper |
+| Word timestamps | whisper.cpp via `@remotion/install-whisper-cpp` | Local, `medium` or `small` model for Italian |
+| Lip sync | Rhubarb Lip Sync, phonetic mode | Fallback: mouth opening from audio amplitude |
+| Audio | ffmpeg | Transient analysis, loudness, mix |
 
-Vincoli:
+Constraints:
 
-- **Cross-platform.** Deve girare su Windows e su Linux. Script di pipeline in TypeScript eseguiti con `tsx`, niente bash obbligatoria. Binari esterni (ffmpeg, whisper.cpp, Rhubarb) scaricati da uno script `setup` in una cartella ignorata da git.
-- **TTS dietro un'interfaccia** `TtsProvider` con implementazioni `gemini-tts`, `kokoro` e `piper`, tutte gratuite. Il provider si sceglie da config. Se Gemini risponde 429 per i limiti giornalieri, il post resta in coda e riprova il giorno dopo; non passare in automatico a una voce offline senza segnalarlo, perché la qualità cambia. I timestamp arrivano sempre da whisper.cpp, così il provider è intercambiabile.
-- **Nessun segreto nel repo.** Chiave Gemini e token Instagram via variabili d'ambiente; `.env.example` documentato. Il progetto Google usato per la chiave non deve mai avere un account di fatturazione collegato. Nota: sul free tier Google può usare input e output per migliorare i modelli, accettabile per contenuti destinati alla pubblicazione.
-- **Determinismo.** Stesso input, stesso output: ogni scelta casuale (varianti SFX, micro-movimenti) usa un seed derivato dall'id del post.
-- **File come fonte di verità.** Niente database: tutto lo stato vive in file JSON e Markdown versionati, che puoi leggere e modificare direttamente.
+- **Cross-platform.** It must run on Windows and on Linux. Pipeline scripts in TypeScript run with `tsx`, no mandatory bash. External binaries (ffmpeg, whisper.cpp, Rhubarb) downloaded by a `setup` script into a git-ignored folder.
+- **TTS behind an interface** `TtsProvider` with implementations `gemini-tts`, `kokoro` and `piper`, all free. The provider is chosen from config. If Gemini answers 429 because of the daily limits, the post stays in the queue and retries the next day; do not switch automatically to an offline voice without flagging it, because the quality changes. Timestamps always come from whisper.cpp, so the provider is interchangeable.
+- **No secrets in the repo.** Gemini key and Instagram token via environment variables; documented `.env.example`. The Google project used for the key must never have a billing account attached. Note: on the free tier Google may use inputs and outputs to improve its models, which is acceptable for content meant for publication.
+- **Determinism.** Same input, same output: every random choice (SFX variants, micro-movements) uses a seed derived from the post id.
+- **Files as the source of truth.** No database: all state lives in versioned JSON and Markdown files, which you can read and edit directly.
 
-## Struttura del repo
+## Repo structure
 
-Proponi questa struttura come punto di partenza; puoi modificarla motivando la scelta.
+Propose this structure as a starting point; you can change it with a justification.
 
 ```
 refattura-reels/
-├─ CLAUDE.md                  # istruzioni operative per te, sempre aggiornate
+├─ CLAUDE.md                  # operating instructions for you, always up to date
 ├─ guidelines/
-│  ├─ brand.md                # identità, palette, tipografia, mascotte, tono
-│  ├─ generation.md           # regole di scrittura, ritmo, scene, SFX, cover
-│  └─ strategy.md             # pilastri, rubriche, frequenza, pubblico
-├─ .claude/commands/          # slash command: /plan-quarter, /new-reel, /render, /review
+│  ├─ brand.md                # identity, palette, typography, mascot, tone
+│  ├─ generation.md           # writing, rhythm, scenes, SFX, cover rules
+│  └─ strategy.md             # pillars, rubrics, frequency, audience
+├─ .claude/commands/          # slash commands: /plan-quarter, /new-reel, /render, /review
 ├─ packages/
-│  ├─ schema/                 # schemi Zod condivisi (post, beat, calendario, manifest)
+│  ├─ schema/                 # shared Zod schemas (post, beat, calendar, manifest)
 │  ├─ pipeline/               # CLI: tts, align, lipsync, sfx-plan, render, publish
-│  └─ video/                  # progetto Remotion: composizioni, scene, componenti
-│     ├─ brand/               # token colore, font, spaziature
-│     ├─ mascot/              # rig SVG, pose, bocche, animazioni idle
-│     ├─ scenes/              # scene parametriche (testo, mockup, contatori, A/B)
-│     ├─ stickers/            # box lime, pill, timbri, barrato, fumetti
+│  └─ video/                  # Remotion project: compositions, scenes, components
+│     ├─ brand/               # color tokens, fonts, spacing
+│     ├─ mascot/              # SVG rig, poses, mouths, idle animations
+│     ├─ scenes/              # parametric scenes (text, mockups, counters, A/B)
+│     ├─ stickers/            # lime box, pills, stamps, strike-through, speech bubbles
 │     └─ compositions/        # Reel, Cover, CarouselSlide, GridPreview
-├─ apps/planner/              # Next.js locale: calendario, griglia, stati
+├─ apps/planner/              # local Next.js: calendar, grid, states
 ├─ assets/
-│  ├─ icons/                  # SVG originali
-│  ├─ sfx/                    # solo CC0, con manifest.json
-│  └─ music/                  # solo licenze compatibili, con manifest.json
+│  ├─ icons/                  # original SVGs
+│  ├─ sfx/                    # CC0 only, with manifest.json
+│  └─ music/                  # compatible licenses only, with manifest.json
 ├─ content/
-│  ├─ calendar.json           # piano a 3 mesi
+│  ├─ calendar.json           # 3-month plan
 │  └─ posts/<yyyy-mm-dd>-<slug>/
-│     ├─ post.json            # stato, rubrica, formato, caption, hashtag
-│     ├─ script.json          # beat validati dallo schema
+│     ├─ post.json            # state, rubric, format, caption, hashtags
+│     ├─ script.json          # beats validated by the schema
 │     ├─ voice.wav, words.json, mouth.json
-│     ├─ review/              # frame chiave estratti per l'auto-review
+│     ├─ review/              # key frames extracted for the self-review
 │     └─ out/                 # reel.mp4, cover.png, slide-01.png...
-└─ tools/                     # binari scaricati da setup (gitignored)
+└─ tools/                     # binaries downloaded by setup (gitignored)
 ```
 
-## Pipeline di generazione
+## Generation pipeline
 
-Ogni step è un comando CLI idempotente che legge e scrive nella cartella del post; `/new-reel` li esegue in sequenza e riparte dallo step fallito.
+Every step is an idempotent CLI command that reads from and writes to the post folder; `/new-reel` runs them in sequence and restarts from the failed step.
 
-1. **Script.** Scrivi `script.json` seguendo `guidelines/generation.md`. Lo schema Zod deve passare; se fallisce, correggi e rivalida.
-2. **Voce.** `pipeline tts` genera `voice.wav` dal testo parlato concatenato, con pause brevi tra i beat.
-3. **Allineamento.** `pipeline align` produce `words.json` con inizio e fine di ogni parola, e assegna le parole ai beat.
-4. **Lip sync.** `pipeline lipsync` produce `mouth.json` (forma della bocca per intervalli di tempo).
-5. **Piano SFX.** `pipeline sfx-plan` risolve gli SFX: quelli dichiarati dai componenti più quelli semantici del beat, applicando le regole di mix.
-6. **Render.** Remotion produce `reel.mp4` (1080×1920, 30 fps, H.264, AAC), `cover.png` e le eventuali slide.
-7. **Auto-review.** Estrai un frame per beat più primo e ultimo frame, guardali e controlla la checklist sotto. Esegui anche i controlli d'ascolto della sezione SFX. Correggi lo script o i parametri e ri-renderizza, massimo 3 iterazioni, poi segnala i problemi residui.
-8. **Gate.** Imposti lo stato del post a `ready-for-review`. La pubblicazione avviene solo dopo che l'umano lo porta ad `approved`.
+1. **Script.** Write `script.json` following `guidelines/generation.md`. The Zod schema must pass; if it fails, fix and revalidate.
+2. **Voice.** `pipeline tts` generates `voice.wav` from the concatenated spoken text, with short pauses between beats.
+3. **Alignment.** `pipeline align` produces `words.json` with the start and end of every word, and assigns the words to the beats.
+4. **Lip sync.** `pipeline lipsync` produces `mouth.json` (mouth shape per time interval).
+5. **SFX plan.** `pipeline sfx-plan` resolves the SFX: those declared by the components plus the semantic ones of the beat, applying the mix rules.
+6. **Render.** Remotion produces `reel.mp4` (1080×1920, 30 fps, H.264, AAC), `cover.png` and any slides.
+7. **Self-review.** Extract one frame per beat plus the first and last frame, look at them and check the checklist below. Also run the listening checks of the SFX section. Fix the script or the parameters and re-render, at most 3 iterations, then report the remaining problems.
+8. **Gate.** Set the post state to `ready-for-review`. Publishing happens only after the human moves it to `approved`.
 
-Esempio di beat (lo schema definitivo lo definisci tu in `packages/schema`):
+Beat example (you define the final schema in `packages/schema`):
 
 ```json
 {
@@ -112,149 +114,149 @@ Esempio di beat (lo schema definitivo lo definisci tu in `packages/schema`):
 }
 ```
 
-I riferimenti temporali (`at`) puntano a parole del parlato, mai a secondi: i tempi reali li risolve la pipeline dopo l'allineamento.
+Time references (`at`) point to words of the speech, never to seconds: the real timings are resolved by the pipeline after the alignment.
 
-Checklist di auto-review:
+Self-review checklist:
 
-- Nessun testo fuori dalle safe zone (in alto e in basso Instagram copre parte del frame) o tagliato.
-- Nessuno sticker sovrapposto alla mascotte o ai sottotitoli.
-- Nessun beat più breve di 0,8 s o più lungo di 5 s senza cambio visivo.
-- Contrasto testo/sfondo leggibile su ogni frame.
-- La bocca della mascotte è chiusa quando la voce tace.
-- Loudness integrata del mix intorno a -14 LUFS, misurata con ffmpeg.
-- La cover è leggibile anche ridotta a miniatura della griglia.
+- No text outside the safe zones (at the top and bottom Instagram covers part of the frame) or cut off.
+- No sticker overlapping the mascot or the subtitles.
+- No beat shorter than 0.8 s or longer than 5 s without a visual change.
+- Readable text/background contrast on every frame.
+- The mascot's mouth is closed when the voice is silent.
+- Integrated loudness of the mix around -14 LUFS, measured with ffmpeg.
+- The cover is readable even when reduced to a grid thumbnail.
 
-## Mascotte, pose e lip sync
+## Mascot, poses and lip sync
 
-La mascotte è un rig SVG animato via codice, non un'immagine: ogni parte è un gruppo separato con un pivot definito, e Remotion la anima frame per frame. Tutte le illustrazioni del progetto (mascotte, icone, mockup) sono SVG vettoriali disegnati nello stile delle guideline; niente generazione di immagini raster in questa prima versione, per coerenza e costo zero.
+The mascot is an SVG rig animated via code, not an image: every part is a separate group with a defined pivot, and Remotion animates it frame by frame. All the illustrations of the project (mascot, icons, mockups) are vector SVGs drawn in the style of the guidelines; no raster image generation in this first version, for consistency and zero cost.
 
-**Rig.** Gruppi separati per corpo, testa, occhi, palpebre, sopracciglia, bocca, braccio e avambraccio sinistro e destro, mani, gambe. Convenzione di naming dei layer documentata in `guidelines/brand.md`, così un SVG esportato da Figma con quei nomi si aggancia al rig senza modifiche al codice. In Fase 0 disegna tu una mascotte provvisoria semplice (un documento/fattura con faccia, braccia e gambe a tubo, contorno spesso); quella definitiva la fornisce l'umano.
+**Rig.** Separate groups for body, head, eyes, eyelids, eyebrows, mouth, left and right arm and forearm, hands, legs. Layer naming convention documented in `guidelines/brand.md`, so that an SVG exported from Figma with those names attaches to the rig without code changes. In Phase 0 you draw a simple provisional mascot (a document/invoice with face, tube arms and legs, thick outline); the definitive one is supplied by the human.
 
-**Livelli di animazione, sommati tra loro:**
+**Animation layers, added together:**
 
-1. **Idle continuo.** Respiro (scala verticale lieve sul corpo), oscillazione leggera, ammiccamento a intervalli irregolari ma deterministici.
-2. **Pose.** Una libreria di pose nominate (`neutral`, `arms-up`, `point-left`, `point-up`, `shrug`, `thinking`, `wave`, `facepalm`, `celebrate`) definite come rotazioni dei segmenti. Il cambio di posa usa spring con un frame di anticipazione e un leggero overshoot.
-3. **Gesti sull'enfasi.** Sulle parole in `highlight` la mascotte fa un micro-gesto (scatto del braccio, rimbalzo) se il beat non specifica già una posa.
-4. **Sguardo.** Gli occhi seguono l'elemento che entra in scena (mockup, sticker), poi tornano verso la camera.
-5. **Espressioni.** Combinazioni di sopracciglia, palpebre e bocca a riposo (`happy`, `worried`, `skeptical`, `surprised`).
+1. **Continuous idle.** Breathing (slight vertical scale on the body), light sway, blinking at irregular but deterministic intervals.
+2. **Poses.** A library of named poses (`neutral`, `arms-up`, `point-left`, `point-up`, `shrug`, `thinking`, `wave`, `facepalm`, `celebrate`) defined as segment rotations. The pose change uses a spring with one frame of anticipation and a slight overshoot.
+3. **Gestures on emphasis.** On the words in `highlight` the mascot makes a micro-gesture (arm flick, bounce) if the beat does not already specify a pose.
+4. **Gaze.** The eyes follow the element entering the scene (mockup, sticker), then go back to the camera.
+5. **Expressions.** Combinations of eyebrows, eyelids and resting mouth (`happy`, `worried`, `skeptical`, `surprised`).
 
-**Lip sync.** Rhubarb Lip Sync in modalità fonetica (indipendente dalla lingua, adatta all'italiano) produce le forme A-H più X (silenzio) con i tempi. Disegna una bocca SVG per ogni forma. Mantieni ogni forma almeno 2 frame per evitare sfarfallii e chiudi sempre la bocca durante le pause. Se Rhubarb non è disponibile o fallisce, fallback su apertura della bocca proporzionale all'ampiezza dell'audio (`@remotion/media-utils`), con 3 livelli di apertura.
+**Lip sync.** Rhubarb Lip Sync in phonetic mode (language independent, suitable for Italian) produces the shapes A-H plus X (silence) with timings. Draw an SVG mouth for each shape. Keep each shape for at least 2 frames to avoid flicker and always close the mouth during pauses. If Rhubarb is not available or fails, fall back to a mouth opening proportional to the audio amplitude (`@remotion/media-utils`), with 3 opening levels.
 
-Verifica il lip sync in auto-review estraendo 10 frame consecutivi in un punto di parlato e uno in un punto di silenzio.
+Check the lip sync in the self-review by extracting 10 consecutive frames at a point of speech and one at a point of silence.
 
-## SFX, musica e mix
+## SFX, music and mix
 
-Gli SFX lavorano su due livelli, entrambi risolti dalla pipeline e non scritti a mano nel video.
+SFX work on two levels, both resolved by the pipeline and not written by hand in the video.
 
-**SFX di componente.** Ogni componente animato dichiara i suoi suoni di ingresso e uscita come tag (sticker lime: `pop`; timbro: `stamp`; freccia tratteggiata: `swish`; barrato: `marker`; card che scorrono: `whoosh-soft`; contatore: `tick` ad ogni step; cambio sfondo: `swoosh`). Se usi il componente, il suono arriva in automatico, sincronizzato all'animazione.
+**Component SFX.** Every animated component declares its entrance and exit sounds as tags (lime sticker: `pop`; stamp: `stamp`; dashed arrow: `swish`; strike-through: `marker`; sliding cards: `whoosh-soft`; counter: `tick` at every step; background change: `swoosh`). If you use the component, the sound arrives automatically, synchronized with the animation.
 
-**SFX semantici.** Li scegli tu nel beat in base al contenuto (`cash-register` su un importo, `notification` su un messaggio, `typing` su una chat, `ding` su un'idea, `error` su una sanzione), ancorati a una parola.
+**Semantic SFX.** You choose them in the beat based on the content (`cash-register` on an amount, `notification` on a message, `typing` on a chat, `ding` on an idea, `error` on a penalty), anchored to a word.
 
-**Manifest.** `assets/sfx/manifest.json` elenca ogni file con tag, durata, varianti, licenza, fonte e `impactMs`: il punto d'impatto reale, calcolato con ffmpeg sul primo transiente. La pipeline allinea l'impatto al frame dell'evento, non l'inizio del file. Uno script `sfx:index` analizza i nuovi file e aggiorna il manifest; i tag li proponi tu senza poter ascoltare, basandoti su nome file, fonte e forma d'onda, e segnala quelli dubbi.
+**Manifest.** `assets/sfx/manifest.json` lists every file with tag, duration, variants, license, source and `impactMs`: the real impact point, computed with ffmpeg on the first transient. The pipeline aligns the impact to the frame of the event, not the start of the file. An `sfx:index` script analyzes new files and updates the manifest; you propose the tags without being able to listen, based on file name, source and waveform, and flag the doubtful ones.
 
-**Regole di mix (nel codice, non per singolo video):**
+**Mix rules (in the code, not per single video):**
 
-- Voce a riferimento, SFX da -12 a -18 dB sotto la voce, musica da -20 a -24 dB con ducking quando la voce parla.
-- Varianti a rotazione deterministica: lo stesso tag non usa lo stesso file due volte di fila.
-- Densità massima: due SFX non partono a meno di 250 ms l'uno dall'altro; in caso di conflitto vince il semantico.
-- Whoosh e swoosh anticipati di 2-3 frame rispetto al movimento.
-- Nessun SFX sopra una parola in `highlight` se ne copre l'attacco.
-- Musica: un loop per reel, fade in e fade out, scelto per tag di mood dal manifest musica.
+- Voice as the reference, SFX from -12 to -18 dB below the voice, music from -20 to -24 dB with ducking when the voice speaks.
+- Variants in deterministic rotation: the same tag does not use the same file twice in a row.
+- Maximum density: two SFX do not start less than 250 ms apart; on conflict the semantic one wins.
+- Whoosh and swoosh anticipated by 2-3 frames relative to the movement.
+- No SFX over a word in `highlight` if it covers its attack.
+- Music: one loop per reel, fade in and fade out, chosen by mood tag from the music manifest.
 
-**Controlli d'ascolto.** Non puoi ascoltare direttamente, ma hai quattro segnali gratuiti da usare in auto-review:
+**Listening checks.** You cannot listen directly, but you have four free signals to use in the self-review:
 
-1. **Trascrizione di ritorno.** whisper.cpp ritrascrive il mix finale e confronti il testo con lo script: parole saltate, pronunce sbagliate (TD17, sigle) o parlato coperto da SFX e musica emergono come differenze.
-2. **Spettrogramma.** ffmpeg genera lo spettrogramma della traccia con le tacche dei beat sovrapposte; lo guardi come un frame per verificare densità, ducking e sincronia.
-3. **Secondo parere.** Invia il wav a Gemini (free tier, stessa chiave senza fatturazione) con domande precise su naturalezza della voce e coerenza degli SFX, e valuta la risposta.
-4. **Validazione SFX.** Un modello CLAP locale verifica che ogni file della libreria suoni come il tag che gli hai assegnato.
+1. **Return transcription.** whisper.cpp re-transcribes the final mix and you compare the text with the script: skipped words, wrong pronunciations (TD17, acronyms) or speech covered by SFX and music show up as differences.
+2. **Spectrogram.** ffmpeg generates the spectrogram of the track with the beat marks overlaid; you look at it like a frame to check density, ducking and synchronization.
+3. **Second opinion.** Send the wav to Gemini (free tier, same key without billing) with precise questions about the naturalness of the voice and the coherence of the SFX, and evaluate the answer.
+4. **SFX validation.** A local CLAP model verifies that every file of the library sounds like the tag you assigned to it.
 
-Sui primi reel il giudizio d'ascolto resta all'umano; ogni suo feedback ricorrente diventa una regola in `guidelines/generation.md`.
+On the first reels the listening judgment stays with the human; every recurring feedback from them becomes a rule in `guidelines/generation.md`.
 
-## Planner, copertine, griglia e caroselli
+## Planner, covers, grid and carousels
 
-**Piano trimestrale.** `/plan-quarter` legge `guidelines/strategy.md` e scrive `content/calendar.json` con 13 settimane di post: data, formato (reel o carosello), rubrica, argomento, hook, colore dominante della cover. Bilancia le rubriche, evita argomenti ripetuti e alterna i colori in modo che ogni blocco di 3 post consecutivi nella griglia sia vario. Crea una cartella per ogni post con `post.json` in stato `idea`.
+**Quarterly plan.** `/plan-quarter` reads `guidelines/strategy.md` and writes `content/calendar.json` with 13 weeks of posts: date, format (reel or carousel), rubric, topic, hook, dominant cover color. It balances the rubrics, avoids repeated topics and alternates the colors so that every block of 3 consecutive posts in the grid is varied. It creates a folder for each post with `post.json` in the `idea` state.
 
-**Ciclo di vita del post:** `idea` → `scripted` → `rendered` → `ready-for-review` → `approved` → `published`, più `rejected` con una nota dell'umano che ti dice cosa rifare. Puoi far avanzare un post solo fino a `ready-for-review`.
+**Post lifecycle:** `idea` → `scripted` → `rendered` → `ready-for-review` → `approved` → `published`, plus `rejected` with a note from the human telling you what to redo. You can move a post forward only up to `ready-for-review`.
 
-**App planner** (`apps/planner`, Next.js su localhost): vista calendario a 3 mesi con stato colorato per post; dettaglio post con player del reel, cover, caption e script leggibile; pulsanti approva, rifiuta con nota, sposta data, che modificano direttamente i file JSON. L'app non genera nulla: la generazione resta nei comandi che esegui tu.
+**Planner app** (`apps/planner`, Next.js on localhost): 3-month calendar view with a colored state per post; post detail with reel player, cover, caption and readable script; approve, reject with a note, and move date buttons, which edit the JSON files directly. The app generates nothing: generation stays in the commands that you run.
 
-**Anteprima griglia.** Composizione Remotion `GridPreview` e vista nell'app che mostrano le prossime 12 cover nella griglia 3 colonne del profilo, con il formato di ritaglio usato da Instagram per la griglia. Serve a controllare l'alternanza prima di approvare.
+**Grid preview.** `GridPreview` Remotion composition and app view showing the next 12 covers in the profile's 3-column grid, with the crop format that Instagram uses for the grid. It serves to check the alternation before approving.
 
-**Generatore di copertine.** Composizione `Cover` a 1080×1920 con template per rubrica: kicker scritto a mano con il nome della rubrica, titolo grande con una parola evidenziata, illustrazione SVG centrale, mascotte in un angolo con posa ed espressione coerenti col tema. Tieni testo e soggetti nella zona centrale che sopravvive al ritaglio della griglia. La cover è anche il primo frame del reel, così non serve impostarla a parte.
+**Cover generator.** `Cover` composition at 1080×1920 with a template per rubric: handwritten kicker with the rubric name, large title with one highlighted word, central SVG illustration, mascot in a corner with pose and expression consistent with the topic. Keep text and subjects in the central zone that survives the grid crop. The cover is also the first frame of the reel, so it does not need to be set separately.
 
-**Caroselli.** Composizione `CarouselSlide` 1080×1350 che riusa scene, sticker e mascotte; ogni slide è un beat statico. Barra di avanzamento segmentata e numerazione (01/05) come nei reel.
+**Carousels.** `CarouselSlide` composition at 1080×1350 that reuses scenes, stickers and mascot; every slide is a static beat. Segmented progress bar and numbering (01/05) as in the reels.
 
-**Testo del post.** Per ogni post scrivi in `post.json` caption (hook nella prima riga, massimo 3 paragrafi brevi, domanda finale), 3-5 hashtag pertinenti e un eventuale primo commento.
+**Post text.** For every post you write in `post.json` the caption (hook in the first line, at most 3 short paragraphs, closing question), 3-5 relevant hashtags and an optional first comment.
 
-**Pubblicazione (ultima fase).** Script `publish` che, per i post `approved` con data passata, pubblica via Instagram Graph API (account Business o Creator) e scrive l'esito in `post.json`; lanciato da cron su Linux o Utilità di pianificazione su Windows. Verifica nella documentazione corrente se l'API accetta l'upload diretto del file; altrimenti usa l'URL pubblico del file nel repo GitHub. TikTok in un secondo momento: la sua API richiede un audit dell'app per pubblicare in pubblico.
+**Publishing (last phase).** A `publish` script that, for `approved` posts with a past date, publishes via the Instagram Graph API (Business or Creator account) and writes the outcome in `post.json`; launched by cron on Linux or Task Scheduler on Windows. Check in the current documentation whether the API accepts direct file upload; otherwise use the public URL of the file in the GitHub repo. TikTok later: its API requires an app audit to publish publicly.
 
-## Guideline da scrivere
+## Guidelines to write
 
-In Fase 0 scrivi una bozza dei tre file in `guidelines/` e sottoponila all'umano prima di usarla. Sono la tua fonte di regole: ogni generazione li rilegge, e ogni feedback ricorrente dell'umano diventa una regola scritta qui.
+In Phase 0 you write a draft of the three files in `guidelines/` and submit it to the human before using it. They are your source of rules: every generation re-reads them, and every recurring feedback from the human becomes a rule written here.
 
 **brand.md**
 
-- Palette: 5-6 colori derivati dai token OKLCH esistenti di Refattura (chiedili all'umano se non sono nel repo), con ruoli espliciti: sfondi, accento per l'evidenziazione, inchiostro, carta. Coppie testo/sfondo ammesse con contrasto verificato.
-- Tipografia: DM Sans (già nel brand) nei pesi più pesanti per titoli e sottotitoli, DM Mono per numeri e dati, un font scritto a mano con licenza OFL per kicker e timbri. Scala tipografica in pixel per il formato 1080×1920.
-- Mascotte: personalità (es. un po' cinica sulla burocrazia, sempre dalla parte dell'utente), pose ed espressioni ammesse, naming dei layer SVG, cosa non deve mai fare.
-- Stile illustrativo: contorno spesso uniforme, campiture piatte, 2-3 colori per oggetto, angoli arrotondati, nessuna sfumatura o ombra realistica; ombre solo come offset pieno.
-- Tono di voce: italiano, del "tu", diretto e ironico sulla burocrazia fiscale ma mai sul lettore; niente gergo inutile, ogni termine tecnico (TD17, reverse charge) spiegato in una frase.
+- Palette: 5-6 colors derived from the existing OKLCH tokens of Refattura (ask the human for them if they are not in the repo), with explicit roles: backgrounds, highlight accent, ink, paper. Allowed text/background pairs with verified contrast.
+- Typography: DM Sans (already in the brand) in the heaviest weights for titles and subtitles, DM Mono for numbers and data, an OFL-licensed handwritten font for kickers and stamps. Typographic scale in pixels for the 1080×1920 format.
+- Mascot: personality (e.g. a bit cynical about bureaucracy, always on the user's side), allowed poses and expressions, SVG layer naming, what it must never do.
+- Illustration style: thick uniform outline, flat fills, 2-3 colors per object, rounded corners, no gradients or realistic shadows; shadows only as a solid offset.
+- Tone of voice: Italian, using "tu", direct and ironic about tax bureaucracy but never about the reader; no useless jargon, every technical term (TD17, reverse charge) explained in one sentence.
 
 **generation.md**
 
-- Durata: reel da 30 a 90 secondi; hook entro i primi 2 secondi, sempre una domanda o un numero.
-- Struttura: hook, problema, spiegazione, esempio concreto, domanda al pubblico, CTA, chiusura col logo. Capitoli da 3 a 5.
-- Beat: un'idea per beat, da 4 a 14 parole parlate, ogni beat con un cambio visivo.
-- Scrittura per la voce: frasi brevi, numeri scritti come vanno pronunciati, niente sigle non spiegate, punteggiatura che guida le pause; niente trattino lungo nei testi.
-- Accuratezza fiscale: ogni affermazione normativa deve essere corretta e aggiornata. Se non sei certo, verifica su fonti ufficiali (Agenzia delle Entrate) e annota la fonte in `post.json`; se non puoi verificare, non usare quell'affermazione.
-- Regole di scena: quando usare mockup, contatori, A/B, timbri; massimo 2 sticker contemporanei; una sola parola evidenziata per beat.
-- Cover: titolo massimo 6 parole, una parola evidenziata, kicker = nome rubrica.
+- Length: reels from 30 to 90 seconds; hook within the first 2 seconds, always a question or a number.
+- Structure: hook, problem, explanation, concrete example, question to the audience, CTA, closing with the logo. 3 to 5 chapters.
+- Beats: one idea per beat, 4 to 14 spoken words, every beat with a visual change.
+- Writing for the voice: short sentences, numbers written as they must be pronounced, no unexplained acronyms, punctuation that drives the pauses; no em dash in texts.
+- Tax accuracy: every regulatory statement must be correct and up to date. If you are not sure, check official sources (Agenzia delle Entrate) and note the source in `post.json`; if you cannot verify, do not use that statement.
+- Scene rules: when to use mockups, counters, A/B, stamps; at most 2 simultaneous stickers; only one highlighted word per beat.
+- Cover: title of at most 6 words, one highlighted word, kicker = rubric name.
 
 **strategy.md**
 
-- Pubblico: freelance, piccole imprese e commercialisti che gestiscono autofatture e rifatturazioni.
-- Pilastri di contenuto (proposta da validare): errori comuni e sanzioni, scadenze e calendario fiscale, spiegazioni semplici delle tipologie di documento, storie e situazioni tipiche, come Refattura risolve un problema concreto.
-- Rubriche: 4-6 rubriche ricorrenti con nome, formato, colore dominante e frequenza.
-- Frequenza di partenza: 3 reel e 1 carosello a settimana, da confermare con l'umano.
+- Audience: freelancers, small businesses and accountants who manage autofatture and rifatturazioni (re-invoicing).
+- Content pillars (proposal to validate): common mistakes and penalties, deadlines and tax calendar, simple explanations of document types, stories and typical situations, how Refattura solves a concrete problem.
+- Rubrics: 4-6 recurring rubrics with name, format, dominant color and frequency.
+- Starting frequency: 3 reels and 1 carousel per week, to be confirmed with the human.
 
-## Repo pubblico: cosa committare
+## Public repo: what to commit
 
-Il repo è pubblico e contiene anche i video e le copertine generate. Questo impone regole precise su file binari, licenze e segreti.
+The repo is public and also contains the generated videos and covers. This imposes precise rules on binary files, licenses and secrets.
 
-| Cosa | Nel repo? | Come |
+| What | In the repo? | How |
 | --- | --- | --- |
-| Codice, schemi, guideline, `CLAUDE.md` | Sì | Normale |
-| `script.json`, `post.json`, `words.json`, `mouth.json`, `calendar.json` | Sì | Normale, sono piccoli e servono a ri-renderizzare |
-| `reel.mp4`, `cover.png`, slide, `voice.wav` | Sì | Git LFS, tracciati da `.gitattributes` fin dal primo commit |
-| Frame di auto-review, cache Remotion, `tools/` | No | `.gitignore` |
-| Font OFL (DM Sans, DM Mono, font a mano) | Sì | Con il file di licenza accanto |
-| SFX e musica CC0 (es. Kenney) | Sì | Con fonte e licenza nel manifest |
-| SFX e musica con licenze che vietano la redistribuzione dei file (Pixabay, Mixkit e simili) | No | Cartella locale ignorata, manifest con URL di download e script per riscaricarli |
-| Credenziali Google, token Instagram | Mai | `.env` e file fuori dal repo |
+| Code, schemas, guidelines, `CLAUDE.md` | Yes | Normal |
+| `script.json`, `post.json`, `words.json`, `mouth.json`, `calendar.json` | Yes | Normal, they are small and needed to re-render |
+| `reel.mp4`, `cover.png`, slides, `voice.wav` | Yes | Git LFS, tracked by `.gitattributes` from the first commit |
+| Self-review frames, Remotion cache, `tools/` | No | `.gitignore` |
+| OFL fonts (DM Sans, DM Mono, handwritten font) | Yes | With the license file next to them |
+| CC0 SFX and music (e.g. Kenney) | Yes | With source and license in the manifest |
+| SFX and music with licenses that forbid redistribution of the files (Pixabay, Mixkit and similar) | No | Ignored local folder, manifest with download URLs and a script to download them again |
+| Google credentials, Instagram token | Never | `.env` and files outside the repo |
 
-Note:
+Notes:
 
-- La quota gratuita di Git LFS su GitHub è limitata: verifica i limiti attuali e aggiungi uno script che stima lo spazio occupato. Se la quota non basta, sposta i render finali come asset di GitHub Release, uno per mese, e tieni nel repo solo i link.
-- Licenze distinte: codice sotto MIT, mentre mascotte, logo e asset di brand restano riservati. Scrivilo nel README e in un file `ASSETS-LICENSE`.
-- Il calendario e gli script sono visibili pubblicamente prima della pubblicazione: scelta confermata dall'umano, tutto resta nel repo pubblico. Non serve un repo privato per `content/`.
-- Prima di ogni commit verifica che non entrino file oltre 50 MB fuori da LFS e nessun file che corrisponda a pattern di segreti.
+- The free Git LFS quota on GitHub is limited: check the current limits and add a script that estimates the space used. If the quota is not enough, move the final renders to GitHub Release assets, one per month, and keep only the links in the repo.
+- Separate licenses: code under MIT, while mascot, logo and brand assets remain reserved. Write it in the README and in an `ASSETS-LICENSE` file.
+- The calendar and the scripts are publicly visible before publication: choice confirmed by the human, everything stays in the public repo. A private repo for `content/` is not needed.
+- Before every commit check that no files over 50 MB enter outside LFS and no file that matches secret patterns.
 
-## Ordine di sviluppo
+## Development order
 
-Procedi una fase alla volta. Una fase è chiusa solo quando il criterio di accettazione è verificato su un render reale e l'umano l'ha visto.
+Proceed one phase at a time. A phase is closed only when the acceptance criterion is verified on a real render and the human has seen it.
 
-1. **Fase 0, fondamenta.** Monorepo, `CLAUDE.md`, script `setup` per i binari, Git LFS configurato, bozze delle tre guideline, mascotte provvisoria. *Accettazione:* `pnpm setup` funziona su Windows e Linux; un render di 5 secondi con logo e testo animato.
-2. **Fase 1, voce e testo.** Provider TTS (Google Chirp e Kokoro), allineamento con whisper.cpp, sottotitoli parola singola e karaoke, cambi di sfondo per beat, header o barra capitoli. *Accettazione:* reel di 30 secondi da uno `script.json` scritto da te, con parole sincronizzate entro 1 frame percepibile.
-3. **Fase 2, mascotte.** Rig, idle, libreria di pose, espressioni, sguardo, lip sync con Rhubarb e fallback. *Accettazione:* lo stesso reel con la mascotte che parla, cambia posa sui beat e chiude la bocca nelle pause.
-4. **Fase 3, scene e audio.** Libreria di scene (mockup chat e notifiche, contatori, A/B, calendario), sticker, manifest SFX con `impactMs`, regole di mix, musica con ducking. *Accettazione:* reel completo di 60 secondi che passa la checklist di auto-review e misura circa -14 LUFS.
-5. **Fase 4, cover e caroselli.** Template di cover per rubrica, `CarouselSlide`, `GridPreview`. *Accettazione:* 12 cover generate e una griglia di anteprima coerente con le regole di alternanza.
-6. **Fase 5, planner.** `/plan-quarter`, `calendar.json`, app Next.js con calendario, dettaglio, approva e rifiuta. *Accettazione:* piano di 13 settimane generato e 3 post portati da `idea` a `ready-for-review` con un solo comando ciascuno.
-7. **Fase 6, autonomia e pubblicazione.** Loop di auto-review robusto, comando headless per generare in batch i post della settimana, script `publish` per Instagram. *Accettazione:* un post approvato pubblicato su un account di test.
+1. **Phase 0, foundations.** Monorepo, `CLAUDE.md`, `setup` script for the binaries, Git LFS configured, drafts of the three guidelines, provisional mascot. *Acceptance:* `pnpm setup` works on Windows and Linux; a 5-second render with logo and animated text.
+2. **Phase 1, voice and text.** TTS providers (Google Chirp and Kokoro), alignment with whisper.cpp, single-word and karaoke subtitles, background changes per beat, chapter header or bar. *Acceptance:* a 30-second reel from a `script.json` written by you, with words synchronized within 1 perceptible frame.
+3. **Phase 2, mascot.** Rig, idle, pose library, expressions, gaze, lip sync with Rhubarb and fallback. *Acceptance:* the same reel with the mascot speaking, changing pose on the beats and closing its mouth in the pauses.
+4. **Phase 3, scenes and audio.** Scene library (chat and notification mockups, counters, A/B, calendar), stickers, SFX manifest with `impactMs`, mix rules, music with ducking. *Acceptance:* a complete 60-second reel that passes the self-review checklist and measures about -14 LUFS.
+5. **Phase 4, covers and carousels.** Cover templates per rubric, `CarouselSlide`, `GridPreview`. *Acceptance:* 12 covers generated and a preview grid consistent with the alternation rules.
+6. **Phase 5, planner.** `/plan-quarter`, `calendar.json`, Next.js app with calendar, detail, approve and reject. *Acceptance:* a 13-week plan generated and 3 posts moved from `idea` to `ready-for-review` with a single command each.
+7. **Phase 6, autonomy and publishing.** Robust self-review loop, headless command to generate the week's posts in batch, `publish` script for Instagram. *Acceptance:* an approved post published on a test account.
 
-Regole di lavoro valide in ogni fase:
+Working rules valid in every phase:
 
-- Commit piccoli e descrittivi in inglese; nessun riferimento a Claude e nessun co-author nei messaggi di commit.
-- Nessun trattino lungo nei testi generati e nella documentazione.
-- Aggiorna `CLAUDE.md` a fine fase con comandi, convenzioni e decisioni prese.
-- Quando una scelta tecnica di questo documento si rivela sbagliata o superata, fermati, spiega perché e proponi l'alternativa prima di cambiarla.
-- Per ogni libreria o API esterna, verifica la documentazione attuale invece di affidarti alla memoria.
+- Small, descriptive commits in English; no reference to Claude and no co-author in the commit messages.
+- No em dash in generated texts and in the documentation.
+- Update `CLAUDE.md` at the end of the phase with commands, conventions and decisions taken.
+- When a technical choice in this document turns out to be wrong or outdated, stop, explain why and propose the alternative before changing it.
+- For every external library or API, check the current documentation instead of relying on memory.

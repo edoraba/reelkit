@@ -1,49 +1,51 @@
-# Strategia editoriale
+# Editorial strategy
 
-> **BOZZA del 2026-11-17, da approvare.** Pilastri, rubriche e frequenza sono proposte: `/plan-quarter` le usa solo dopo l'approvazione di Edoardo.
+> **DRAFT of 2026-11-17, to be approved.** Pillars, rubrics and frequency are proposals: `/plan-quarter` uses them only after Edoardo's approval.
 
-## Pubblico
+## Audience
 
-Chi riceve fatture da fornitori esteri e deve emettere autofatture:
+People who receive invoices from foreign suppliers and must issue autofatture (self-issued invoices):
 
-- **freelance e piccole imprese** che comprano software, pubblicità, hosting e servizi da fornitori UE ed extra-UE;
-- **commercialisti e studi** che gestiscono queste autofatture per molti clienti, a lotti mensili.
+- **freelancers and small businesses** that buy software, advertising, hosting and services from EU and non-EU suppliers;
+- **accountants and firms** that manage these autofatture for many clients, in monthly batches.
 
-Cosa li accomuna: poco tempo, paura di sbagliare e di prendere sanzioni, nessuna voglia di studiare la normativa.
+What they have in common: little time, fear of making mistakes and getting penalties, no desire to study the regulations.
 
-## Pilastri di contenuto
+## Content pillars
 
-1. **Errori comuni e sanzioni**: cosa succede se sbagli o dimentichi, come evitarlo.
-2. **Scadenze e calendario fiscale**: le date che contano per le autofatture.
-3. **I documenti spiegati semplici**: TD17, TD18, TD19, integrazione, reverse charge, in 30 secondi.
-4. **Storie e situazioni tipiche**: la fattura di un servizio estero, il fornitore che non risponde, il lotto di fine mese.
-5. **Come Refattura risolve un problema concreto**: dal PDF del fornitore all'autofattura, senza promesse esagerate.
+1. **Common mistakes and penalties**: what happens if you get it wrong or forget, how to avoid it.
+2. **Deadlines and tax calendar**: the dates that matter for autofatture.
+3. **Documents explained simply**: TD17, TD18, TD19, integrazione (integration), reverse charge, in 30 seconds.
+4. **Stories and typical situations**: the invoice for a foreign service, the supplier who does not reply, the end-of-month batch.
+5. **How Refattura solves a concrete problem**: from the supplier's PDF to the autofattura, without exaggerated promises.
 
-## Rubriche
+## Rubrics
 
-| Rubrica (kicker)     | Pilastro | Formato           | Colore dominante | Frequenza                                           |
-| -------------------- | -------- | ----------------- | ---------------- | --------------------------------------------------- |
-| Errori da evitare    | 1        | reel              | `red`            | 1 a settimana                                       |
-| TD in 30 secondi     | 3        | reel              | `blue`           | 1 a settimana                                       |
-| Storie di fatture    | 4        | reel              | `ink`            | 1 ogni 2 settimane                                  |
-| Lo risolve Refattura | 5        | reel              | `green`          | 1 ogni 2 settimane                                  |
-| Scadenzario          | 2        | carosello         | `sky`            | 1 a settimana                                       |
-| A o B?               | 1, 3     | reel breve (30 s) | `paper`          | jolly, al posto di una rubrica quando serve variare |
+The rubric names are published content and stay in Italian (English gloss in parentheses).
 
-## Frequenza
+| Rubric (kicker)                              | Pillar | Format            | Dominant color | Frequency                                          |
+| -------------------------------------------- | ------ | ----------------- | -------------- | -------------------------------------------------- |
+| "Errori da evitare" (mistakes to avoid)      | 1      | reel              | `red`          | 1 per week                                         |
+| "TD in 30 secondi" (TD in 30 seconds)        | 3      | reel              | `blue`         | 1 per week                                         |
+| "Storie di fatture" (invoice stories)        | 4      | reel              | `ink`          | 1 every 2 weeks                                    |
+| "Lo risolve Refattura" (Refattura solves it) | 5      | reel              | `green`        | 1 every 2 weeks                                    |
+| "Scadenzario" (deadline calendar)            | 2      | carousel          | `sky`          | 1 per week                                         |
+| "A o B?" (A or B?)                           | 1, 3   | short reel (30 s) | `paper`        | wildcard, replaces a rubric when variety is needed |
 
-Di partenza: **3 reel e 1 carosello a settimana**, da confermare con Edoardo.
+## Frequency
 
-Proposta di settimana tipo:
+Starting point: **3 reels and 1 carousel per week**, to be confirmed with Edoardo.
 
-- lunedì: reel "Errori da evitare";
-- mercoledì: reel "TD in 30 secondi";
-- giovedì: carosello "Scadenzario";
-- venerdì: reel "Storie di fatture" o "Lo risolve Refattura", a settimane alterne.
+Proposed typical week:
 
-## Griglia del profilo
+- Monday: "Errori da evitare" reel;
+- Wednesday: "TD in 30 secondi" reel;
+- Thursday: "Scadenzario" carousel;
+- Friday: "Storie di fatture" or "Lo risolve Refattura" reel, in alternate weeks.
 
-- Ogni blocco di 3 post consecutivi ha tre colori dominanti diversi.
-- Ogni riga della griglia ha almeno una cover chiara (`paper`, `sky`) e una scura o satura.
-- Due cover vicine (anche in verticale nella griglia a 3 colonne) non hanno lo stesso colore dominante.
-- Controllo con l'anteprima `GridPreview` (Fase 4) prima di approvare.
+## Profile grid
+
+- Every block of 3 consecutive posts has three different dominant colors.
+- Every grid row has at least one light cover (`paper`, `sky`) and one dark or saturated cover.
+- Two neighboring covers (also vertically in the 3-column grid) do not share the same dominant color.
+- Check with the `GridPreview` preview (Phase 4) before approving.

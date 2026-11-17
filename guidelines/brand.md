@@ -1,152 +1,153 @@
-# Brand per i social
+# Brand for social
 
-> **BOZZA del 2026-11-17, da approvare.** Finché Edoardo non la approva, nessuna generazione la usa come regola definitiva. Ogni feedback ricorrente diventa una regola scritta qui.
+> **DRAFT of 2026-11-17, to be approved.** Until Edoardo approves it, no generation uses it as a definitive rule. Every recurring feedback becomes a rule written here.
 
-Riferimento stilistico: la grammatica visiva di match.creativelab (ritmo, testo che segue la voce, mascotte che reagisce, mockup che illustrano la frase, SFX), mai la sua identità. Palette, mascotte, font e testi sono di Refattura.
+Style reference: the visual grammar of match.creativelab (rhythm, text that follows the voice, a mascot that reacts, mockups that illustrate the sentence, SFX), never its identity. Palette, mascot, fonts and texts belong to Refattura.
 
-### Distanza dal riferimento (feedback di Edoardo, 2026-11-17)
+### Distance from the reference (Edoardo's feedback, 2026-11-17)
 
-Il primo render di prova somigliava troppo a match.creativelab. Regola: dal riferimento si prendono i **meccanismi** (cosa succede e quando), mai i **segni** (come appare). Non si usano:
+The first test render looked too much like match.creativelab. Rule: take the **mechanisms** (what happens and when) from the reference, never the **signs** (how it looks). Do not use:
 
-- il box lime ruotato con ombra nera come evidenziazione;
-- la griglia di punti sullo sfondo;
-- il cono di luce sotto la mascotte;
-- arti a tubo con mani bianche a guanto;
-- l'etichetta capitolo nel formato `01 / 03 · TITOLO` sotto una barra segmentata;
-- in generale, qualsiasi elemento che si riconosca come "loro" a colpo d'occhio.
+- the rotated lime box with black shadow as highlight;
+- the dot grid in the background;
+- the light cone under the mascot;
+- tube limbs with white glove-like hands;
+- the chapter label in the `01 / 03 · TITOLO` format under a segmented bar;
+- in general, any element that is recognizable as "theirs" at a glance.
 
-Ogni segno visivo deve nascere dal mondo di Refattura (carta, registro, inchiostro blu, timbri). Direzione in discussione: vedi `docs/decisions.md` D-013.
+Every visual sign must come from the world of Refattura (paper, ledger, ink blue, stamps). Direction under discussion: see `docs/decisions.md` D-013.
 
-Fonte dei token: `refattura/DESIGN.md`, copiati in `packages/brand/src/tokens.ts`. Nel codice i colori si prendono sempre da `@reelkit/brand`, mai scritti a mano.
+Token source: `refattura/DESIGN.md`, copied to `packages/brand/src/tokens.ts`. In code, colors always come from `@reelkit/brand`, never written by hand.
 
 ## Palette
 
-L'app Refattura è calma: un inchiostro blu, carta fredda, tre timbri di stato. I reel hanno bisogno di più energia, quindi usano la stessa base con due aggiunte (`lime`, `sky`) e un cambio di sfondo per ogni concetto.
+The Refattura app is calm: one ink blue, cool paper, three status stamps. Reels need more energy, so they use the same base with two additions (`lime`, `sky`) and a background change for each concept.
 
-> **`lime` in discussione** (Edoardo, 2026-11-17): forse troppo acceso per Refattura. Non usarlo in contenuti nuovi finché non si sceglie l'alternativa (D-013).
+> **`lime` under discussion** (Edoardo, 2026-11-17): perhaps too bright for Refattura. Do not use it in new content until the alternative is chosen (D-013).
 
-| Nome           | OKLCH                | Hex     | Ruolo nei reel                                 |
-| -------------- | -------------------- | ------- | ---------------------------------------------- |
-| `inkBlue`      | 52.82% 0.2628 262.87 | #0052ff | Sfondo principale, colore del brand            |
-| `graphite`     | 21.03% 0.002 262.87  | #181819 | Sfondo scuro, contorni, testo su chiaro        |
-| `paperCool`    | 97.02% 0.002 262.87  | #f4f5f6 | Sfondo chiaro, chiusura col logo               |
-| `sheetWhite`   | 100% 0.001 262.87    | #ffffff | Testo su sfondi saturi, corpo della mascotte   |
-| `stampGreen`   | 49% 0.14 151.89      | #007439 | Sfondo "soluzione", "giusto"                   |
-| `stampRed`     | 53% 0.205 26.82      | #c7171e | Sfondo "errore", "sanzione"                    |
-| `stampAmber`   | 52% 0.12 70          | #915b00 | Solo sticker e timbri "attenzione", mai sfondo |
-| `lime` (nuovo) | 93% 0.2 123          | #cffd4d | Box di evidenziazione, sticker parola chiave   |
-| `sky` (nuovo)  | 75% 0.13 264         | #84acff | Sfondo chiaro secondario, arti della mascotte  |
+| Name                       | OKLCH                | Hex     | Role in the reels                                          |
+| -------------------------- | -------------------- | ------- | ---------------------------------------------------------- |
+| `inkBlue`                  | 52.82% 0.2628 262.87 | #0052ff | Main background, brand color                               |
+| `graphite`                 | 21.03% 0.002 262.87  | #181819 | Dark background, outlines, text on light                   |
+| `paperCool`                | 97.02% 0.002 262.87  | #f4f5f6 | Light background, closing with the logo                    |
+| `sheetWhite`               | 100% 0.001 262.87    | #ffffff | Text on saturated backgrounds, mascot body                 |
+| `stampGreen`               | 49% 0.14 151.89      | #007439 | "Solution", "right" background                             |
+| `stampRed`                 | 53% 0.205 26.82      | #c7171e | "Error", "penalty" background                              |
+| `stampAmber`               | 52% 0.12 70          | #915b00 | "Warning" stickers and stamps only, never a background     |
+| `lime` (new)               | 93% 0.2 123          | #cffd4d | Highlight box, keyword sticker                             |
+| `sky` (new)                | 75% 0.13 264         | #84acff | Secondary light background, pen ink on dark backgrounds    |
+| `markerYellow` (candidate) | 92% 0.12 98          | #fae685 | Soft highlighter, candidate replacement for `lime` (D-013) |
 
-### Sfondi e coppie ammesse
+### Backgrounds and allowed pairs
 
-Sei sfondi, uno per concetto. Ogni coppia è verificata con `pnpm brand:contrast` (minimo 4,5:1).
+Six backgrounds, one per concept. Every pair is verified with `pnpm brand:contrast` (minimum 4.5:1).
 
-| Sfondo  | Testo   | Box evidenziazione      | Contrasto testo | Contrasto box |
-| ------- | ------- | ----------------------- | --------------- | ------------- |
-| `blue`  | bianco  | lime con testo grafite  | 5,75            | 15,05         |
-| `ink`   | carta   | lime con testo grafite  | 16,26           | 15,05         |
-| `paper` | grafite | lime con testo grafite  | 16,26           | 15,05         |
-| `sky`   | grafite | blu con testo bianco    | 7,88            | 5,75          |
-| `green` | bianco  | lime con testo grafite  | 5,90            | 15,05         |
-| `red`   | bianco  | carta con testo grafite | 5,88            | 16,26         |
+| Background | Text     | Highlight box            | Text contrast | Box contrast |
+| ---------- | -------- | ------------------------ | ------------- | ------------ |
+| `blue`     | white    | lime with graphite text  | 5.75          | 15.05        |
+| `ink`      | paper    | lime with graphite text  | 16.26         | 15.05        |
+| `paper`    | graphite | lime with graphite text  | 16.26         | 15.05        |
+| `sky`      | graphite | blue with white text     | 7.88          | 5.75         |
+| `green`    | white    | lime with graphite text  | 5.90          | 15.05        |
+| `red`      | white    | paper with graphite text | 5.88          | 16.26        |
 
-Regole:
+Rules:
 
-- Il colore di sfondo cambia quando cambia il concetto, non a ogni beat.
-- `red` solo per errori, sanzioni, cose da non fare. `green` solo per soluzioni e risposte giuste.
-- Sugli sfondi c'è sempre una griglia di punti a contrasto bassissimo.
-- Mai sfumature: campiture piatte, ombre solo come offset pieno.
+- The background color changes when the concept changes, not at every beat.
+- `red` only for errors, penalties, things not to do. `green` only for solutions and right answers.
+- Backgrounds always carry a very low-contrast dot grid.
+- Never gradients: flat fills, shadows only as a solid offset.
 
-## Tipografia
+## Typography
 
-Set predefinito (`brand`):
+Default set (`brand`):
 
-- **Bricolage Grotesque 800**: kinetic typography, titoli, cover. Tracking -0.03em, interlinea 1.
-- **Caveat 700**: kicker delle cover, timbri, note scritte a mano. Leggermente ruotato (-2°).
-- **DM Mono 500**: numeri, importi, date, codici (TD17), etichette dei capitoli in maiuscolo.
+- **Bricolage Grotesque 800**: kinetic typography, titles, covers. Tracking -0.03em, line height 1.
+- **Caveat 700**: cover kickers, stamps, handwritten notes. Slightly rotated (-2°).
+- **DM Mono 500**: numbers, amounts, dates, codes (TD17), uppercase chapter labels.
 
-Set giocosi in prova (decisione D-002), confrontabili con `pnpm render:fontlab`: `gabarito` (Gabarito + Shantell Sans), `rubik` (Rubik + Gochi Hand), `baloo` (Baloo 2 + Patrick Hand), `fredoka` (Fredoka + Caveat). La scelta finale si fa sui primi reel.
+Playful sets on trial (decision D-002), comparable with `pnpm render:fontlab`: `gabarito` (Gabarito + Shantell Sans), `rubik` (Rubik + Gochi Hand), `baloo` (Baloo 2 + Patrick Hand), `fredoka` (Fredoka + Caveat). The final choice is made on the first reels.
 
-Scala in px per il formato 1080×1920:
+Scale in px for the 1080×1920 format:
 
-| Ruolo                      | px  |
-| -------------------------- | --- |
-| Parola singola al centro   | 168 |
-| Righe karaoke (2-4 parole) | 104 |
-| Titolo cover               | 150 |
-| Kicker a mano              | 72  |
-| Testo nei mockup           | 48  |
-| Etichetta capitolo, pill   | 34  |
+| Role                      | px  |
+| ------------------------- | --- |
+| Single word in the center | 168 |
+| Karaoke lines (2-4 words) | 104 |
+| Cover title               | 150 |
+| Handwritten kicker        | 72  |
+| Text in mockups           | 48  |
+| Chapter label, pill       | 34  |
 
-## Safe zone e formati
+## Safe zone and formats
 
-- Reel e cover: 1080×1920, 30 fps. Carosello: 1080×1350.
-- Nessun testo o sticker entro 250 px dall'alto, 480 px dal basso, 64 px da sinistra, 150 px da destra (interfaccia di Instagram e TikTok). Valori da verificare su screenshot reali dell'app.
-- La mascotte può scendere con i piedi nella fascia bassa; il viso no.
-- Cover: titolo e soggetti nella fascia centrale 1080×1440 (da y 240 a y 1680), quella che resta visibile nella griglia del profilo.
+- Reel and cover: 1080×1920, 30 fps. Carousel: 1080×1350.
+- No text or sticker within 250 px from the top, 480 px from the bottom, 64 px from the left, 150 px from the right (Instagram and TikTok interface). Values to be verified on real screenshots of the app.
+- The mascot's feet can go down into the bottom band; the face cannot.
+- Cover: title and subjects in the central 1080×1440 band (from y 240 to y 1680), the one that stays visible in the profile grid.
 
 ## Logo
 
-- File: `assets/brand/logo.svg` (simbolo) e `assets/brand/logotype.svg` (simbolo e scritta). Copiati da `refattura/public/img/`, diritti riservati.
-- Il logotipo va su `paper` o `sheetWhite`. Su sfondi saturi si usa il solo simbolo dentro un cerchio bianco (da disegnare in Fase 3).
-- Chiusura di ogni reel: logotipo e tagline.
-- Tagline **provvisoria**: "autofatture, senza pensieri". Da confermare.
+- Files: `assets/brand/logo.svg` (symbol) and `assets/brand/logotype.svg` (symbol and wordmark). Copied from `refattura/public/img/`, all rights reserved.
+- The logotype goes on `paper` or `sheetWhite`. On saturated backgrounds only the symbol is used, inside a white circle (to be drawn in Phase 3).
+- Closing of every reel: logotype and tagline.
+- **Provisional** tagline: "autofatture, senza pensieri" (self-issued invoices, no worries). To be confirmed.
 
-## Mascotte
+## Mascot
 
-La mascotte attuale è **provvisoria** (Fase 0): un foglio di fattura con angolo piegato, faccia, braccia e gambe a tubo azzurre, mani bianche, scarpe grafite. Quella definitiva la fornisce Edoardo e deve rispettare il naming dei livelli qui sotto.
+The current mascot is **provisional** (Phase 0): an invoice sheet with a folded corner and a face; arms, hands and legs are pen doodles drawn in the `pen` color of the background (ink blue on light, white or light blue on dark). The definitive one is supplied by Edoardo and must follow the layer naming below.
 
-Personalità (proposta):
+Personality (proposal):
 
-- un po' cinica sulla burocrazia, mai sull'utente: sta sempre dalla sua parte;
-- pratica: quando c'è un problema, ha già la soluzione in tasca;
-- espressiva ma non isterica: reagisce, non urla.
+- a bit cynical about bureaucracy, never about the user: always on the user's side;
+- practical: when there is a problem, it already has the solution in its pocket;
+- expressive but not hysterical: it reacts, it does not shout.
 
-Cosa non fa mai: deridere chi sbaglia, piangere, comparire triste sul finale, toccare o coprire il testo, fare gesti volgari, comparire senza il cono di luce nelle scene centrali.
+What it never does: mock people who make mistakes, cry, appear sad at the end, touch or cover the text, make vulgar gestures, appear without the light cone in the central scenes.
 
-Nome: da decidere.
+Name: to be decided.
 
-### Pose ed espressioni
+### Poses and expressions
 
-Pose (libreria completa in Fase 2): `neutral`, `arms-up`, `point-left`, `point-up`, `shrug`, `thinking`, `wave`, `facepalm`, `celebrate`. In Fase 0 esistono `neutral` e `arms-up`.
+Poses (full library in Phase 2): `neutral`, `arms-up`, `point-left`, `point-up`, `shrug`, `thinking`, `wave`, `facepalm`, `celebrate`. In Phase 0 `neutral` and `arms-up` exist.
 
-Espressioni (Fase 2): `happy`, `worried`, `skeptical`, `surprised`, combinando sopracciglia, palpebre e bocca a riposo.
+Expressions (Phase 2): `happy`, `worried`, `skeptical`, `surprised`, combining eyebrows, eyelids and resting mouth.
 
-### Naming dei livelli SVG
+### SVG layer naming
 
-Ogni parte animata è un gruppo `<g>` con questo `id`. Un SVG esportato da Figma con gli stessi nomi di livello si aggancia al rig senza modificare il codice. ViewBox 400×600, piedi a y 580.
+Every animated part is a `<g>` group with this `id`. An SVG exported from Figma with the same layer names attaches to the rig without code changes. ViewBox 400×600, feet at y 580.
 
-| id                           | Contenuto                               | Pivot (rotazione)       |
-| ---------------------------- | --------------------------------------- | ----------------------- |
-| `mascot`                     | tutto il personaggio                    | 200, 580 (piedi)        |
-| `leg-l`, `leg-r`             | gamba e scarpa                          | anca                    |
-| `body`                       | foglio, braccia, testa (respira)        | 200, 472 (bordo basso)  |
-| `arm-l-upper`, `arm-r-upper` | braccio, contiene l'avambraccio         | spalla 88,262 e 312,262 |
-| `arm-l-lower`, `arm-r-lower` | avambraccio, contiene la mano           | gomito                  |
-| `hand-l`, `hand-r`           | mano                                    | polso                   |
-| `sheet`                      | il foglio con angolo piegato e righe    |                         |
-| `head`                       | la zona del viso                        |                         |
-| `eye-l`, `eye-r`             | bianco dell'occhio                      | centro dell'occhio      |
-| `pupil-l`, `pupil-r`         | pupilla (segue lo sguardo)              |                         |
-| `lid-l`, `lid-r`             | palpebra (ammiccamento)                 |                         |
-| `brow-l`, `brow-r`           | sopracciglio                            |                         |
-| `mouth`                      | bocca (forme Rhubarb A-H e X in Fase 2) | 200, 284                |
+| id                           | Content                                     | Pivot (rotation)            |
+| ---------------------------- | ------------------------------------------- | --------------------------- |
+| `mascot`                     | the whole character                         | 200, 580 (feet)             |
+| `leg-l`, `leg-r`             | leg and shoe                                | hip                         |
+| `body`                       | sheet, arms, head (breathes)                | 200, 472 (bottom edge)      |
+| `arm-l-upper`, `arm-r-upper` | upper arm, contains the forearm             | shoulder 88,262 and 312,262 |
+| `arm-l-lower`, `arm-r-lower` | forearm, contains the hand                  | elbow                       |
+| `hand-l`, `hand-r`           | hand                                        | wrist                       |
+| `sheet`                      | the sheet with folded corner and lines      |                             |
+| `head`                       | the face area                               |                             |
+| `eye-l`, `eye-r`             | white of the eye                            | eye center                  |
+| `pupil-l`, `pupil-r`         | pupil (follows the gaze)                    |                             |
+| `lid-l`, `lid-r`             | eyelid (blink)                              |                             |
+| `brow-l`, `brow-r`           | eyebrow                                     |                             |
+| `mouth`                      | mouth (Rhubarb shapes A-H and X in Phase 2) | 200, 284                    |
 
-Il contratto vive in `packages/video/src/mascot/rig.ts`.
+The contract lives in `packages/video/src/mascot/rig.ts`.
 
-## Stile illustrativo
+## Illustration style
 
-Vale per mascotte, icone e mockup:
+Applies to mascot, icons and mockups:
 
-- contorno grafite spesso e uniforme (8 px a 1080 di larghezza);
-- campiture piatte, 2-3 colori per oggetto;
-- angoli arrotondati (raggio 18 px);
-- nessuna sfumatura, nessuna ombra realistica; ombra solo come offset pieno grafite di 12 px;
-- tutto vettoriale (SVG), niente immagini raster generate.
+- thick, uniform graphite outline (8 px at 1080 width);
+- flat fills, 2-3 colors per object;
+- rounded corners (radius 18 px);
+- no gradients, no realistic shadows; shadow only as a solid graphite offset of 12 px;
+- everything vector (SVG), no generated raster images.
 
-## Tono di voce
+## Tone of voice
 
-- Italiano, del "tu".
-- Diretto e ironico sulla burocrazia fiscale, mai sul lettore.
-- Niente gergo inutile: ogni termine tecnico (TD17, reverse charge, integrazione) spiegato in una frase la prima volta che compare.
-- Mai il trattino lungo nei testi.
+- Italian, using "tu" (informal you).
+- Direct and ironic about tax bureaucracy, never about the reader.
+- No useless jargon: every technical term (TD17, reverse charge, integrazione) explained in one sentence the first time it appears.
+- Never the em dash in texts.

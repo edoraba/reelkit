@@ -1,17 +1,17 @@
 # reelkit
 
-Generatore di reel verticali, copertine e caroselli per [Refattura](https://refattura.it), pilotato da Claude Code. Tutto gira in locale: TypeScript, Remotion, whisper.cpp, Rhubarb Lip Sync e ffmpeg. Nessun servizio a pagamento.
+Generator of vertical reels, covers and carousels for [Refattura](https://refattura.it), driven by Claude Code. Everything runs locally: TypeScript, Remotion, whisper.cpp, Rhubarb Lip Sync and ffmpeg. No paid services.
 
-Brief del progetto: [docs/brief.md](docs/brief.md). Decisioni prese: [docs/decisions.md](docs/decisions.md). Istruzioni operative: [CLAUDE.md](CLAUDE.md).
+Project brief: [docs/brief.md](docs/brief.md). Decisions taken: [docs/decisions.md](docs/decisions.md). Operating instructions: [CLAUDE.md](CLAUDE.md).
 
-## Requisiti
+## Requirements
 
-- Node.js 22 o superiore, pnpm 10 (`corepack enable`)
+- Node.js 22 or later, pnpm 10 (`corepack enable`)
 - Git LFS
-- Windows x64 oppure Linux x64
-- Solo Linux: `git`, `build-essential` (whisper.cpp si compila da sorgente), `xz-utils`, e le librerie di Chrome elencate da `pnpm tools:check`
+- Windows x64 or Linux x64
+- Linux only: `git`, `build-essential` (whisper.cpp is built from source), `xz-utils`, and the Chrome libraries listed by `pnpm tools:check`
 
-## Avvio
+## Getting started
 
 ```bash
 pnpm install
@@ -20,19 +20,20 @@ pnpm tools:check
 pnpm render:demo
 ```
 
-`pnpm bootstrap` scarica in `tools/` (ignorata da git) ffmpeg, Rhubarb, whisper.cpp con il modello e il browser usato da Remotion. Si può rilanciare: salta quello che è già installato. Opzioni: `--only ffmpeg,rhubarb,whisper,browser`, `--model small|medium`, `--force`.
+`pnpm bootstrap` downloads ffmpeg, Rhubarb, whisper.cpp with its model and the browser used by Remotion into `tools/` (ignored by git). It can be re-run: it skips what is already installed. Options: `--only ffmpeg,rhubarb,whisper,browser`, `--model small|medium`, `--force`.
 
-| Comando               | Cosa fa                                                           |
-| --------------------- | ----------------------------------------------------------------- |
-| `pnpm studio`         | Remotion Studio per vedere le composizioni                        |
-| `pnpm render:demo`    | Render di prova di 5 secondi in `packages/video/out/demo.mp4`     |
-| `pnpm render:fontlab` | Confronto dei set di font in `packages/video/out/fontlab.png`     |
-| `pnpm brand:contrast` | Valori hex dei token e contrasto WCAG di ogni coppia testo/sfondo |
-| `pnpm lfs:usage`      | Spazio Git LFS occupato rispetto alla quota gratuita              |
-| `pnpm typecheck`      | Controllo dei tipi di tutto il monorepo                           |
+| Command               | What it does                                                            |
+| --------------------- | ----------------------------------------------------------------------- |
+| `pnpm studio`         | Remotion Studio to preview the compositions                             |
+| `pnpm render:demo`    | 5-second test render to `packages/video/out/demo.mp4`                   |
+| `pnpm render:fontlab` | Font set comparison in `packages/video/out/fontlab.png`                 |
+| `pnpm render:lab`     | Visual direction proposals in `packages/video/out/lab/`                 |
+| `pnpm brand:contrast` | Hex values of the tokens and WCAG contrast of each text/background pair |
+| `pnpm lfs:usage`      | Git LFS space used compared with the free quota                         |
+| `pnpm typecheck`      | Type check of the whole monorepo                                        |
 
-## Licenze
+## Licenses
 
-- Codice: MIT, vedi [LICENSE](LICENSE).
-- Logo, mascotte, illustrazioni e contenuti pubblicati di Refattura: tutti i diritti riservati, vedi [ASSETS-LICENSE](ASSETS-LICENSE).
-- Font: SIL Open Font License, file `OFL.txt` accanto a ogni font in `assets/fonts/`.
+- Code: MIT, see [LICENSE](LICENSE).
+- Logo, mascot, illustrations and published Refattura content: all rights reserved, see [ASSETS-LICENSE](ASSETS-LICENSE).
+- Fonts: SIL Open Font License, `OFL.txt` file next to each font in `assets/fonts/`.

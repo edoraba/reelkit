@@ -1,91 +1,93 @@
-# reelkit: istruzioni operative
+# reelkit: operating instructions
 
-Repo che genera reel verticali, copertine, caroselli e testi dei post per **Refattura** (SaaS italiano di autofatture TD17/TD18/TD19). Lo piloti tu, Claude Code: dato un argomento o un calendario produci script, voce, animazione, SFX, cover e caption. Ti fermi al gate di approvazione umana prima della pubblicazione.
+Repo that generates vertical reels, covers, carousels and post texts for **Refattura** (Italian SaaS for autofatture TD17/TD18/TD19, i.e. self-issued invoices). You, Claude Code, drive it: given a topic or a calendar you produce script, voice, animation, SFX, cover and caption. You stop at the human approval gate before publishing.
 
-- Brief originale: `docs/brief.md`
-- Decisioni che completano o cambiano il brief: `docs/decisions.md` (leggile prima di cambiare architettura)
-- Regole di contenuto: `guidelines/brand.md`, `guidelines/generation.md`, `guidelines/strategy.md` (rileggile prima di ogni generazione)
-- Fonte del brand: `refattura/DESIGN.md` nel repo Refattura (solo lettura, mai modificare quel repo da qui)
+- Original brief: `docs/brief.md`
+- Decisions that complete or change the brief: `docs/decisions.md` (read them before changing the architecture)
+- Content rules: `guidelines/brand.md`, `guidelines/generation.md`, `guidelines/strategy.md` (re-read them before every generation)
+- Brand source: `refattura/DESIGN.md` in the Refattura repo (read-only, never modify that repo from here)
 
-## Regole sempre valide
+## Always valid rules
 
-- Nessun riferimento a Claude o Anthropic e nessun `Co-Authored-By` in commit, branch, tag, PR.
-- Commit piccoli e descrittivi in inglese. Branch `feat/`, `fix/`, `docs/`, `chore/`.
-- Mai il trattino lungo (U+2014) in guideline, docs, contenuti e codice: il pre-commit lo blocca.
-- Nessun segreto nel repo: chiavi in `.env` (vedi `.env.example`).
-- Nessun servizio a pagamento e nessun account con carta o fatturazione. Ogni servizio esterno deve poter solo rifiutare oltre il limite gratuito.
-- File come fonte di verità, niente database (fase di prova, vedi D-005).
-- Determinismo: ogni scelta casuale usa `seededRandom(postId, ...)` di `@reelkit/schema`.
-- Puoi portare un post al massimo a `ready-for-review`. `approved` e `rejected` li decide l'umano.
-- Feedback ricorrente dell'umano: diventa una regola in `guidelines/`.
-- Per ogni libreria o API esterna verifica la documentazione attuale invece della memoria.
-- Se una scelta del brief si rivela sbagliata o superata: fermati, spiega perché, proponi l'alternativa, registra la decisione in `docs/decisions.md`.
-- Test minimi: niente e2e, niente scaffolding TDD. Si verifica con render reali e frame estratti.
-- Sempre `pnpm`, mai `npm`.
+- Language: everything written in the repository is in English: code, identifiers, comments, docs, README, guidelines, CLAUDE.md, decisions, commit messages, branch names and PR text. Only published content stays in Italian: voice scripts, on-screen text, captions, hashtags, cover titles, rubric names, and Italian examples quoted in the guidelines.
+- No reference to Claude or Anthropic and no `Co-Authored-By` in commits, branches, tags, PRs.
+- Small, descriptive commits. Branches `feat/`, `fix/`, `docs/`, `chore/`.
+- Never the em dash (U+2014) in guidelines, docs, content and code: the pre-commit hook blocks it.
+- No secrets in the repo: keys go in `.env` (see `.env.example`).
+- No paid services and no accounts requiring a card or billing. Every external service must only be able to refuse requests beyond the free limit.
+- Files as the source of truth, no database (trial phase, see D-005).
+- Determinism: every random choice uses `seededRandom(postId, ...)` from `@reelkit/schema`.
+- You can move a post at most to `ready-for-review`. `approved` and `rejected` are decided by the human.
+- Recurring human feedback becomes a rule in `guidelines/`.
+- For every external library or API, check the current documentation instead of relying on memory.
+- If a choice in the brief turns out to be wrong or outdated: stop, explain why, propose the alternative, record the decision in `docs/decisions.md`.
+- Minimal tests: no e2e, no TDD scaffolding. Verify with real renders and extracted frames.
+- Always `pnpm`, never `npm`.
 
-## Comandi
+## Commands
 
-| Comando               | Cosa fa                                                                                                                   |
-| --------------------- | ------------------------------------------------------------------------------------------------------------------------- |
-| `pnpm install`        | Dipendenze e hook pre-commit                                                                                              |
-| `pnpm bootstrap`      | Scarica ffmpeg, Rhubarb, whisper.cpp + modello, browser Remotion in `tools/`. Idempotente. `--only`, `--model`, `--force` |
-| `pnpm tools:check`    | Stato dei binari e degli hook Git LFS                                                                                     |
-| `pnpm studio`         | Remotion Studio                                                                                                           |
-| `pnpm render:demo`    | Render di prova 5 s in `packages/video/out/demo.mp4`                                                                      |
-| `pnpm render:fontlab` | Confronto set di font in `packages/video/out/fontlab.png`                                                                 |
-| `pnpm brand:contrast` | Hex dei token e contrasto WCAG delle coppie testo/sfondo                                                                  |
-| `pnpm typecheck`      | Tipi di tutto il monorepo                                                                                                 |
-| `pnpm guard`          | Controlli del pre-commit sui file in stage                                                                                |
-| `pnpm lfs:usage`      | Occupazione Git LFS rispetto alla quota gratuita                                                                          |
+| Command               | What it does                                                                                                               |
+| --------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| `pnpm install`        | Dependencies and pre-commit hook                                                                                           |
+| `pnpm bootstrap`      | Downloads ffmpeg, Rhubarb, whisper.cpp + model, Remotion browser into `tools/`. Idempotent. `--only`, `--model`, `--force` |
+| `pnpm tools:check`    | Status of the binaries and the Git LFS hooks                                                                               |
+| `pnpm studio`         | Remotion Studio                                                                                                            |
+| `pnpm render:demo`    | 5 s test render to `packages/video/out/demo.mp4`                                                                           |
+| `pnpm render:fontlab` | Font set comparison in `packages/video/out/fontlab.png`                                                                    |
+| `pnpm render:lab`     | Visual direction proposals and highlight options in `packages/video/out/lab/`                                              |
+| `pnpm brand:contrast` | Token hex values and WCAG contrast of the text/background pairs                                                            |
+| `pnpm typecheck`      | Types of the whole monorepo                                                                                                |
+| `pnpm guard`          | Pre-commit checks on staged files                                                                                          |
+| `pnpm lfs:usage`      | Git LFS usage compared with the free quota                                                                                 |
 
-Render della demo con un altro set di font (da `packages/video`):
+Render the demo with another font set (from `packages/video`):
 
 ```bash
 pnpm exec remotion render Demo out/demo-gabarito.mp4 --props='{"fontSet":"gabarito","seed":"demo"}'
 ```
 
-Estrarre frame per la review (ffmpeg di `tools/`), per esempio un contact sheet di 4 frame:
+Extract frames for review (ffmpeg from `tools/`), for example a 4-frame contact sheet:
 
 ```bash
 tools/ffmpeg/bin/ffmpeg -v error -y -i packages/video/out/demo.mp4 -vf "select='eq(n,15)+eq(n,64)+eq(n,80)+eq(n,135)',scale=360:-1,tile=4x1" -vframes 1 packages/video/out/review/sheet.png
 ```
 
-## Struttura
+## Structure
 
 ```
-CLAUDE.md, README.md, LICENSE (MIT, codice), ASSETS-LICENSE (brand riservato)
+CLAUDE.md, README.md, LICENSE (MIT, code), ASSETS-LICENSE (brand reserved)
 docs/            brief.md, decisions.md
-guidelines/      brand.md, generation.md, strategy.md (bozze da approvare)
+guidelines/      brand.md, generation.md, strategy.md (drafts to approve)
 packages/
-  schema/        Zod: stato e id dei post, seed deterministico (beat e manifest da Fase 1)
-  brand/         token colore (OKLCH), sfondi, font set, scala tipografica, safe zone
-  pipeline/      CLI tsx: bootstrap e check (da Fase 1: tts, align, lipsync, sfx-plan, render, publish)
+  schema/        Zod: post state and ids, deterministic seed (beats and manifest from Phase 1)
+  brand/         color tokens (OKLCH), backgrounds, font sets, type scale, safe zone
+  pipeline/      tsx CLI: bootstrap and check (from Phase 1: tts, align, lipsync, sfx-plan, render, publish)
   video/         Remotion: src/{brand,components,stickers,mascot,scenes,compositions}
-apps/            planner Next.js (Fase 5)
-assets/          fonts (OFL), brand (logo), icons, sfx e music (manifest.json): public dir di Remotion
-content/posts/   <yyyy-mm-dd>-<slug>/ con post.json, script.json, voice.wav, words.json, mouth.json, out/
+apps/            Next.js planner (Phase 5)
+assets/          fonts (OFL), brand (logo), icons, sfx and music (manifest.json): Remotion public dir
+content/posts/   <yyyy-mm-dd>-<slug>/ with post.json, script.json, voice.wav, words.json, mouth.json, out/
 scripts/         guard.ts (pre-commit), lfs-usage.ts
-tools/           binari scaricati da bootstrap (gitignored, solo alla radice)
+tools/           binaries downloaded by bootstrap (gitignored, root only)
 ```
 
-## Convenzioni
+## Conventions
 
-- I package interni esportano sorgenti TypeScript (`"exports": "./src/index.ts"`), senza build.
-- `remotion` e tutti i `@remotion/*` alla stessa versione esatta (oggi 4.0.544).
-- Colori sempre dai token di `@reelkit/brand`; mai un colore scritto a mano in un componente.
-- Safe zone (`safeZone`) e fascia della griglia (`gridCrop`) in `@reelkit/brand`.
-- Mascotte: contratto del rig in `packages/video/src/mascot/rig.ts`, naming dei livelli in `guidelines/brand.md`.
-- `.gitignore`: i pattern di cartelle che esistono anche dentro `packages/` vanno ancorati alla radice (`/tools/`).
-- Video, cover e voice dei post in Git LFS (`.gitattributes`); font, logo e SFX in git normale.
+- Internal packages export TypeScript sources (`"exports": "./src/index.ts"`), no build step.
+- `remotion` and all `@remotion/*` at the same exact version (currently 4.0.544).
+- Colors always from the `@reelkit/brand` tokens; never a hand-written color in a component.
+- Safe zone (`safeZone`) and grid band (`gridCrop`) in `@reelkit/brand`.
+- Mascot: rig contract in `packages/video/src/mascot/rig.ts`, layer naming in `guidelines/brand.md`.
+- `.gitignore`: folder patterns that also exist inside `packages/` must be anchored to the root (`/tools/`).
+- Post videos, covers and voice in Git LFS (`.gitattributes`); fonts, logo and SFX in regular git.
 
-## Stato delle fasi
+## Phase status
 
-| Fase                        | Stato                                                                                          |
-| --------------------------- | ---------------------------------------------------------------------------------------------- |
-| 0 Fondamenta                | Pipeline fatta il 2026-11-17. Stile della demo da rifare: troppo simile al riferimento (D-013) |
-| 1 Voce e testo              | Da fare, dopo la nuova direzione visiva. Partire dalla prova d'ascolto TTS (D-003)             |
-| 2 Mascotte                  | Da fare. La mascotte provvisoria è solo un punto di partenza, va rilavorata molto              |
-| 3 Scene e audio             | Da fare                                                                                        |
-| 4 Cover e caroselli         | Da fare                                                                                        |
-| 5 Planner                   | Da fare                                                                                        |
-| 6 Autonomia e pubblicazione | Da fare                                                                                        |
+| Phase                     | Status                                                                                   |
+| ------------------------- | ---------------------------------------------------------------------------------------- |
+| 0 Foundations             | Pipeline done on 2026-11-17. Demo style to be redone: too close to the reference (D-013) |
+| 1 Voice and text          | To do, after the new visual direction. Start with the TTS listening test (D-003)         |
+| 2 Mascot                  | To do. The provisional mascot is only a starting point, it needs a lot of rework         |
+| 3 Scenes and audio        | To do                                                                                    |
+| 4 Covers and carousels    | To do                                                                                    |
+| 5 Planner                 | To do                                                                                    |
+| 6 Autonomy and publishing | To do                                                                                    |
