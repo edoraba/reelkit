@@ -11,6 +11,7 @@
     "tools:check": "tsx packages/pipeline/src/cli.ts check",
     "studio": "pnpm --filter @reelkit/video studio",
     "render:demo": "pnpm --filter @reelkit/video render:demo",
+    "render:test-reels": "pnpm --filter @reelkit/video render:test-reels",
     "render:fontlab": "pnpm --filter @reelkit/video render:fontlab",
     "render:lab": "pnpm --filter @reelkit/video render:lab",
     "render:mascots": "pnpm --filter @reelkit/video render:mascots",

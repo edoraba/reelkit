@@ -1,12 +1,15 @@
 import { backgrounds, type BackgroundName } from '@reelkit/brand';
 import { AbsoluteFill, Easing, interpolate, useCurrentFrame } from 'remotion';
+import { GraphPaper } from '../textures/Paper';
 
 export interface BackgroundSegment {
   from: number;
   bg: BackgroundName;
+  /** Squared paper (quadretti scenes) or plain color (scontrino scenes). Default grid. */
+  texture?: 'grid' | 'plain';
 }
 
-/** Frames the new color takes to slide in. The `swoosh` SFX is anticipated by 2-3 frames. */
+/** Frames the new background takes to slide in. The `swoosh` SFX is anticipated by 2-3 frames. */
 export const BG_SLIDE_FRAMES = 9;
 
 /** Background active at `frame` (the one whose colors text should use). */
@@ -16,17 +19,7 @@ export function activeBackground(segments: BackgroundSegment[], frame: number): 
   return active;
 }
 
-const DotGrid: React.FC<{ color: string }> = ({ color }) => (
-  <AbsoluteFill
-    style={{
-      backgroundImage: `radial-gradient(circle, ${color} 2.6px, transparent 3.2px)`,
-      backgroundSize: '40px 40px',
-      backgroundPosition: '20px 20px',
-    }}
-  />
-);
-
-/** Flat background with a dot grid; each new color slides up over the previous one. */
+/** Flat background, squared or plain; each new one slides up over the previous one. */
 export const BackgroundTrack: React.FC<{ segments: BackgroundSegment[] }> = ({ segments }) => {
   const frame = useCurrentFrame();
   const visible = segments.filter((s) => s.from <= frame).slice(-2);
@@ -42,14 +35,12 @@ export const BackgroundTrack: React.FC<{ segments: BackgroundSegment[] }> = ({ s
           : 1;
         const spec = backgrounds[s.bg];
         return (
-          <AbsoluteFill
-            key={s.from}
-            style={{
-              backgroundColor: spec.fill,
-              transform: `translateY(${(1 - progress) * 100}%)`,
-            }}
-          >
-            <DotGrid color={spec.dots} />
+          <AbsoluteFill key={s.from} style={{ transform: `translateY(${(1 - progress) * 100}%)` }}>
+            {(s.texture ?? 'grid') === 'grid' ? (
+              <GraphPaper fill={spec.fill} line={spec.dots} spacing={54} />
+            ) : (
+              <AbsoluteFill style={{ backgroundColor: spec.fill }} />
+            )}
           </AbsoluteFill>
         );
       })}

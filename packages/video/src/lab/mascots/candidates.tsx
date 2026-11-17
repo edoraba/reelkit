@@ -1,7 +1,7 @@
 import { refattura, social, type BackgroundName } from '@reelkit/brand';
 import { fontsOf } from '../../brand/fonts';
 import { Mascot } from '../../mascot/Mascot';
-import { LogoMark } from './LogoMark';
+import { LogoMark } from '../../brand/LogoMark';
 import { DotEyes, Eyes, LW, OUT, PenArm, PenLegs, Shadow, Smile, WHITE } from './parts';
 
 /**

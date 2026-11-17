@@ -1,8 +1,9 @@
-import { illustration, refattura } from '@reelkit/brand';
+import { illustration, refattura, social } from '@reelkit/brand';
 import { seededRandom } from '@reelkit/schema';
 import { useId } from 'react';
 import { useCurrentFrame, useVideoConfig } from 'remotion';
 import { fontsOf } from '../brand/fonts';
+import { LogoMark } from '../brand/LogoMark';
 import { idleAt } from './idle';
 import { poseAt, type PoseCue } from './poses';
 
@@ -34,12 +35,14 @@ export interface Look {
   roll: string;
   /** Table rows and header rule. */
   rule: string;
-  /** TOT pill, invoice number, header band. */
+  /** Total pill, logo mark, header band. */
   accent: string;
   accentText: string;
-  /** Eyes, mouth, FATTURA text. */
+  /** Eyes, mouth, REFATTURA text. */
   ink: string;
   tongue: string;
+  /** Opacity of the REFATTURA header and the logo mark: kept faint, the face leads. */
+  headerOpacity: number;
   /** Limb stroke width (limb color is the `pen` prop). */
   limbWidth: number;
   /** Optional cel-shading strip along the right edge of the sheet (fill or pattern). */
@@ -58,6 +61,7 @@ export const DEFAULT_LOOK: Look = {
   accentText: refattura.sheetWhite,
   ink: illustration.outline,
   tongue: refattura.stampRed,
+  headerOpacity: 0.4,
   limbWidth: 10,
 };
 
@@ -266,8 +270,7 @@ export const InvoiceRoll: React.FC<InvoiceRollProps> = ({
   const fill = (c: string) => (showFills ? c : 'none');
   const outline = showLines && look.outlineWidth > 0 ? look.outline : 'none';
   const outlineW = look.outlineWidth;
-  // In lines-only mode the pill becomes an outline with ink text.
-  const pillText = showFills ? look.accentText : look.ink;
+  // In lines-only mode the pill becomes an outline.
   const pillStroke = showFills ? 'none' : look.ink;
 
   // Arms: pose + idle swing, plus the hand oscillation of the wave.
@@ -396,11 +399,12 @@ export const InvoiceRoll: React.FC<InvoiceRollProps> = ({
                       y={s.top + 42}
                       textAnchor="middle"
                       fill={showFills ? look.accentText : look.ink}
-                      fontSize={24}
+                      fontSize={21}
                       letterSpacing={3}
+                      opacity={look.headerOpacity}
                       {...mono}
                     >
-                      FATTURA
+                      REFATTURA
                     </text>
                   )}
                 </>
@@ -412,23 +416,24 @@ export const InvoiceRoll: React.FC<InvoiceRollProps> = ({
                       y={s.top + 46}
                       textAnchor={wide ? 'start' : 'middle'}
                       fill={look.ink}
-                      fontSize={w < 160 ? 19 : 22}
+                      fontSize={w < 160 ? 15 : 22}
                       letterSpacing={2}
+                      opacity={look.headerOpacity}
                       {...mono}
                     >
-                      FATTURA
+                      REFATTURA
                     </text>
                     {wide && (
-                      <text
-                        x={s.x2 - 16}
-                        y={s.top + 46}
-                        textAnchor="end"
-                        fill={look.accent}
-                        fontSize={20}
-                        {...mono}
-                      >
-                        N.12
-                      </text>
+                      // Logo mark in place of the invoice number, faded like the header text.
+                      <g opacity={look.headerOpacity}>
+                        <LogoMark
+                          x={s.x2 - 32}
+                          y={s.top + 40}
+                          scale={0.28}
+                          ring={showFills ? social.sky : look.accent}
+                          ink={look.accent}
+                        />
+                      </g>
                     )}
                     <line
                       x1={s.x1 + 14}
@@ -466,19 +471,6 @@ export const InvoiceRoll: React.FC<InvoiceRollProps> = ({
                 stroke={pillStroke}
                 strokeWidth={4}
               />
-              {showLines && (
-                <text
-                  x={s.x2 - 18 - 38}
-                  y={bottom - 29}
-                  textAnchor="middle"
-                  fill={pillText}
-                  fontSize={17}
-                  letterSpacing={1}
-                  {...mono}
-                >
-                  TOT
-                </text>
-              )}
               {s.stamp && showLines && (
                 <g transform={`rotate(-10 ${s.x1 + 50} ${bottom - 76})`}>
                   <rect

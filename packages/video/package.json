@@ -11,7 +11,8 @@
     "render:mascots": "remotion still MascotLab-close out/lab/mascots-close.png && remotion still MascotLab-other out/lab/mascots-other.png",
     "render:invoice-roll": "remotion render InvoiceRollLab out/lab/invoice-roll.mp4",
     "render:styles": "remotion still StyleLab-1 out/lab/styles-1.png && remotion still StyleLab-2 out/lab/styles-2.png && remotion still StyleLab-3 out/lab/styles-3.png",
-    "render:style-motion": "remotion render StyleMotionLab out/lab/style-motion.mp4"
+    "render:style-motion": "remotion render StyleMotionLab out/lab/style-motion.mp4",
+    "render:test-reels": "remotion render TestReel-flat out/test-reel-flat.mp4 && remotion render TestReel-sticker out/test-reel-sticker.mp4"
   },
   "dependencies": {
     "@reelkit/brand": "workspace:*",

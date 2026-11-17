@@ -6,6 +6,7 @@ import { useId } from 'react';
  * - underline: hand-drawn pen stroke under the word
  * - circle: pen loop around the word, like a correction
  * - color: the word changes color, nothing else
+ * `progress` (0..1) animates the mark: the highlighter sweeps left to right, the pen draws.
  */
 export type HighlightKind = 'marker' | 'underline' | 'circle' | 'color';
 
@@ -15,6 +16,8 @@ export interface HighlightProps {
   children: React.ReactNode;
   /** Pen stroke width in px (underline, circle). */
   strokeWidth?: number;
+  /** 0 = not drawn yet, 1 = complete. */
+  progress?: number;
 }
 
 /** Slight wobble so pen strokes do not look like vector shapes. */
@@ -36,15 +39,31 @@ export const Highlight: React.FC<HighlightProps> = ({
   color,
   children,
   strokeWidth = 12,
+  progress = 1,
 }) => {
   const filterId = `pen${useId().replace(/[^a-zA-Z0-9]/g, '')}`;
+  const p = Math.max(0, Math.min(1, progress));
+  const pen = {
+    fill: 'none',
+    stroke: color,
+    strokeWidth,
+    strokeLinecap: 'round' as const,
+    vectorEffect: 'non-scaling-stroke' as const,
+    filter: `url(#${filterId})`,
+  };
+  // Pen strokes are revealed left to right with a clip (dash offsets break with
+  // non-scaling strokes on a stretched viewBox).
+  const reveal: React.CSSProperties = {
+    clipPath: `inset(-50% ${(1 - p) * 100}% -50% -10%)`,
+    opacity: p > 0 ? 1 : 0,
+  };
   return (
     <span
       style={{
         position: 'relative',
         display: 'inline-block',
         isolation: 'isolate',
-        color: kind === 'color' ? color : undefined,
+        color: kind === 'color' && p > 0.5 ? color : undefined,
         // The pen loop is wider than the word: keep it off the neighbouring words.
         margin: kind === 'circle' ? '0 0.24em' : undefined,
       }}
@@ -59,7 +78,8 @@ export const Highlight: React.FC<HighlightProps> = ({
             bottom: '0.02em',
             backgroundColor: color,
             borderRadius: '0.06em 0.22em 0.1em 0.28em',
-            transform: 'rotate(-1.2deg) skewX(-8deg)',
+            transform: `rotate(-1.2deg) skewX(-8deg) scaleX(${p})`,
+            transformOrigin: 'left center',
             zIndex: -1,
           }}
         />
@@ -76,20 +96,13 @@ export const Highlight: React.FC<HighlightProps> = ({
             bottom: '-0.2em',
             height: '0.3em',
             overflow: 'visible',
+            ...reveal,
           }}
         >
           <defs>
             <PenFilter id={filterId} />
           </defs>
-          <path
-            d="M 2 12 C 18 5, 30 17, 50 10 S 82 5, 98 11"
-            fill="none"
-            stroke={color}
-            strokeWidth={strokeWidth}
-            strokeLinecap="round"
-            vectorEffect="non-scaling-stroke"
-            filter={`url(#${filterId})`}
-          />
+          <path d="M 2 12 C 18 5, 30 17, 50 10 S 82 5, 98 11" {...pen} />
         </svg>
       )}
       {kind === 'circle' && (
@@ -103,6 +116,7 @@ export const Highlight: React.FC<HighlightProps> = ({
             top: '-0.2em',
             height: 'calc(100% + 0.42em)',
             overflow: 'visible',
+            ...reveal,
           }}
         >
           <defs>
@@ -110,12 +124,7 @@ export const Highlight: React.FC<HighlightProps> = ({
           </defs>
           <path
             d="M 62 7 C 24 0, 1 26, 4 54 C 7 90, 66 100, 92 72 C 106 46, 88 6, 40 12"
-            fill="none"
-            stroke={color}
-            strokeWidth={strokeWidth}
-            strokeLinecap="round"
-            vectorEffect="non-scaling-stroke"
-            filter={`url(#${filterId})`}
+            {...pen}
           />
         </svg>
       )}

@@ -3,6 +3,7 @@ import { Composition, Still } from 'remotion';
 import './brand/fonts';
 import { Demo, DEMO_DURATION, demoDefaultProps } from './compositions/Demo';
 import { FontLab, FONTLAB_HEIGHT } from './compositions/FontLab';
+import { TestReel, TEST_REEL_DURATION } from './compositions/TestReel';
 import { HighlightLab, HIGHLIGHT_LAB_HEIGHT } from './lab/HighlightLab';
 import { InvoiceRollLab, INVOICE_ROLL_LAB_DURATION } from './lab/InvoiceRollLab';
 import { MascotLab, MASCOT_SHEETS, sheetHeight, type MascotSheet } from './lab/mascots/MascotLab';
@@ -21,6 +22,18 @@ export const RemotionRoot: React.FC = () => (
       height={formats.reel.height}
       defaultProps={demoDefaultProps}
     />
+    {(['flat', 'sticker'] as const).map((mascotStyle) => (
+      <Composition
+        key={mascotStyle}
+        id={`TestReel-${mascotStyle}`}
+        component={TestReel}
+        durationInFrames={TEST_REEL_DURATION}
+        fps={formats.reel.fps}
+        width={formats.reel.width}
+        height={formats.reel.height}
+        defaultProps={{ mascotStyle }}
+      />
+    ))}
     <Composition
       id="InvoiceRollLab"
       component={InvoiceRollLab}
