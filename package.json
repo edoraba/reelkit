@@ -13,6 +13,7 @@
     "render:demo": "pnpm --filter @reelkit/video render:demo",
     "render:fontlab": "pnpm --filter @reelkit/video render:fontlab",
     "render:lab": "pnpm --filter @reelkit/video render:lab",
+    "render:mascots": "pnpm --filter @reelkit/video render:mascots",
     "brand:contrast": "tsx packages/brand/scripts/contrast.ts",
     "lfs:usage": "tsx scripts/lfs-usage.ts",
     "guard": "tsx scripts/guard.ts",

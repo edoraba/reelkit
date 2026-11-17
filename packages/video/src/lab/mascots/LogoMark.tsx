@@ -1,0 +1,61 @@
+/**
+ * The Refattura logo mark (assets/brand/logo.svg), redrawn from its paths so its parts can be
+ * colored and animated separately. Geometry in its own 100 x 100 box:
+ * - ring: a half ring centered at (43.5, 56.5), outer radius 43.5, from north-west to south-east
+ * - bar: a rounded bar from the ring center to the north-east
+ * - dotN, dotE: two dots on the circle at north and east
+ * Rotated by -45 degrees around CENTER, the mark reads as a face: dots are the eyes, the ring
+ * is the smile, the bar points straight up.
+ */
+export const LOGO_CENTER = { x: 43.5, y: 56.5 } as const;
+
+const DOT_N =
+  'M55.1216 11.7072C55.1216 18.1729 49.88 23.4144 43.4142 23.4144C36.9483 23.4144 31.7067 18.1729 31.7067 11.7072C31.7067 5.24148 36.9483 0 43.4142 0C49.88 0 55.1216 5.24148 55.1216 11.7072Z';
+const DOT_E =
+  'M100 56.5847C100 63.0504 94.7584 68.2919 88.2926 68.2919C81.8268 68.2919 76.5852 63.0504 76.5852 56.5847C76.5852 50.119 81.8268 44.8776 88.2926 44.8776C94.7584 44.8776 100 50.119 100 56.5847Z';
+const BAR =
+  'M79.9758 3.43862C84.5478 -1.13332 91.9606 -1.13332 96.5326 3.43862C101.105 8.01056 101.105 15.4231 96.5326 19.9951L51.7135 64.8133C47.1415 69.3852 39.7287 69.3852 35.1567 64.8133C30.5847 60.2413 30.5847 52.8288 35.1567 48.2568L79.9758 3.43862Z';
+const RING =
+  'M12.7462 25.7109C17.3182 21.139 24.731 21.139 29.303 25.7109C33.875 30.2829 33.875 37.6955 29.303 42.2674C27.4362 44.1341 25.9554 46.3503 24.9451 48.7893C23.9348 51.2283 23.4149 53.8424 23.4149 56.4824C23.4149 59.1223 23.9348 61.7365 24.9451 64.1755C25.9554 66.6145 27.4362 68.8307 29.303 70.6974C31.1698 72.5641 33.386 74.0449 35.8251 75.0552C38.2641 76.0655 40.8783 76.5854 43.5183 76.5854C46.1583 76.5854 48.7724 76.0654 51.2115 75.0552C53.6506 74.0449 55.8668 72.5641 57.7336 70.6974C62.3056 66.1255 69.7183 66.1255 74.2904 70.6974C78.8624 75.2693 78.8624 82.6819 74.2904 87.2539C70.2493 91.2948 65.452 94.5004 60.1721 96.6873C54.8922 98.8743 49.2332 100 43.5183 99.9999C37.8034 99.9999 32.1444 98.8743 26.8645 96.6873C21.5846 94.5004 16.7873 91.2948 12.7462 87.2539C8.70518 83.2129 5.49956 78.4156 3.31257 73.1359C1.12559 67.8561 1.47371e-05 62.1973 0 56.4825C-1.05265e-06 50.7677 1.12571 45.1088 3.3127 39.8291C5.4997 34.5493 8.70517 29.7519 12.7462 25.7109Z';
+
+export interface LogoMarkProps {
+  /** Where the mark center (ring center) goes. */
+  x: number;
+  y: number;
+  scale: number;
+  /** Degrees; -45 turns the mark into a face. */
+  rotate?: number;
+  ring: string;
+  ink: string;
+  /** Hide the bar (e.g. when it becomes a separate tuft). */
+  showBar?: boolean;
+  /** White shine on the dots, so they read as eyes. */
+  eyeShine?: boolean;
+}
+
+export const LogoMark: React.FC<LogoMarkProps> = ({
+  x,
+  y,
+  scale,
+  rotate = 0,
+  ring,
+  ink,
+  showBar = true,
+  eyeShine = false,
+}) => (
+  <g
+    transform={`translate(${x} ${y}) rotate(${rotate}) scale(${scale}) translate(${-LOGO_CENTER.x} ${-LOGO_CENTER.y})`}
+  >
+    <path d={RING} fill={ring} />
+    {showBar && <path d={BAR} fill={ink} />}
+    <path d={DOT_N} fill={ink} />
+    <path d={DOT_E} fill={ink} />
+    {eyeShine && (
+      // Offsets chosen so the shine sits up-left once the mark is rotated by -45 degrees.
+      <g fill="white">
+        <circle cx={44.1} cy={6.8} r={3.6} />
+        <circle cx={89} cy={51.6} r={3.6} />
+      </g>
+    )}
+  </g>
+);

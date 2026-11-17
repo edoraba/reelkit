@@ -4,6 +4,7 @@ import './brand/fonts';
 import { Demo, DEMO_DURATION, demoDefaultProps } from './compositions/Demo';
 import { FontLab, FONTLAB_HEIGHT } from './compositions/FontLab';
 import { HighlightLab, HIGHLIGHT_LAB_HEIGHT } from './lab/HighlightLab';
+import { MascotLab, MASCOT_SHEETS, sheetHeight, type MascotSheet } from './lab/mascots/MascotLab';
 import { Proposal, PROPOSALS } from './lab/Proposals';
 
 export const RemotionRoot: React.FC = () => (
@@ -27,6 +28,16 @@ export const RemotionRoot: React.FC = () => (
         width={formats.reel.width}
         height={formats.reel.height}
         defaultProps={{ variant }}
+      />
+    ))}
+    {(Object.keys(MASCOT_SHEETS) as MascotSheet[]).map((sheet) => (
+      <Still
+        key={sheet}
+        id={`MascotLab-${sheet}`}
+        component={MascotLab}
+        width={1080}
+        height={sheetHeight(sheet)}
+        defaultProps={{ sheet }}
       />
     ))}
   </>
