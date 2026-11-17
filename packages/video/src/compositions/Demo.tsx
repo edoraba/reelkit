@@ -130,6 +130,7 @@ export const Demo: React.FC<DemoProps> = ({ fontSet, seed }) => {
         cues={CUES}
         gaze={gaze}
         seed={seed}
+        pen={bg.pen}
         style={{ position: 'absolute', left: (1080 - MASCOT_WIDTH) / 2, top: MASCOT_TOP }}
       />
     </AbsoluteFill>

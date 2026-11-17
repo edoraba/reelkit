@@ -6,7 +6,8 @@
     "studio": "remotion studio",
     "render:demo": "remotion render Demo out/demo.mp4",
     "render:fontlab": "remotion still FontLab out/fontlab.png",
-    "typecheck": "tsc -p tsconfig.json"
+    "typecheck": "tsc -p tsconfig.json",
+    "render:lab": "remotion still Proposal-registro out/lab/registro.png && remotion still Proposal-quadretti out/lab/quadretti.png && remotion still Proposal-scontrino out/lab/scontrino.png && remotion still Proposal-minimal out/lab/minimal.png && remotion still HighlightLab out/lab/highlights.png"
   },
   "dependencies": {
     "@reelkit/brand": "workspace:*",

@@ -1,4 +1,4 @@
-import { illustration, refattura, social } from '@reelkit/brand';
+import { illustration, refattura } from '@reelkit/brand';
 import { useId } from 'react';
 import { useCurrentFrame, useVideoConfig } from 'remotion';
 import { idleAt } from './idle';
@@ -6,14 +6,14 @@ import { poseAt, type MouthShape, type PoseCue } from './poses';
 import { ARM, EYE, pivots, RIG_VIEWBOX } from './rig';
 
 /**
- * PROVISIONAL mascot (phase 0): an invoice sheet with a face, tube arms and legs.
+ * PROVISIONAL mascot: an invoice sheet with a face. Arms and legs are pen doodles drawn in
+ * the ink of the background (`pen`), as if someone sketched them on the document.
  * The final character comes from the human; it must keep the layer ids of rig.ts.
  */
 
 const OUT = illustration.outline;
 const LINE = 9;
-// Light blue limbs read on every background of the palette (blue, ink, paper, green, red).
-const LIMB = social.sky;
+const PEN_WIDTH = 11;
 const SHEET = refattura.sheetWhite;
 const SHEET_SHADE = refattura.sheetGrey;
 
@@ -26,64 +26,56 @@ export interface MascotProps {
   gaze?: { x: number; y: number };
   /** Seed for idle and blink timing: use the post id. */
   seed: string;
+  /** Ink of arms, hands, legs and feet: use the `pen` color of the background. */
+  pen?: string;
   style?: React.CSSProperties;
 }
 
-const Tube: React.FC<{ x1: number; y1: number; x2: number; y2: number; layer: 'out' | 'fill' }> = ({
-  layer,
+const Stroke: React.FC<{ x1: number; y1: number; x2: number; y2: number; pen: string }> = ({
+  pen,
   ...p
-}) => (
-  <line
-    {...p}
-    stroke={layer === 'out' ? OUT : LIMB}
-    strokeWidth={layer === 'out' ? 28 : 13}
-    strokeLinecap="round"
-  />
-);
+}) => <line {...p} stroke={pen} strokeWidth={PEN_WIDTH} strokeLinecap="round" />;
 
-const Arm: React.FC<{ side: 'l' | 'r'; upper: number; lower: number }> = ({
+const Arm: React.FC<{ side: 'l' | 'r'; upper: number; lower: number; pen: string }> = ({
   side,
   upper,
   lower,
+  pen,
 }) => {
   const pivot = side === 'l' ? pivots['arm-l-upper'] : pivots['arm-r-upper'];
-  const thumbX = side === 'l' ? 16 : -16;
+  const s = side === 'l' ? 1 : -1;
   return (
     <g id={`arm-${side}-upper`} transform={`translate(${pivot.x} ${pivot.y}) rotate(${upper})`}>
-      <Tube x1={0} y1={0} x2={0} y2={ARM.upper} layer="out" />
+      <Stroke x1={0} y1={0} x2={0} y2={ARM.upper} pen={pen} />
       <g id={`arm-${side}-lower`} transform={`translate(0 ${ARM.upper}) rotate(${lower})`}>
-        <Tube x1={0} y1={0} x2={0} y2={ARM.lower} layer="out" />
-        <Tube x1={0} y1={0} x2={0} y2={ARM.lower} layer="fill" />
+        <Stroke x1={0} y1={0} x2={0} y2={ARM.lower} pen={pen} />
         <g id={`hand-${side}`} transform={`translate(0 ${ARM.lower})`}>
-          <ellipse cx={thumbX} cy={-6} rx={10} ry={12} fill={SHEET} stroke={OUT} strokeWidth={7} />
-          <circle r={ARM.handRadius} fill={SHEET} stroke={OUT} strokeWidth={8} />
+          {/* Doodled hand: a small loop and a thumb stroke. */}
+          <circle cy={8} r={10} fill="none" stroke={pen} strokeWidth={PEN_WIDTH - 2} />
+          <line
+            x1={s * 7}
+            y1={2}
+            x2={s * 17}
+            y2={-6}
+            stroke={pen}
+            strokeWidth={PEN_WIDTH - 2}
+            strokeLinecap="round"
+          />
         </g>
       </g>
-      {/* Upper fill drawn last so the elbow reads as one bent tube. */}
-      <Tube x1={0} y1={0} x2={0} y2={ARM.upper} layer="fill" />
     </g>
   );
 };
 
-const Leg: React.FC<{ side: 'l' | 'r' }> = ({ side }) => {
+const Leg: React.FC<{ side: 'l' | 'r'; pen: string }> = ({ side, pen }) => {
   const s = side === 'l' ? -1 : 1;
-  const hipX = 200 + s * 34;
+  const hipX = 200 + s * 36;
   const footX = 200 + s * 40;
-  // Shoe: a flat-bottomed dome with the toe pointing outward.
-  const toe = footX + s * 42;
-  const heel = footX - s * 24;
-  const [a, b] = s < 0 ? [toe, heel] : [heel, toe];
   return (
     <g id={`leg-${side}`}>
-      <Tube x1={hipX} y1={455} x2={footX} y2={548} layer="out" />
-      <Tube x1={hipX} y1={455} x2={footX} y2={548} layer="fill" />
-      <path
-        d={`M ${a} 572 Q ${a} 538 ${footX + s * 6} 536 Q ${b} 536 ${b} 572 Z`}
-        fill={OUT}
-        stroke={OUT}
-        strokeWidth={6}
-        strokeLinejoin="round"
-      />
+      <Stroke x1={hipX} y1={470} x2={footX} y2={556} pen={pen} />
+      {/* Foot: one short stroke pointing outward. */}
+      <Stroke x1={footX} y1={562} x2={footX + s * 30} y2={562} pen={pen} />
     </g>
   );
 };
@@ -169,6 +161,7 @@ export const Mascot: React.FC<MascotProps> = ({
   cues,
   gaze = { x: 0, y: 0 },
   seed,
+  pen = refattura.inkBlue,
   style,
 }) => {
   const frame = useCurrentFrame();
@@ -190,14 +183,14 @@ export const Mascot: React.FC<MascotProps> = ({
       style={{ overflow: 'visible', ...style }}
     >
       <g id="mascot" transform={`rotate(${idle.sway} ${mx} ${my})`}>
-        <Leg side="l" />
-        <Leg side="r" />
+        <Leg side="l" pen={pen} />
+        <Leg side="r" pen={pen} />
         <g
           id="body"
           transform={`translate(0 ${idle.bob}) translate(${bx} ${by}) scale(1 ${idle.breath}) translate(${-bx} ${-by})`}
         >
-          <Arm side="l" upper={pose.armL[0] + swingL} lower={pose.armL[1]} />
-          <Arm side="r" upper={pose.armR[0] + swingR} lower={pose.armR[1]} />
+          <Arm side="l" upper={pose.armL[0] + swingL} lower={pose.armL[1]} pen={pen} />
+          <Arm side="r" upper={pose.armR[0] + swingR} lower={pose.armR[1]} pen={pen} />
           <g id="sheet" strokeLinejoin="round">
             <path
               d="M 109 60 H 255 L 315 120 V 448 Q 315 472 291 472 H 109 Q 85 472 85 448 V 84 Q 85 60 109 60 Z"

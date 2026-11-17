@@ -21,10 +21,12 @@ export const refattura = {
  * guidelines/brand.md.
  * - lime: highlight box and stickers, the "look here" color of the reels.
  * - sky: light blue close to the light tone of the logotype (#80A9FF), secondary light background.
+ * - markerYellow: soft highlighter yellow, candidate replacement for lime (D-013).
  */
 export const social = {
   lime: 'oklch(93% 0.2 123)',
   sky: 'oklch(75% 0.13 264)',
+  markerYellow: 'oklch(92% 0.12 98)',
 } as const;
 
 export interface BackgroundSpec {
@@ -40,6 +42,8 @@ export interface BackgroundSpec {
   dots: string;
   /** Light cone under the mascot. */
   cone: string;
+  /** Pen ink on this background: mascot limbs, hand-drawn strokes, ground line. */
+  pen: string;
 }
 
 const DOTS_ON_DARK = 'oklch(100% 0 0 / 0.11)';
@@ -59,6 +63,7 @@ export const backgrounds = {
     highlightText: refattura.graphite,
     dots: DOTS_ON_DARK,
     cone: CONE_ON_DARK,
+    pen: refattura.sheetWhite,
   },
   ink: {
     fill: refattura.graphite,
@@ -67,6 +72,7 @@ export const backgrounds = {
     highlightText: refattura.graphite,
     dots: DOTS_ON_DARK,
     cone: CONE_ON_DARK,
+    pen: social.sky,
   },
   paper: {
     fill: refattura.paperCool,
@@ -75,6 +81,7 @@ export const backgrounds = {
     highlightText: refattura.graphite,
     dots: DOTS_ON_LIGHT,
     cone: CONE_ON_LIGHT,
+    pen: refattura.inkBlue,
   },
   sky: {
     fill: social.sky,
@@ -83,6 +90,7 @@ export const backgrounds = {
     highlightText: refattura.sheetWhite,
     dots: DOTS_ON_LIGHT,
     cone: CONE_ON_LIGHT,
+    pen: refattura.inkBlue,
   },
   green: {
     fill: refattura.stampGreen,
@@ -91,6 +99,7 @@ export const backgrounds = {
     highlightText: refattura.graphite,
     dots: DOTS_ON_DARK,
     cone: CONE_ON_DARK,
+    pen: refattura.sheetWhite,
   },
   red: {
     fill: refattura.stampRed,
@@ -99,6 +108,7 @@ export const backgrounds = {
     highlightText: refattura.graphite,
     dots: DOTS_ON_DARK,
     cone: CONE_ON_DARK,
+    pen: refattura.sheetWhite,
   },
 } as const satisfies Record<string, BackgroundSpec>;
 
