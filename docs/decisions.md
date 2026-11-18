@@ -118,3 +118,17 @@ Edoardo asked to replace "FATTURA" with "REFATTURA", to put the logo mark where 
 ## D-019 Sticker finish for the mascot (2026-11-17)
 
 After the two full test reels Edoardo chose the **sticker** style (02, closes D-017): graphite outline, white die-cut border (dilate 12 in viewBox units) and a soft shadow, limbs always in ink blue. The border keeps the silhouette on every background, including graphite where the plain outline disappears. `StickerFilter` lives in `packages/video/src/mascot/StickerFilter.tsx`; production scenes use it, the labs keep the other styles for reference.
+
+## D-020 Art direction exploration: simple 2D styles (2026-11-18, open)
+
+Edoardo asked to push the look further, towards Matisse or other simple 2D art, with research and moodboards first. Seven directions, each a moodboard with a sample frame of the same hook and the mascot restyled (`pnpm render:moodboards`, code in `packages/video/src/lab/moodboards/`):
+
+1. Papiers découpés, after Matisse's gouache cut-outs (scissor wobble, gouache grain, organic motifs);
+2. Torn paper, after Leo Lionni (torn edges with white fibres, few shapes, empty page);
+3. Futurist advertising, after Fortunato Depero for Campari (geometric puppets, blocky tilted type);
+4. Playful modernism, after Paul Rand and Bruno Munari (square, circle, triangle, puns, handwritten notes);
+5. Memphis Milano, after Sottsass (squiggles, stripes, confetti, hard shadows);
+6. Cut-out cinema, after Saul Bass (black, white, one color, jagged cuts);
+7. Pictograms, after Isotype (repeated symbols for numbers): a module for data scenes, combinable with any direction.
+
+We take methods, never copy artworks. Choice open.
