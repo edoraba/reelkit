@@ -10,6 +10,7 @@
     "typecheck": "tsc -p tsconfig.json"
   },
   "dependencies": {
+    "@reelkit/brand": "workspace:*",
     "@reelkit/schema": "workspace:*",
     "@remotion/install-whisper-cpp": "4.0.544",
     "@remotion/renderer": "4.0.544",

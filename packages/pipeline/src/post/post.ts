@@ -1,8 +1,9 @@
 import { spawnSync } from 'node:child_process';
 import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
-import { Post, ReelTimeline, Script, type PostStatus } from '@reelkit/schema';
+import { MascotPlan, Post, ReelTimeline, Script, type PostStatus } from '@reelkit/schema';
 import { alignAudio, type AlignReport } from '../align/align';
+import { planMascot } from '../mascot/plan';
 import { contentDir, rel, repoRoot } from '../paths';
 import type { WhisperModelName } from '../tools/registry';
 import { speechMap, spokenText, type SpeechUnit } from '../tts/pronounce';
@@ -21,6 +22,7 @@ export function postPaths(id: string) {
     script: path.join(dir, 'script.json'),
     voice: path.join(dir, 'voice.wav'),
     words: path.join(dir, 'words.json'),
+    mascot: path.join(dir, 'mascot.json'),
     reel: path.join(dir, 'out', 'reel.mp4'),
   };
 }
@@ -140,4 +142,20 @@ export function renderPost(id: string, opts: { scale?: number } = {}): void {
   if (res.status !== 0) throw new Error('Remotion render failed');
   if (!opts.scale) setStatus(id, 'rendered');
   console.log(`-> ${rel(p.reel)}`);
+}
+
+/**
+ * Plans the mascot of a post (D-032) and writes mascot.json. Throws with every problem the
+ * planner found; warnings (a trigger without room) are printed.
+ */
+export function mascotPost(id: string): MascotPlan {
+  const { script } = loadPost(id);
+  const report = readJson(postPaths(id).words) as AlignReport;
+  const { plan, problems, warnings } = planMascot({ script, report, seed: id });
+  for (const w of warnings) console.log(`  warning: ${w}`);
+  if (problems.length > 0) {
+    throw new Error(`mascot plan of ${id}:\n  ${problems.join('\n  ')}`);
+  }
+  writeFileSync(postPaths(id).mascot, JSON.stringify(plan, null, 2) + '\n');
+  return plan;
 }

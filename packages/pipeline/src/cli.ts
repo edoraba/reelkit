@@ -9,6 +9,7 @@
  * Per post (content/posts/<id>/):
  *   pnpm pipeline tts <id>                  voice.wav from script.json (one Gemini request)
  *   pnpm pipeline align <id>                words.json from voice.wav
+ *   pnpm pipeline mascot <id>               mascot.json, the mascot choreography (D-032)
  *   pnpm pipeline render <id> [--scale 0.5] out/reel.mp4 (full size sets status rendered)
  */
 import { existsSync } from 'node:fs';
@@ -17,7 +18,7 @@ import { parseArgs } from 'node:util';
 import { alignAudio, type AlignReport } from './align/align';
 import { bootstrap, check, TOOL_NAMES, type ToolName } from './bootstrap';
 import { rel, repoRoot } from './paths';
-import { alignPost, postPaths, renderPost, ttsPost } from './post/post';
+import { alignPost, mascotPost, postPaths, renderPost, ttsPost } from './post/post';
 import { WHISPER_MODELS, type WhisperModelName } from './tools/registry';
 import { listeningTest } from './tts/listening-test';
 import { speechMap, spokenText } from './tts/pronounce';
@@ -137,6 +138,22 @@ async function main(): Promise<void> {
       );
       return;
     }
+    case 'mascot': {
+      const id = postIdArg();
+      const plan = mascotPost(id);
+      const count = (src: string) => plan.gags.filter((g) => g.source === src).length;
+      console.log(
+        `${plan.moves.length} moves, ${plan.cues.length} cues, gags ${count('script')} script + ${count('auto')} auto, ` +
+          `triggers ${
+            plan.transitions
+              .filter((t) => t.trigger)
+              .map((t) => `${t.beat} ${t.trigger}`)
+              .join(', ') || 'none'
+          }, ` +
+          `stretch ${plan.stretch.map((x) => `+${x.addMs} ms at ${x.atMs}`).join(', ') || 'none'} -> ${rel(postPaths(id).mascot)}`,
+      );
+      return;
+    }
     case 'tts':
       await ttsPost(postIdArg());
       return;
@@ -146,7 +163,7 @@ async function main(): Promise<void> {
     default:
       console.error(
         `Unknown command "${command ?? ''}". ` +
-          'Commands: bootstrap, check, tts-test, say, tts, align, render',
+          'Commands: bootstrap, check, tts-test, say, tts, align, mascot, render',
       );
       process.exitCode = 1;
   }
