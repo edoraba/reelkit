@@ -1,3 +1,4 @@
+import { seededRandom } from '@reelkit/schema';
 import { interpolate, spring, useCurrentFrame, useVideoConfig } from 'remotion';
 import type { ResolvedFont } from '../brand/fonts';
 import { Highlight, type HighlightKind } from '../highlights/Highlight';
@@ -18,6 +19,25 @@ export interface RevealWord {
 const MARK_DELAY = 4;
 const MARK_FRAMES = 9;
 
+/**
+ * "Cut letters": every letter is its own slightly rotated, slightly shifted piece, as if cut
+ * out of paper and glued by hand. Seeded, so the same text always gets the same jitter.
+ */
+function cutLetters(text: string, seed: string, amount: number): React.ReactNode {
+  const rnd = seededRandom('cut-letters', seed, text);
+  return Array.from(text).map((ch, i) => (
+    <span
+      key={i}
+      style={{
+        display: 'inline-block',
+        transform: `rotate(${(rnd() - 0.5) * 10 * amount}deg) translateY(${(rnd() - 0.5) * 0.08 * amount}em)`,
+      }}
+    >
+      {ch}
+    </span>
+  ));
+}
+
 export const RevealText: React.FC<{
   words: RevealWord[];
   font: ResolvedFont;
@@ -25,10 +45,28 @@ export const RevealText: React.FC<{
   color: string;
   lineHeight?: number;
   align?: 'left' | 'center';
+  /** Letter spacing in em (fonts differ: rounded and serif faces need more air). */
+  tracking?: number;
+  /** Extra CSS for the font, e.g. variable axes. */
+  variation?: string;
+  /** Seed for cut letters; omit for plain text. */
+  cut?: { seed: string; amount?: number };
   style?: React.CSSProperties;
-}> = ({ words, font, fontSize, color, lineHeight = 1.06, align = 'left', style }) => {
+}> = ({
+  words,
+  font,
+  fontSize,
+  color,
+  lineHeight = 1.06,
+  align = 'left',
+  tracking = -0.03,
+  variation,
+  cut,
+  style,
+}) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
+  const piece = (text: string) => (cut ? cutLetters(text, cut.seed, cut.amount ?? 1) : text);
   return (
     <div
       style={{
@@ -36,7 +74,8 @@ export const RevealText: React.FC<{
         ...font,
         fontSize,
         lineHeight,
-        letterSpacing: '-0.03em',
+        letterSpacing: `${tracking}em`,
+        fontVariationSettings: variation,
         color,
         textAlign: align,
         ...style,
@@ -61,11 +100,11 @@ export const RevealText: React.FC<{
               progress={mark}
               strokeWidth={11}
             >
-              {w.text}
+              {piece(w.text)}
             </Highlight>
           </span>
         ) : (
-          w.text
+          piece(w.text)
         );
         return (
           <span key={i}>

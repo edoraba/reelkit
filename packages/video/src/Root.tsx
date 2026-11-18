@@ -5,6 +5,13 @@ import { Demo, DEMO_DURATION, demoDefaultProps } from './compositions/Demo';
 import { FontLab, FONTLAB_HEIGHT } from './compositions/FontLab';
 import { TestReel, TEST_REEL_DURATION } from './compositions/TestReel';
 import { MotifLab, MOTIF_LAB_DURATION } from './lab/cutouts/MotifLab';
+import {
+  FontSpecimen,
+  FontTest,
+  FONT_CANDIDATES,
+  FONT_TEST,
+  SPECIMEN_ROW,
+} from './lab/cutouts/FontTest';
 import { CutoutBackgrounds, CUTOUT_SHEET } from './lab/cutouts/scenes';
 import { TransitionReel, TRANSITION_REEL_DURATION } from './lab/cutouts/transitions';
 import { HighlightLab, HIGHLIGHT_LAB_HEIGHT } from './lab/HighlightLab';
@@ -83,6 +90,24 @@ export const RemotionRoot: React.FC = () => (
       fps={formats.reel.fps}
       width={CUTOUT_SHEET.width}
       height={CUTOUT_SHEET.height}
+    />
+    {(['ultramarine', 'cream'] as const).map((scene) => (
+      <Composition
+        key={scene}
+        id={`CutoutFonts-${scene}`}
+        component={FontTest}
+        durationInFrames={FONT_TEST.frame + 1}
+        fps={formats.reel.fps}
+        width={FONT_TEST.width}
+        height={FONT_TEST.height}
+        defaultProps={{ scene }}
+      />
+    ))}
+    <Still
+      id="CutoutFontSpecimen"
+      component={FontSpecimen}
+      width={1080}
+      height={FONT_CANDIDATES.length * SPECIMEN_ROW}
     />
     <Still id="FontLab" component={FontLab} width={1080} height={FONTLAB_HEIGHT} />
     <Still id="HighlightLab" component={HighlightLab} width={1080} height={HIGHLIGHT_LAB_HEIGHT} />

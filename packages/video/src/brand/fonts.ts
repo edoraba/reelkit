@@ -4,7 +4,12 @@ import { staticFile } from 'remotion';
 
 // Load every font once at module level; loadFont delays the render until the font is ready.
 for (const f of Object.values(fontFiles)) {
-  void loadFont({ family: f.family, url: staticFile(f.file), weight: f.weight });
+  void loadFont({
+    family: f.family,
+    url: staticFile(f.file),
+    weight: f.weight,
+    style: 'style' in f ? f.style : 'normal',
+  });
 }
 
 export interface ResolvedFont {

@@ -49,6 +49,53 @@ export const fontFiles = {
     file: 'fonts/patrickhand/PatrickHand-Regular.ttf',
     weight: '400',
   },
+  // Candidates for the cut-paper direction (D-024), all OFL.
+  fraunces: {
+    family: 'Fraunces',
+    file: 'fonts/fraunces/Fraunces-Variable.ttf',
+    weight: '100 900',
+  },
+  youngSerif: {
+    family: 'Young Serif',
+    file: 'fonts/youngserif/YoungSerif-Regular.ttf',
+    weight: '400',
+  },
+  instrumentSerif: {
+    family: 'Instrument Serif',
+    file: 'fonts/instrumentserif/InstrumentSerif-Regular.ttf',
+    weight: '400',
+  },
+  instrumentSerifItalic: {
+    family: 'Instrument Serif',
+    file: 'fonts/instrumentserif/InstrumentSerif-Italic.ttf',
+    weight: '400',
+    style: 'italic',
+  },
+  gloock: {
+    family: 'Gloock',
+    file: 'fonts/gloock/Gloock-Regular.ttf',
+    weight: '400',
+  },
+  bagel: {
+    family: 'Bagel Fat One',
+    file: 'fonts/bagelfatone/BagelFatOne-Regular.ttf',
+    weight: '400',
+  },
+  gluten: {
+    family: 'Gluten',
+    file: 'fonts/gluten/Gluten-Variable.ttf',
+    weight: '100 900',
+  },
+  sourGummy: {
+    family: 'Sour Gummy',
+    file: 'fonts/sourgummy/SourGummy-Variable.ttf',
+    weight: '100 900',
+  },
+  caveatBrush: {
+    family: 'Caveat Brush',
+    file: 'fonts/caveatbrush/CaveatBrush-Regular.ttf',
+    weight: '400',
+  },
   dmMono: {
     family: 'DM Mono',
     file: 'fonts/dmmono/DMMono-Regular.ttf',

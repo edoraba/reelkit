@@ -1,5 +1,5 @@
 import { AbsoluteFill, useCurrentFrame } from 'remotion';
-import { fontsOf } from '../../brand/fonts';
+import { fontsOf, type ResolvedFont } from '../../brand/fonts';
 import { RevealText, type RevealWord } from '../../components/RevealText';
 import type { HighlightKind } from '../../highlights/Highlight';
 import { InvoiceRoll, type Look } from '../../mascot/InvoiceRoll';
@@ -306,8 +306,25 @@ function words(v: Variant): RevealWord[] {
   }));
 }
 
+/** Headline typography of a scene: font, size, spacing, variable axes, cut-letter treatment. */
+export interface SceneType {
+  font: ResolvedFont;
+  size: number;
+  tracking?: number;
+  lineHeight?: number;
+  variation?: string;
+  /** Letters as hand-cut pieces, plus the boiling edge on the text. */
+  cut?: boolean;
+}
+
+export const DEFAULT_TYPE: SceneType = { font: fonts.display, size: 118 };
+
 /** One cut-paper scene; frames are local (0 = scene start). */
-export const CutoutScene: React.FC<{ v: Variant; idSuffix?: string }> = ({ v, idSuffix = '' }) => {
+export const CutoutScene: React.FC<{ v: Variant; idSuffix?: string; type?: SceneType }> = ({
+  v,
+  idSuffix = '',
+  type = DEFAULT_TYPE,
+}) => {
   const f = useCurrentFrame();
   const id = `cs${v.key}${idSuffix}`;
   return (
@@ -315,6 +332,7 @@ export const CutoutScene: React.FC<{ v: Variant; idSuffix?: string }> = ({ v, id
       <svg width={1080} height={1920} style={{ position: 'absolute', inset: 0 }}>
         <defs>
           <BoilFilter id={id} frame={f} />
+          {type.cut && <BoilFilter id={`${id}t`} frame={f} scale={3.5} grain={0.08} />}
         </defs>
         <g filter={`url(#${id})`}>
           {v.blocks?.(f)}
@@ -323,10 +341,14 @@ export const CutoutScene: React.FC<{ v: Variant; idSuffix?: string }> = ({ v, id
       </svg>
       <RevealText
         words={words(v)}
-        font={fonts.display}
-        fontSize={118}
+        font={type.font}
+        fontSize={type.size}
+        tracking={type.tracking}
+        lineHeight={type.lineHeight}
+        variation={type.variation}
+        cut={type.cut ? { seed: v.key, amount: 1.6 } : undefined}
         color={v.text}
-        style={{ top: 470, left: 96, right: 150 }}
+        style={{ top: 470, left: 96, right: 150, filter: type.cut ? `url(#${id}t)` : undefined }}
       />
       <InvoiceRoll
         width={420}
