@@ -1,11 +1,18 @@
 import { spawnSync } from 'node:child_process';
-import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { copyFileSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { postPaths } from '../post/post';
 import { rel, repoRoot } from '../paths';
 import { bin } from '../tools/registry';
-import { analyze, readManifest, search, type Wanted } from './library';
-import { mixSound, type SoundPlan } from './sound';
+import {
+  analyze,
+  readManifest,
+  search,
+  writeManifest,
+  type LibraryFile,
+  type Wanted,
+} from './library';
+import { mixSound, musicGainDb, type SoundPlan } from './sound';
 
 /**
  * Music listening test (D-034): CC0 loops of several genres from Freesound, each played alone
@@ -62,10 +69,12 @@ export function readRejected(): number[] {
     : [];
 }
 
+const outDir = path.join(repoRoot, 'packages', 'pipeline', 'out', 'music-test');
+const candidatesPath = path.join(outDir, 'candidates.json');
+
 export async function musicTest(postId: string, opts: { force?: boolean } = {}): Promise<string> {
   const key = process.env.FREESOUND_API_KEY;
   if (!key) throw new Error('FREESOUND_API_KEY missing in .env');
-  const outDir = path.join(repoRoot, 'packages', 'pipeline', 'out', 'music-test');
   mkdirSync(outDir, { recursive: true });
   const library = readManifest('music').files;
   const rejected = new Set(readRejected());
@@ -132,7 +141,7 @@ export async function musicTest(postId: string, opts: { force?: boolean } = {}):
       voice,
       {
         ...plan,
-        music: { ...plan.music!, file: c.file, gainDb: Math.round((-33 - c.lufs) * 10) / 10 },
+        music: { ...plan.music!, file: c.file, gainDb: musicGainDb(c.lufs) },
       },
       wav,
     );
@@ -141,8 +150,55 @@ export async function musicTest(postId: string, opts: { force?: boolean } = {}):
   }
   const page = path.join(outDir, 'index.html');
   writeFileSync(page, html(postId, candidates, outDir));
+  writeFileSync(candidatesPath, JSON.stringify(candidates, null, 2) + '\n');
   console.log(`${candidates.length} loops -> ${rel(page)}`);
   return page;
+}
+
+/**
+ * Applies the choice made on the page: the kept loops become the music library (new ones are
+ * copied into assets/music/<mood>/), every other loop of the page goes to rejected.json and a
+ * library loop that was not kept is deleted.
+ *   pnpm pipeline music-pick --keep 425971,561190,...
+ */
+export function pickMusic(keep: number[]): void {
+  if (!existsSync(candidatesPath))
+    throw new Error('No listening test yet: run "pnpm pipeline music-test <id>"');
+  const candidates = JSON.parse(readFileSync(candidatesPath, 'utf8')) as Candidate[];
+  const unknown = keep.filter((id) => !candidates.some((c) => c.id === id));
+  if (unknown.length > 0) throw new Error(`Not on the page: ${unknown.join(', ')}`);
+  const library = readManifest('music').files;
+  const files: LibraryFile[] = [];
+  for (const c of candidates.filter((x) => keep.includes(x.id))) {
+    const have = library.find((f) => f.source.id === c.id);
+    if (have) {
+      files.push(have);
+      continue;
+    }
+    const file = `music/${c.mood}/fs-${c.id}.mp3`;
+    const abs = path.join(repoRoot, 'assets', file);
+    mkdirSync(path.dirname(abs), { recursive: true });
+    copyFileSync(c.file, abs);
+    files.push({
+      tag: 'music',
+      mood: c.mood,
+      file,
+      ...analyze(abs),
+      source: { site: 'freesound', id: c.id, name: c.name, author: c.author, url: c.url },
+      license: 'CC0-1.0',
+    });
+  }
+  for (const f of library.filter((x) => !keep.includes(x.source.id))) {
+    rmSync(path.join(repoRoot, 'assets', f.file), { force: true });
+  }
+  const dropped = candidates.filter((c) => !keep.includes(c.id)).map((c) => c.id);
+  const rejected = [...new Set([...readRejected(), ...dropped])].sort((a, b) => a - b);
+  writeFileSync(rejectedPath, JSON.stringify({ ids: rejected }, null, 2) + '\n');
+  writeManifest('music', files);
+  console.log(
+    `music: ${files.length} kept, ${dropped.length} rejected (${rejected.length} in all)`,
+  );
+  for (const f of files) console.log(`  ${f.mood}: ${f.source.name} by ${f.source.author}`);
 }
 
 const esc = (s: string) =>

@@ -14,13 +14,14 @@
  *   pnpm pipeline render <id> [--scale 0.5] out/reel.mp4 (full size sets status rendered)
  *   pnpm pipeline audio-fetch [--force]     CC0 sound effects and music from Freesound (D-034)
  *   pnpm pipeline music-test <id> [--force] listening page of CC0 loops under the voice of a post
+ *   pnpm pipeline music-pick --keep 1,2,3   kept loops become the music library, the rest rejected
  */
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { parseArgs } from 'node:util';
 import { alignAudio, type AlignReport } from './align/align';
 import { fetchLibrary } from './audio/library';
-import { musicTest } from './audio/music-test';
+import { musicTest, pickMusic } from './audio/music-test';
 import { bootstrap, check, TOOL_NAMES, type ToolName } from './bootstrap';
 import { rel, repoRoot } from './paths';
 import { alignPost, mascotPost, postPaths, renderPost, soundPost, ttsPost } from './post/post';
@@ -56,6 +57,7 @@ const { positionals, values } = parseArgs({
     text: { type: 'string' },
     out: { type: 'string' },
     scale: { type: 'string' },
+    keep: { type: 'string' },
   },
 });
 
@@ -175,6 +177,10 @@ async function main(): Promise<void> {
     case 'music-test':
       await musicTest(postIdArg(), { force: values.force ?? false });
       return;
+    case 'music-pick':
+      if (!values.keep) throw new Error('music-pick needs --keep with the Freesound ids to keep');
+      pickMusic(values.keep.split(',').map((x) => Number(x.trim())));
+      return;
     case 'audio-fetch':
       await fetchLibrary({ force: values.force ?? false });
       return;
@@ -187,7 +193,7 @@ async function main(): Promise<void> {
     default:
       console.error(
         `Unknown command "${command ?? ''}". ` +
-          'Commands: bootstrap, check, tts-test, say, tts, align, mascot, sound, render, audio-fetch, music-test',
+          'Commands: bootstrap, check, tts-test, say, tts, align, mascot, sound, render, audio-fetch, music-test, music-pick',
       );
       process.exitCode = 1;
   }
