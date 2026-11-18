@@ -113,7 +113,12 @@ export const PaperIn: React.FC<{
   scene: React.ReactNode;
   prevScene?: (idSuffix: string) => React.ReactNode;
   prevOffset?: number;
-}> = ({ to: v, from: prev, kind, scene, prevScene, prevOffset = 0 }) => {
+  /**
+   * Paper layers and cut line (default). Off for the second pass that draws only the front
+   * motifs above the mascot (D-032): there the old front motifs disappear under the bloom.
+   */
+  decor?: boolean;
+}> = ({ to: v, from: prev, kind, scene, prevScene, prevOffset = 0, decor = true }) => {
   const [a1, a2] = prev ? bloomLayers(prev, v) : v.bloom;
   const lf = useCurrentFrame();
   if (!kind || !prev || lf >= DURATION[kind]) return <AbsoluteFill>{scene}</AbsoluteFill>;
@@ -125,6 +130,26 @@ export const PaperIn: React.FC<{
     const maxR = 2500;
     const ra = maxR * ramp(lf, 0, 14);
     const rs = maxR * ramp(lf, 5, 14);
+    if (!decor) {
+      // Old front motifs stay outside the growing paper layers, new ones grow inside.
+      const hole = organic(cx, cy, Math.max(1, ra), lf, 'bloomA');
+      return (
+        <AbsoluteFill>
+          {prevScene && (
+            <Sequence from={-prevOffset} layout="none">
+              <AbsoluteFill
+                style={{ clipPath: `path(evenodd, 'M 0 0 H ${W} V ${H} H 0 Z ${hole}')` }}
+              >
+                {prevScene('f')}
+              </AbsoluteFill>
+            </Sequence>
+          )}
+          {rs > 1 && (
+            <AbsoluteFill style={clip(organic(cx, cy, rs, lf + 7, 'bloomB'))}>{scene}</AbsoluteFill>
+          )}
+        </AbsoluteFill>
+      );
+    }
     return (
       <AbsoluteFill>
         <svg width={W} height={H} style={{ position: 'absolute', inset: 0 }}>
@@ -254,7 +279,7 @@ export const PaperIn: React.FC<{
           {prevScene?.('t')}
         </AbsoluteFill>
       </Sequence>
-      {lf < CUT + 2 && (
+      {decor && lf < CUT + 2 && (
         <svg width={W} height={H} style={{ position: 'absolute', inset: 0 }}>
           <mask id="cutMask" maskUnits="userSpaceOnUse" x={0} y={0} width={W} height={H}>
             <rect x={0} y={0} width={(W + 40) * drawn} height={H} fill="white" />

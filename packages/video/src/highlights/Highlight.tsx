@@ -25,6 +25,8 @@ export interface HighlightProps {
   textColor?: string;
   /** The word has descenders (g, p, q, y): the label strip reaches lower to cover them. */
   descender?: boolean;
+  /** Frames since a hit on the word (mascot stamp, D-032): the mark thumps for 6 frames. */
+  pulse?: number;
 }
 
 /** Letters that go below the baseline. */
@@ -76,6 +78,7 @@ export const Highlight: React.FC<HighlightProps> = ({
   progress = 1,
   textColor,
   descender = false,
+  pulse,
 }) => {
   const filterId = `pen${useId().replace(/[^a-zA-Z0-9]/g, '')}`;
   const band = kind === 'marker' || kind === 'label' ? BANDS[kind] : undefined;
@@ -100,6 +103,10 @@ export const Highlight: React.FC<HighlightProps> = ({
         position: 'relative',
         display: 'inline-block',
         isolation: 'isolate',
+        transform:
+          pulse !== undefined && pulse >= 0 && pulse < 6
+            ? `scale(${1 + 0.12 * Math.sin((pulse / 6) * Math.PI)}, ${1 - 0.08 * Math.sin((pulse / 6) * Math.PI)})`
+            : undefined,
         color: kind === 'color' && p > 0.5 ? color : undefined,
         // The pen loop is wider than the word: keep it off the neighbouring words.
         margin: kind === 'circle' ? '0 0.24em' : undefined,

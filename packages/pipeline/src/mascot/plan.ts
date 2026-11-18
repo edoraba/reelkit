@@ -364,15 +364,21 @@ export function planMascot(input: { script: Script; report: AlignReport; seed: s
       }
       if (prop)
         props.push({ fromMs: from, toMs: action === 'send' ? at : to, hand: 'right', prop });
+      // The gag starts at its moment (stamp hit, letter sent, water poured), its props and
+      // poses cover the beat.
       gags.push({
-        fromMs: from,
-        toMs: to,
+        fromMs: at,
+        toMs: Math.max(at + 400, to),
         kind: action,
         source: 'script',
         beat: id,
         ...(target ? { target } : {}),
         ...(SFX[action] ? { sfx: SFX[action] } : {}),
       });
+      // Back from the side motif to the open lane, in front again, when the beat ends.
+      if (action === 'hide' || action === 'water') {
+        walkTo(to, x < 540 ? 380 : 700, 'front');
+      }
     }
 
     // Automatic side-motif interaction, once per scene, when there is time and no script gag.
