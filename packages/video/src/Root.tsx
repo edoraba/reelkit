@@ -7,6 +7,13 @@ import { TestReel, TEST_REEL_DURATION } from './compositions/TestReel';
 import { HighlightLab, HIGHLIGHT_LAB_HEIGHT } from './lab/HighlightLab';
 import { InvoiceRollLab, INVOICE_ROLL_LAB_DURATION } from './lab/InvoiceRollLab';
 import { MascotLab, MASCOT_SHEETS, sheetHeight, type MascotSheet } from './lab/mascots/MascotLab';
+import { BOARDS } from './lab/moodboards/boards';
+import {
+  MoodBoard,
+  MoodBoardOverview,
+  MOODBOARD_OVERVIEW,
+  MOODBOARD_SIZE,
+} from './lab/moodboards/MoodBoard';
 import { Proposal, PROPOSALS } from './lab/Proposals';
 import { StyleLab, STYLE_SHEETS, styleSheetHeight } from './lab/StyleLab';
 import { StyleMotionLab, STYLE_MOTION_DURATION } from './lab/StyleMotionLab';
@@ -82,5 +89,21 @@ export const RemotionRoot: React.FC = () => (
         defaultProps={{ sheet }}
       />
     ))}
+    {BOARDS.map((b, index) => (
+      <Still
+        key={b.key}
+        id={`MoodBoard-${index + 1}-${b.key}`}
+        component={MoodBoard}
+        width={MOODBOARD_SIZE.width}
+        height={MOODBOARD_SIZE.height}
+        defaultProps={{ index }}
+      />
+    ))}
+    <Still
+      id="MoodBoard-overview"
+      component={MoodBoardOverview}
+      width={MOODBOARD_OVERVIEW.width}
+      height={MOODBOARD_OVERVIEW.height}
+    />
   </>
 );

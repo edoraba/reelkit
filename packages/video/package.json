@@ -12,7 +12,8 @@
     "render:invoice-roll": "remotion render InvoiceRollLab out/lab/invoice-roll.mp4",
     "render:styles": "remotion still StyleLab-1 out/lab/styles-1.png && remotion still StyleLab-2 out/lab/styles-2.png && remotion still StyleLab-3 out/lab/styles-3.png",
     "render:style-motion": "remotion render StyleMotionLab out/lab/style-motion.mp4",
-    "render:test-reels": "remotion render TestReel-flat out/test-reel-flat.mp4 && remotion render TestReel-sticker out/test-reel-sticker.mp4"
+    "render:test-reels": "remotion render TestReel-flat out/test-reel-flat.mp4 && remotion render TestReel-sticker out/test-reel-sticker.mp4",
+    "render:moodboards": "remotion still MoodBoard-1-matisse out/lab/moodboards/1-matisse.png && remotion still MoodBoard-2-lionni out/lab/moodboards/2-lionni.png && remotion still MoodBoard-3-depero out/lab/moodboards/3-depero.png && remotion still MoodBoard-4-rand out/lab/moodboards/4-rand.png && remotion still MoodBoard-5-memphis out/lab/moodboards/5-memphis.png && remotion still MoodBoard-6-bass out/lab/moodboards/6-bass.png && remotion still MoodBoard-7-isotype out/lab/moodboards/7-isotype.png && remotion still MoodBoard-overview out/lab/moodboards/overview.png"
   },
   "dependencies": {
     "@reelkit/brand": "workspace:*",
