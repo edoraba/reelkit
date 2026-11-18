@@ -13,12 +13,14 @@
  *   pnpm pipeline sound <id>                sound.json: effects and music of the reel (D-034)
  *   pnpm pipeline render <id> [--scale 0.5] out/reel.mp4 (full size sets status rendered)
  *   pnpm pipeline audio-fetch [--force]     CC0 sound effects and music from Freesound (D-034)
+ *   pnpm pipeline music-test <id> [--force] listening page of CC0 loops under the voice of a post
  */
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { parseArgs } from 'node:util';
 import { alignAudio, type AlignReport } from './align/align';
 import { fetchLibrary } from './audio/library';
+import { musicTest } from './audio/music-test';
 import { bootstrap, check, TOOL_NAMES, type ToolName } from './bootstrap';
 import { rel, repoRoot } from './paths';
 import { alignPost, mascotPost, postPaths, renderPost, soundPost, ttsPost } from './post/post';
@@ -161,13 +163,18 @@ async function main(): Promise<void> {
       const id = postIdArg();
       const plan = soundPost(id);
       for (const e of plan.events) {
-        console.log(`  ${(e.atMs / 1000).toFixed(2)} s  ${e.tag.padEnd(12)} ${e.gainDb} dB  ${e.reason}`);
+        console.log(
+          `  ${(e.atMs / 1000).toFixed(2)} s  ${e.tag.padEnd(12)} ${e.gainDb} dB  ${e.reason}`,
+        );
       }
       console.log(
         `${plan.events.length} sounds, music ${plan.music ? `${plan.music.file} by ${plan.music.author}` : 'none'} -> ${rel(postPaths(id).sound)}`,
       );
       return;
     }
+    case 'music-test':
+      await musicTest(postIdArg(), { force: values.force ?? false });
+      return;
     case 'audio-fetch':
       await fetchLibrary({ force: values.force ?? false });
       return;
@@ -180,7 +187,7 @@ async function main(): Promise<void> {
     default:
       console.error(
         `Unknown command "${command ?? ''}". ` +
-          'Commands: bootstrap, check, tts-test, say, tts, align, mascot, sound, render, audio-fetch',
+          'Commands: bootstrap, check, tts-test, say, tts, align, mascot, sound, render, audio-fetch, music-test',
       );
       process.exitCode = 1;
   }

@@ -74,15 +74,40 @@ function wants(t: ReelTimeline): Want[] {
       const kind = planned?.kind ?? 'bloom';
       const tStart = b.startMs - ms(transitionTiming[kind].lead);
       if (kind === 'bloom') {
-        out.push({ tag: 'paper-swoosh', atMs: tStart + ms(2), level: 'transition', reason: `bloom into ${b.id}` });
+        out.push({
+          tag: 'paper-swoosh',
+          atMs: tStart + ms(2),
+          level: 'transition',
+          reason: `bloom into ${b.id}`,
+        });
       } else if (kind === 'cut') {
-        out.push({ tag: 'snip', atMs: tStart + ms(2), level: 'transition', reason: `cut into ${b.id}` });
-        out.push({ tag: 'paper-tear', atMs: tStart + ms(10), level: 'transition', reason: `pieces fall into ${b.id}` });
+        out.push({
+          tag: 'snip',
+          atMs: tStart + ms(2),
+          level: 'transition',
+          reason: `cut into ${b.id}`,
+        });
+        out.push({
+          tag: 'paper-tear',
+          atMs: tStart + ms(10),
+          level: 'transition',
+          reason: `pieces fall into ${b.id}`,
+        });
       } else {
-        out.push({ tag: 'paper-pull', atMs: tStart, level: 'transition', reason: `pull into ${b.id}` });
+        out.push({
+          tag: 'paper-pull',
+          atMs: tStart,
+          level: 'transition',
+          reason: `pull into ${b.id}`,
+        });
       }
       if (planned?.trigger === 'blow') {
-        out.push({ tag: 'puff', atMs: tStart - 120, level: 'script', reason: `mascot blows into ${b.id}` });
+        out.push({
+          tag: 'puff',
+          atMs: tStart - 120,
+          level: 'script',
+          reason: `mascot blows into ${b.id}`,
+        });
       }
     }
     prev = b.palette;
@@ -103,13 +128,23 @@ function wants(t: ReelTimeline): Want[] {
     } else if (g.kind === 'hop') {
       out.push({ tag: 'hop', atMs: g.fromMs + 120, level: 'auto', reason: `hop in ${g.beat}` });
     } else if (g.kind === 'tap') {
-      out.push({ tag: 'tap', atMs: g.fromMs + 100, level: 'auto', reason: `foot tap in ${g.beat}` });
+      out.push({
+        tag: 'tap',
+        atMs: g.fromMs + 100,
+        level: 'auto',
+        reason: `foot tap in ${g.beat}`,
+      });
     }
   }
   // Closing: the card lands, the logo chimes.
   if (t.outro) {
     // Frames of reel/Outro.tsx: the card lands at 8, the tagline at 24.
-    out.push({ tag: 'pop', atMs: t.outro.startMs + ms(9), level: 'closing', reason: 'closing card' });
+    out.push({
+      tag: 'pop',
+      atMs: t.outro.startMs + ms(9),
+      level: 'closing',
+      reason: 'closing card',
+    });
     out.push({ tag: 'sting', atMs: t.outro.startMs + ms(18), level: 'closing', reason: 'logo' });
   }
   return out.sort((a, b) => a.atMs - b.atMs);
@@ -127,7 +162,8 @@ export function planSound(t: ReelTimeline, totalMs: number): SoundPlan {
     if (!w.onWord && attacks.some((a) => Math.abs(a - w.atMs) < ATTACK_GUARD_MS)) continue;
     const clash = chosen.find((c) => Math.abs(c.atMs - w.atMs) < MIN_GAP_MS);
     if (!clash) chosen.push(w);
-    else if (LEVEL[w.level]!.priority > LEVEL[clash.level]!.priority) chosen.splice(chosen.indexOf(clash), 1, w);
+    else if (LEVEL[w.level]!.priority > LEVEL[clash.level]!.priority)
+      chosen.splice(chosen.indexOf(clash), 1, w);
   }
   const lastFile = new Map<string, string>();
   const events: SoundEvent[] = [];
@@ -147,7 +183,9 @@ export function planSound(t: ReelTimeline, totalMs: number): SoundPlan {
       atMs: Math.round(w.atMs),
       startMs,
       gainDb: Math.round(Math.min(MAX_BOOST_DB, LEVEL[w.level]!.peak - pick.peakDb) * 10) / 10,
-      ...(w.maxMs && w.maxMs + pick.impactMs < pick.durationMs ? { maxMs: w.maxMs + pick.impactMs } : {}),
+      ...(w.maxMs && w.maxMs + pick.impactMs < pick.durationMs
+        ? { maxMs: w.maxMs + pick.impactMs }
+        : {}),
       reason: w.reason,
     });
   }
@@ -182,7 +220,10 @@ export function mixSound(voice: string, plan: SoundPlan, out: string): { lufs: n
   const assets = path.join(repoRoot, 'assets');
   const args = ['-v', 'error', '-y', '-i', voice];
   for (const e of plan.events) args.push('-i', path.join(assets, e.file));
-  if (plan.music) args.push('-stream_loop', '-1', '-i', path.join(assets, plan.music.file));
+  if (plan.music) {
+    const m = plan.music.file;
+    args.push('-stream_loop', '-1', '-i', path.isAbsolute(m) ? m : path.join(assets, m));
+  }
   const fmt = 'aresample=48000,aformat=sample_fmts=fltp:channel_layouts=stereo';
   const parts: string[] = [`[0:a]${fmt},apad=whole_dur=${D},asplit=2[v][key]`];
   const labels = ['[v]'];
@@ -211,7 +252,19 @@ export function mixSound(voice: string, plan: SoundPlan, out: string): { lufs: n
   parts.push(
     `${labels.join('')}amix=inputs=${labels.length}:normalize=0:duration=longest,atrim=0:${D},loudnorm=I=-14:TP=-1.5:LRA=11,aresample=48000[out]`,
   );
-  args.push('-filter_complex', parts.join(';'), '-map', '[out]', '-ac', '2', '-ar', '48000', '-c:a', 'pcm_s16le', out);
+  args.push(
+    '-filter_complex',
+    parts.join(';'),
+    '-map',
+    '[out]',
+    '-ac',
+    '2',
+    '-ar',
+    '48000',
+    '-c:a',
+    'pcm_s16le',
+    out,
+  );
   const res = spawnSync(bin.ffmpeg, args, { encoding: 'utf8', maxBuffer: 1 << 26 });
   if (res.status !== 0) throw new Error(`ffmpeg mix failed: ${res.stderr.slice(-1500)}`);
   return { lufs: analyze(out).lufs };

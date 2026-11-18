@@ -16,7 +16,7 @@ import { bin } from '../tools/registry';
 const API = 'https://freesound.org/apiv2';
 
 /** One kind of sound the reels use, and how to find it. */
-interface Wanted {
+export interface Wanted {
   tag: string;
   query: string;
   /** Seconds. */
@@ -99,7 +99,7 @@ export function readManifest(kind: 'sfx' | 'music'): Manifest {
   return JSON.parse(readFileSync(manifestPath(kind), 'utf8')) as Manifest;
 }
 
-async function search(w: Wanted & { mood?: string }, key: string): Promise<FsSound[]> {
+export async function search(w: Wanted & { mood?: string }, key: string): Promise<FsSound[]> {
   const params = new URLSearchParams({
     query: w.query,
     filter: `license:"Creative Commons 0" duration:[${w.duration[0]} TO ${w.duration[1]}]${w.mood ? ' tag:loop' : ''}${w.tag2 ? ` tag:${w.tag2}` : ''}`,
