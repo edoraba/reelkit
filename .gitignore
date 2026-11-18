@@ -33,3 +33,6 @@ assets/music/local/
 Thumbs.db
 .vscode/
 .idea/
+
+# plan execution scratch (ledger, briefs, review packages)
+/.superpowers/

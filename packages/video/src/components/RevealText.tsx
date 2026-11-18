@@ -11,7 +11,13 @@ import { Highlight, hasDescender, type HighlightKind } from '../highlights/Highl
 export interface RevealWord {
   text: string;
   at: number;
-  highlight?: { kind: HighlightKind; color: string; textColor?: string };
+  highlight?: {
+    kind: HighlightKind;
+    color: string;
+    textColor?: string;
+    /** Frame of a hit on the word (stamp), relative to the text. */
+    pulseAt?: number;
+  };
   /** Start a new line before this word. */
   br?: boolean;
 }
@@ -98,6 +104,7 @@ export const RevealText: React.FC<{
             color={w.highlight.color}
             textColor={w.highlight.textColor}
             descender={hasDescender(w.text)}
+            pulse={w.highlight.pulseAt === undefined ? undefined : frame - w.highlight.pulseAt}
             progress={mark}
             strokeWidth={11}
           >
@@ -174,6 +181,7 @@ export const PopWords: React.FC<{
           color={w.highlight.color}
           textColor={w.highlight.textColor}
           descender={hasDescender(w.text)}
+          pulse={w.highlight.pulseAt === undefined ? undefined : frame - w.highlight.pulseAt}
           progress={mark}
           strokeWidth={13}
         >

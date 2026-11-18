@@ -1,4 +1,581 @@
 {
-  "$comment": "CC0 or redistributable SFX only. Fields per file: tag, file, durationMs, impactMs, variants, license, source. See guidelines/generation.md.",
-  "files": []
+  "$comment": "CC0 sound effects from Freesound (D-034). Fields: tag, file, durationMs, impactMs (first transient), lufs, source (site, id, name, author, url), license. Fetched by pnpm pipeline audio-fetch.",
+  "files": [
+    {
+      "tag": "snip",
+      "file": "sfx/snip/fs-175522.mp3",
+      "durationMs": 255,
+      "impactMs": 20,
+      "lufs": -70,
+      "peakDb": -7.3,
+      "source": {
+        "site": "freesound",
+        "id": 175522,
+        "name": "scissors cut.wav",
+        "author": "mywhats",
+        "url": "https://freesound.org/s/175522/"
+      },
+      "license": "CC0-1.0"
+    },
+    {
+      "tag": "snip",
+      "file": "sfx/snip/fs-240473.mp3",
+      "durationMs": 542,
+      "impactMs": 45,
+      "lufs": -30.1,
+      "peakDb": -8.7,
+      "source": {
+        "site": "freesound",
+        "id": 240473,
+        "name": "Scissors.wav",
+        "author": "Godowan",
+        "url": "https://freesound.org/s/240473/"
+      },
+      "license": "CC0-1.0"
+    },
+    {
+      "tag": "snip",
+      "file": "sfx/snip/fs-240474.mp3",
+      "durationMs": 584,
+      "impactMs": 25,
+      "lufs": -30.7,
+      "peakDb": -13.3,
+      "source": {
+        "site": "freesound",
+        "id": 240474,
+        "name": "Scissors2.wav",
+        "author": "Godowan",
+        "url": "https://freesound.org/s/240474/"
+      },
+      "license": "CC0-1.0"
+    },
+    {
+      "tag": "paper-tear",
+      "file": "sfx/paper-tear/fs-181773.mp3",
+      "durationMs": 1526,
+      "impactMs": 810,
+      "lufs": -14.9,
+      "peakDb": -5.5,
+      "source": {
+        "site": "freesound",
+        "id": 181773,
+        "name": "tearing paper4.wav",
+        "author": "keweldog",
+        "url": "https://freesound.org/s/181773/"
+      },
+      "license": "CC0-1.0"
+    },
+    {
+      "tag": "paper-tear",
+      "file": "sfx/paper-tear/fs-272028.mp3",
+      "durationMs": 1960,
+      "impactMs": 500,
+      "lufs": -29.1,
+      "peakDb": -15.8,
+      "source": {
+        "site": "freesound",
+        "id": 272028,
+        "name": "Ripping Paper",
+        "author": "aldenroth2",
+        "url": "https://freesound.org/s/272028/"
+      },
+      "license": "CC0-1.0"
+    },
+    {
+      "tag": "paper-tear",
+      "file": "sfx/paper-tear/fs-342541.mp3",
+      "durationMs": 888,
+      "impactMs": 115,
+      "lufs": -28.9,
+      "peakDb": -13.8,
+      "source": {
+        "site": "freesound",
+        "id": 342541,
+        "name": "Fast Paper Rip",
+        "author": "sgrowe",
+        "url": "https://freesound.org/s/342541/"
+      },
+      "license": "CC0-1.0"
+    },
+    {
+      "tag": "paper-swoosh",
+      "file": "sfx/paper-swoosh/fs-397548.mp3",
+      "durationMs": 501,
+      "impactMs": 215,
+      "lufs": -25.9,
+      "peakDb": -9.5,
+      "source": {
+        "site": "freesound",
+        "id": 397548,
+        "name": "Page Turn 01",
+        "author": "LilMati",
+        "url": "https://freesound.org/s/397548/"
+      },
+      "license": "CC0-1.0"
+    },
+    {
+      "tag": "paper-swoosh",
+      "file": "sfx/paper-swoosh/fs-457767.mp3",
+      "durationMs": 709,
+      "impactMs": 80,
+      "lufs": -31,
+      "peakDb": -11.9,
+      "source": {
+        "site": "freesound",
+        "id": 457767,
+        "name": "turnPage.mp3",
+        "author": "partheeban",
+        "url": "https://freesound.org/s/457767/"
+      },
+      "license": "CC0-1.0"
+    },
+    {
+      "tag": "paper-swoosh",
+      "file": "sfx/paper-swoosh/fs-346835.mp3",
+      "durationMs": 522,
+      "impactMs": 240,
+      "lufs": -29.8,
+      "peakDb": -12,
+      "source": {
+        "site": "freesound",
+        "id": 346835,
+        "name": "PageTurn.wav",
+        "author": "yatoimtop",
+        "url": "https://freesound.org/s/346835/"
+      },
+      "license": "CC0-1.0"
+    },
+    {
+      "tag": "paper-pull",
+      "file": "sfx/paper-pull/fs-464302.mp3",
+      "durationMs": 1643,
+      "impactMs": 620,
+      "lufs": -20.3,
+      "peakDb": -13.3,
+      "source": {
+        "site": "freesound",
+        "id": 464302,
+        "name": "PaperSlide.wav",
+        "author": "eyesonlegs",
+        "url": "https://freesound.org/s/464302/"
+      },
+      "license": "CC0-1.0"
+    },
+    {
+      "tag": "paper-pull",
+      "file": "sfx/paper-pull/fs-444431.mp3",
+      "durationMs": 1152,
+      "impactMs": 445,
+      "lufs": -40,
+      "peakDb": -31.4,
+      "source": {
+        "site": "freesound",
+        "id": 444431,
+        "name": "Sliding Envelope.wav",
+        "author": "MTJohnson",
+        "url": "https://freesound.org/s/444431/"
+      },
+      "license": "CC0-1.0"
+    },
+    {
+      "tag": "stamp",
+      "file": "sfx/stamp/fs-362624.mp3",
+      "durationMs": 582,
+      "impactMs": 80,
+      "lufs": -22.9,
+      "peakDb": -3.4,
+      "source": {
+        "site": "freesound",
+        "id": 362624,
+        "name": "Stamp",
+        "author": "kermite607",
+        "url": "https://freesound.org/s/362624/"
+      },
+      "license": "CC0-1.0"
+    },
+    {
+      "tag": "stamp",
+      "file": "sfx/stamp/fs-362622.mp3",
+      "durationMs": 642,
+      "impactMs": 60,
+      "lufs": -27.1,
+      "peakDb": -8.3,
+      "source": {
+        "site": "freesound",
+        "id": 362622,
+        "name": "Stamp",
+        "author": "kermite607",
+        "url": "https://freesound.org/s/362622/"
+      },
+      "license": "CC0-1.0"
+    },
+    {
+      "tag": "stamp",
+      "file": "sfx/stamp/fs-362623.mp3",
+      "durationMs": 543,
+      "impactMs": 30,
+      "lufs": -25.6,
+      "peakDb": -6.3,
+      "source": {
+        "site": "freesound",
+        "id": 362623,
+        "name": "Stamp",
+        "author": "kermite607",
+        "url": "https://freesound.org/s/362623/"
+      },
+      "license": "CC0-1.0"
+    },
+    {
+      "tag": "typing",
+      "file": "sfx/typing/fs-347544.mp3",
+      "durationMs": 2310,
+      "impactMs": 1840,
+      "lufs": -19.9,
+      "peakDb": 0,
+      "source": {
+        "site": "freesound",
+        "id": 347544,
+        "name": "Mouse click sounds",
+        "author": "Masgame",
+        "url": "https://freesound.org/s/347544/"
+      },
+      "license": "CC0-1.0"
+    },
+    {
+      "tag": "typing",
+      "file": "sfx/typing/fs-416777.mp3",
+      "durationMs": 1000,
+      "impactMs": 30,
+      "lufs": -15.7,
+      "peakDb": -11.9,
+      "source": {
+        "site": "freesound",
+        "id": 416777,
+        "name": "digital_typing.wav",
+        "author": "Sky_Motion",
+        "url": "https://freesound.org/s/416777/"
+      },
+      "license": "CC0-1.0"
+    },
+    {
+      "tag": "swish",
+      "file": "sfx/swish/fs-60013.mp3",
+      "durationMs": 426,
+      "impactMs": 45,
+      "lufs": -18,
+      "peakDb": -5.1,
+      "source": {
+        "site": "freesound",
+        "id": 60013,
+        "name": "Whoosh",
+        "author": "qubodup",
+        "url": "https://freesound.org/s/60013/"
+      },
+      "license": "CC0-1.0"
+    },
+    {
+      "tag": "swish",
+      "file": "sfx/swish/fs-60009.mp3",
+      "durationMs": 320,
+      "impactMs": 70,
+      "lufs": -70,
+      "peakDb": -0.7,
+      "source": {
+        "site": "freesound",
+        "id": 60009,
+        "name": "swosh-22.flac",
+        "author": "qubodup",
+        "url": "https://freesound.org/s/60009/"
+      },
+      "license": "CC0-1.0"
+    },
+    {
+      "tag": "swish",
+      "file": "sfx/swish/fs-60007.mp3",
+      "durationMs": 448,
+      "impactMs": 55,
+      "lufs": -17.8,
+      "peakDb": -1,
+      "source": {
+        "site": "freesound",
+        "id": 60007,
+        "name": "Swipe Whoosh",
+        "author": "qubodup",
+        "url": "https://freesound.org/s/60007/"
+      },
+      "license": "CC0-1.0"
+    },
+    {
+      "tag": "water",
+      "file": "sfx/water/fs-207781.mp3",
+      "durationMs": 2833,
+      "impactMs": 100,
+      "lufs": -32.5,
+      "peakDb": -14.9,
+      "source": {
+        "site": "freesound",
+        "id": 207781,
+        "name": "Pouring Liquid.wav",
+        "author": "Dvideoguy",
+        "url": "https://freesound.org/s/207781/"
+      },
+      "license": "CC0-1.0"
+    },
+    {
+      "tag": "water",
+      "file": "sfx/water/fs-683102.mp3",
+      "durationMs": 1669,
+      "impactMs": 100,
+      "lufs": -18.8,
+      "peakDb": -1.1,
+      "source": {
+        "site": "freesound",
+        "id": 683102,
+        "name": "water drop",
+        "author": "florianreichelt",
+        "url": "https://freesound.org/s/683102/"
+      },
+      "license": "CC0-1.0"
+    },
+    {
+      "tag": "whoosh-soft",
+      "file": "sfx/whoosh-soft/fs-71852.mp3",
+      "durationMs": 953,
+      "impactMs": 335,
+      "lufs": -17,
+      "peakDb": -9.2,
+      "source": {
+        "site": "freesound",
+        "id": 71852,
+        "name": "digital_whoosh_soft.wav",
+        "author": "ludvique",
+        "url": "https://freesound.org/s/71852/"
+      },
+      "license": "CC0-1.0"
+    },
+    {
+      "tag": "whoosh-soft",
+      "file": "sfx/whoosh-soft/fs-485277.mp3",
+      "durationMs": 710,
+      "impactMs": 65,
+      "lufs": -32.5,
+      "peakDb": -16.9,
+      "source": {
+        "site": "freesound",
+        "id": 485277,
+        "name": "Wooden Stick Swing 1_2",
+        "author": "Joao_Janz",
+        "url": "https://freesound.org/s/485277/"
+      },
+      "license": "CC0-1.0"
+    },
+    {
+      "tag": "whoosh-soft",
+      "file": "sfx/whoosh-soft/fs-485250.mp3",
+      "durationMs": 906,
+      "impactMs": 60,
+      "lufs": -45.3,
+      "peakDb": -29.5,
+      "source": {
+        "site": "freesound",
+        "id": 485250,
+        "name": "Swing 1_5",
+        "author": "Joao_Janz",
+        "url": "https://freesound.org/s/485250/"
+      },
+      "license": "CC0-1.0"
+    },
+    {
+      "tag": "puff",
+      "file": "sfx/puff/fs-683096.mp3",
+      "durationMs": 1717,
+      "impactMs": 535,
+      "lufs": -24.2,
+      "peakDb": -11.5,
+      "source": {
+        "site": "freesound",
+        "id": 683096,
+        "name": "Woosh",
+        "author": "florianreichelt",
+        "url": "https://freesound.org/s/683096/"
+      },
+      "license": "CC0-1.0"
+    },
+    {
+      "tag": "puff",
+      "file": "sfx/puff/fs-215850.mp3",
+      "durationMs": 397,
+      "impactMs": 45,
+      "lufs": -70,
+      "peakDb": -0.2,
+      "source": {
+        "site": "freesound",
+        "id": 215850,
+        "name": "Puff blow 01.MP3",
+        "author": "VKProduktion",
+        "url": "https://freesound.org/s/215850/"
+      },
+      "license": "CC0-1.0"
+    },
+    {
+      "tag": "pop",
+      "file": "sfx/pop/fs-245645.mp3",
+      "durationMs": 172,
+      "impactMs": 5,
+      "lufs": -70,
+      "peakDb": -1.9,
+      "source": {
+        "site": "freesound",
+        "id": 245645,
+        "name": "Cartoon Pop (Clean)",
+        "author": "unfa",
+        "url": "https://freesound.org/s/245645/"
+      },
+      "license": "CC0-1.0"
+    },
+    {
+      "tag": "pop",
+      "file": "sfx/pop/fs-245646.mp3",
+      "durationMs": 172,
+      "impactMs": 5,
+      "lufs": -70,
+      "peakDb": 0,
+      "source": {
+        "site": "freesound",
+        "id": 245646,
+        "name": "Cartoon Pop (Distorted)",
+        "author": "unfa",
+        "url": "https://freesound.org/s/245646/"
+      },
+      "license": "CC0-1.0"
+    },
+    {
+      "tag": "pop",
+      "file": "sfx/pop/fs-221091.mp3",
+      "durationMs": 145,
+      "impactMs": 25,
+      "lufs": -70,
+      "peakDb": -5.2,
+      "source": {
+        "site": "freesound",
+        "id": 221091,
+        "name": "cartoon pop or drip",
+        "author": "AlaskaRobotics",
+        "url": "https://freesound.org/s/221091/"
+      },
+      "license": "CC0-1.0"
+    },
+    {
+      "tag": "hop",
+      "file": "sfx/hop/fs-383240.mp3",
+      "durationMs": 646,
+      "impactMs": 0,
+      "lufs": -6.4,
+      "peakDb": 0,
+      "source": {
+        "site": "freesound",
+        "id": 383240,
+        "name": "Bounce",
+        "author": "Jofae",
+        "url": "https://freesound.org/s/383240/"
+      },
+      "license": "CC0-1.0"
+    },
+    {
+      "tag": "hop",
+      "file": "sfx/hop/fs-618961.mp3",
+      "durationMs": 341,
+      "impactMs": 0,
+      "lufs": -70,
+      "peakDb": -2.7,
+      "source": {
+        "site": "freesound",
+        "id": 618961,
+        "name": "Cute Bounce Jump.wav",
+        "author": "Hemplock",
+        "url": "https://freesound.org/s/618961/"
+      },
+      "license": "CC0-1.0"
+    },
+    {
+      "tag": "tap",
+      "file": "sfx/tap/fs-91043.mp3",
+      "durationMs": 319,
+      "impactMs": 85,
+      "lufs": -70,
+      "peakDb": -17.1,
+      "source": {
+        "site": "freesound",
+        "id": 91043,
+        "name": "foot 3.aif",
+        "author": "zinzan_101",
+        "url": "https://freesound.org/s/91043/"
+      },
+      "license": "CC0-1.0"
+    },
+    {
+      "tag": "tap",
+      "file": "sfx/tap/fs-91042.mp3",
+      "durationMs": 465,
+      "impactMs": 150,
+      "lufs": -49.3,
+      "peakDb": -30.7,
+      "source": {
+        "site": "freesound",
+        "id": 91042,
+        "name": "foot 2.aif",
+        "author": "zinzan_101",
+        "url": "https://freesound.org/s/91042/"
+      },
+      "license": "CC0-1.0"
+    },
+    {
+      "tag": "sting",
+      "file": "sfx/sting/fs-842513.mp3",
+      "durationMs": 969,
+      "impactMs": 0,
+      "lufs": -8.8,
+      "peakDb": -1,
+      "source": {
+        "site": "freesound",
+        "id": 842513,
+        "name": "Triple_Ping_Notification_Sound_Mobile_Optimized",
+        "author": "PiesHelpfulOven",
+        "url": "https://freesound.org/s/842513/"
+      },
+      "license": "CC0-1.0"
+    },
+    {
+      "tag": "sting",
+      "file": "sfx/sting/fs-717771.mp3",
+      "durationMs": 808,
+      "impactMs": 5,
+      "lufs": -7.1,
+      "peakDb": -0.9,
+      "source": {
+        "site": "freesound",
+        "id": 717771,
+        "name": "victory chime",
+        "author": "1bob",
+        "url": "https://freesound.org/s/717771/"
+      },
+      "license": "CC0-1.0"
+    },
+    {
+      "tag": "sting",
+      "file": "sfx/sting/fs-541985.mp3",
+      "durationMs": 1588,
+      "impactMs": 215,
+      "lufs": -13.6,
+      "peakDb": -3.1,
+      "source": {
+        "site": "freesound",
+        "id": 541985,
+        "name": "GASP_Chimes_Success_4.wav",
+        "author": "Rob_Marion",
+        "url": "https://freesound.org/s/541985/"
+      },
+      "license": "CC0-1.0"
+    }
+  ]
 }

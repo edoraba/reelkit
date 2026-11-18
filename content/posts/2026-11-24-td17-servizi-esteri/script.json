@@ -7,20 +7,30 @@
       "say": "Paghi Google Ads o Canva con la partita IVA?",
       "palette": "blu",
       "highlight": "Canva",
-      "mascot": { "pose": "wave" }
+      "mascot": {
+        "pose": "wave"
+      }
     },
     {
       "id": "b02",
       "say": "Ogni mese ti arriva una fattura estera, senza IVA.",
       "palette": "blu",
-      "highlight": "estera"
+      "highlight": "estera",
+      "mascot": {
+        "action": "hide"
+      }
     },
     {
       "id": "b03",
       "say": "L'IVA la integri tu, con il TD17.",
       "palette": "ghiaccio",
       "highlight": "TD17",
-      "mascot": { "pose": "arms-up" }
+      "mascot": {
+        "pose": "arms-up"
+      },
+      "transition": {
+        "trigger": "pull"
+      }
     },
     {
       "id": "b04",
@@ -32,33 +42,51 @@
       "id": "b05",
       "say": "Esempio: una fattura da 120 euro.",
       "palette": "notte",
-      "highlight": "120"
+      "highlight": "120",
+      "mascot": {
+        "action": "type",
+        "at": "120"
+      },
+      "transition": {
+        "trigger": "scissors"
+      }
     },
     {
       "id": "b06",
       "say": "Integri 26,40 euro di IVA e la mandi allo SDI.",
       "palette": "notte",
-      "highlight": "26,40"
+      "highlight": "26,40",
+      "mascot": {
+        "action": "send",
+        "at": "SDI"
+      }
     },
     {
       "id": "b07",
       "say": "Con Refattura carichi il PDF e l'autofattura è pronta.",
       "palette": "lavanda",
       "highlight": "pronta",
-      "mascot": { "pose": "arms-up" }
+      "mascot": {
+        "pose": "arms-up"
+      }
     },
     {
       "id": "b08",
       "say": "E tu come le fai? A mano o col commercialista?",
       "palette": "lavanda",
-      "highlight": "mano"
+      "highlight": "mano",
+      "mascot": {
+        "action": "point"
+      }
     },
     {
       "id": "b09",
-      "say": "Provalo: il link è in bio.",
+      "say": "Provalo su refattura.it.",
       "palette": "blu",
-      "highlight": "Provalo",
-      "mascot": { "pose": "wave" }
+      "highlight": "refattura.it",
+      "mascot": {
+        "pose": "wave"
+      }
     }
   ]
 }

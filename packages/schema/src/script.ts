@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { AltScene, MascotAction, Trigger } from './mascot';
 import { PostFormat, PostId, PostStatus } from './post';
 
 /**
@@ -29,13 +30,20 @@ export const Beat = z
     palette: z.string(),
     /** The one highlighted word of the beat, as it appears in `say` (punctuation excluded). */
     highlight: z.string().optional(),
-    /** Mascot pose for the beat (idle if absent). */
+    /** What the mascot does in the beat (idle and automatic behaviors if absent). */
     mascot: z
       .object({
-        pose: z.string(),
-        expression: z.string().optional(),
+        pose: z.string().optional(),
+        /** An authored gag (design section 5). */
+        action: MascotAction.optional(),
+        /** Word of `say` the action lands on. */
+        at: z.string().optional(),
+        /** A rare alternative scene replacing the mascot for this beat (at most one per reel). */
+        scene: AltScene.optional(),
       })
       .optional(),
+    /** The scene change into this beat, started by a mascot gesture (at most 2 per reel). */
+    transition: z.object({ trigger: Trigger }).optional(),
   })
   .superRefine((beat, ctx) => {
     const words = wordsOf(beat.say);
@@ -49,6 +57,19 @@ export const Beat = z
       ctx.addIssue({
         code: 'custom',
         message: `beat ${beat.id}: highlight "${beat.highlight}" is not a word of "${beat.say}"`,
+      });
+    }
+    if (beat.mascot?.scene && beat.mascot.action) {
+      ctx.addIssue({
+        code: 'custom',
+        message: `beat ${beat.id}: an alternative scene replaces the mascot, it cannot also have an action`,
+      });
+    }
+    const at = beat.mascot?.at;
+    if (at && !holdsHighlight(beat.say, at)) {
+      ctx.addIssue({
+        code: 'custom',
+        message: `beat ${beat.id}: mascot.at "${at}" is not a word of "${beat.say}"`,
       });
     }
   });
@@ -65,6 +86,20 @@ export const Script = z
     const ids = script.beats.map((b) => b.id);
     if (new Set(ids).size !== ids.length) {
       ctx.addIssue({ code: 'custom', message: 'beat ids must be unique' });
+    }
+    const scenes = script.beats.filter((b) => b.mascot?.scene);
+    if (scenes.length > 1) {
+      ctx.addIssue({ code: 'custom', message: 'at most one alternative mascot scene per reel' });
+    }
+    const triggers = script.beats.filter((b) => b.transition);
+    if (triggers.length > 2) {
+      ctx.addIssue({ code: 'custom', message: 'at most 2 mascot-triggered transitions per reel' });
+    }
+    if (triggers.filter((b) => b.transition?.trigger === 'pull').length > 1) {
+      ctx.addIssue({ code: 'custom', message: 'at most one pull transition per reel' });
+    }
+    if (script.beats[0]?.transition) {
+      ctx.addIssue({ code: 'custom', message: 'the first beat has no transition to trigger' });
     }
   });
 export type Script = z.infer<typeof Script>;

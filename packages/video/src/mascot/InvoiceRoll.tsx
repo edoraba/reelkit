@@ -1,11 +1,13 @@
-import { illustration, refattura, social } from '@reelkit/brand';
-import { seededRandom } from '@reelkit/schema';
+import { illustration, refattura, social, type CutoutPalette } from '@reelkit/brand';
+import { seededRandom, type Eyes, type PropKind } from '@reelkit/schema';
 import { useId } from 'react';
 import { useCurrentFrame, useVideoConfig } from 'remotion';
 import { fontsOf } from '../brand/fonts';
 import { LogoMark } from '../brand/LogoMark';
+import { SHIN, standLegs, THIGH, type LegPose } from './gait';
 import { idleAt } from './idle';
 import { poseAt, type PoseCue } from './poses';
+import { HandProp } from './props';
 
 /**
  * Mascot candidate 05 reshaped into an invoice (Edoardo, 2026-11-17): rolled paper on top,
@@ -124,6 +126,24 @@ export interface InvoiceRollProps {
   /** Extra drawing in viewBox coordinates, above the character. */
   overlay?: React.ReactNode;
   style?: React.CSSProperties;
+  /** Eye shape; overrides the cue's eyes (choreography, D-032). */
+  eyes?: Eyes;
+  /** Body tilt over the hips, degrees, positive toward the right. */
+  lean?: number;
+  /** Leg angles and lift (walk, hop, crouch); standing legs when absent. */
+  legs?: LegPose;
+  /** Vertical squash of the whole character from the feet (hop take-off and landing). */
+  squash?: number;
+  /** Extra arm swing while walking, degrees. */
+  swing?: number;
+  /** Things held in the hands. */
+  hold?: { left?: PropKind; right?: PropKind };
+  /** Palette for the colors of held props. */
+  palette?: CutoutPalette;
+  /** Mouth when the voice is silent (default smile); `o` for the cheek puff of a blow. */
+  restMouth?: 'smile' | 'o';
+  /** Drawn on the face, moving with it (glasses of an alternative scene, D-032). */
+  faceOverlay?: (face: { eyeY: number; eyeDx: number; ink: string }) => React.ReactNode;
 }
 
 const mono = fontsOf('brand').mono;
@@ -143,18 +163,53 @@ function mouthAt(frame: number, talk: TalkSpan[], fallback: Mouth, seed: string)
 }
 
 const Arm: React.FC<{
+  side: 'l' | 'r';
   x: number;
   y: number;
   upper: number;
   lower: number;
   pen: string;
   width: number;
-}> = ({ x, y, upper, lower, pen, width }) => (
-  <g transform={`translate(${x} ${y}) rotate(${upper})`}>
+  prop?: React.ReactNode;
+}> = ({ side, x, y, upper, lower, pen, width, prop }) => (
+  <g id={`arm-${side}-upper`} transform={`translate(${x} ${y}) rotate(${upper})`}>
     <line y2={ARM.upper} stroke={pen} strokeWidth={width} strokeLinecap="round" />
-    <g transform={`translate(0 ${ARM.upper}) rotate(${lower})`}>
+    <g id={`arm-${side}-lower`} transform={`translate(0 ${ARM.upper}) rotate(${lower})`}>
       <line y2={ARM.lower} stroke={pen} strokeWidth={width} strokeLinecap="round" />
-      <circle cy={ARM.lower + 9} r={10} fill="none" stroke={pen} strokeWidth={width - 2} />
+      <circle
+        id={`hand-${side}`}
+        cy={ARM.lower + 9}
+        r={10}
+        fill="none"
+        stroke={pen}
+        strokeWidth={width - 2}
+      />
+      {prop && (
+        <g
+          id={`prop-${side}`}
+          transform={`translate(0 ${ARM.lower + 12}) rotate(${-(upper + lower)}) scale(1.35)`}
+        >
+          {prop}
+        </g>
+      )}
+    </g>
+  </g>
+);
+
+/** Two-segment leg with the foot pointing outward. */
+const Leg: React.FC<{
+  side: 'l' | 'r';
+  x: number;
+  hip: number;
+  knee: number;
+  pen: string;
+  width: number;
+}> = ({ side, x, hip, knee, pen, width }) => (
+  <g id={`leg-${side}`} transform={`translate(${x} ${BODY_BOTTOM}) rotate(${hip})`}>
+    <line y2={THIGH} />
+    <g id={`shin-${side}`} transform={`translate(0 ${THIGH}) rotate(${knee})`}>
+      <line y2={SHIN} />
+      <line x1={0} y1={SHIN} x2={side === 'l' ? -30 : 30} y2={SHIN} />
     </g>
   </g>
 );
@@ -253,6 +308,15 @@ export const InvoiceRoll: React.FC<InvoiceRollProps> = ({
   filter,
   overlay,
   style,
+  eyes: eyesOverride,
+  lean = 0,
+  legs = standLegs(),
+  squash = 0,
+  swing = 0,
+  hold,
+  palette,
+  faceOverlay,
+  restMouth,
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -274,7 +338,12 @@ export const InvoiceRoll: React.FC<InvoiceRollProps> = ({
   const pillStroke = showFills ? 'none' : look.ink;
 
   // Arms: pose + idle swing, plus the hand oscillation of the wave.
-  const wave = cue.pose === 'wave' ? 22 * Math.sin(frame * 0.55) : 0;
+  const wave =
+    cue.pose === 'wave'
+      ? 22 * Math.sin(frame * 0.55)
+      : cue.pose === 'type'
+        ? 8 * Math.sin(Math.floor(frame / 2) * 1.7)
+        : 0;
   const armY = s.top + (BODY_BOTTOM - s.top) * 0.5;
 
   // The roll squashes for a moment at every pose change.
@@ -282,8 +351,12 @@ export const InvoiceRoll: React.FC<InvoiceRollProps> = ({
   const bounce = cue.at > 0 && since < 12 ? Math.sin((since / 12) * Math.PI) * 0.14 : 0;
   const rollCy = s.top - 6;
 
-  const mouth = mouthAt(frame, talk, cue.mouth === 'open' ? 'open' : 'smile', seed);
-  const happy = cue.eyes === 'happy';
+  const mouth = mouthAt(frame, talk, restMouth ?? (cue.mouth === 'open' ? 'open' : 'smile'), seed);
+  const eyes: Eyes = eyesOverride ?? (cue.eyes === 'happy' ? 'happy' : 'open');
+  const happy = eyes === 'happy';
+  const closed = eyes === 'closed';
+  const eyeRx = eyes === 'wide' ? 13 : 10.5;
+  const eyeOpen = eyes === 'wide' ? 17 : eyes === 'half' ? 6 : 13;
 
   // Face layout.
   const band = s.header === 'band';
@@ -291,7 +364,7 @@ export const InvoiceRoll: React.FC<InvoiceRollProps> = ({
   const eyeDx = Math.min(34, Math.max(22, w * 0.17));
   const gx = gaze.x * 5;
   const gy = gaze.y * 4;
-  const eyeRy = 13 * (1 - 0.9 * idle.blink);
+  const eyeRy = eyeOpen * (1 - 0.9 * idle.blink);
   const tableY = eyeY + 84;
   const bottom = s.bottomCurl ? BODY_BOTTOM - 14 : BODY_BOTTOM;
   const hipDx = Math.max(26, w * 0.2);
@@ -342,36 +415,49 @@ export const InvoiceRoll: React.FC<InvoiceRollProps> = ({
         )}
       </defs>
       <g filter={filter}>
-        <g id="mascot" transform={`rotate(${idle.sway} 200 ${FEET_Y})`}>
+        <g
+          id="mascot"
+          transform={`translate(0 ${-legs.lift}) rotate(${idle.sway} 200 ${FEET_Y}) translate(200 ${FEET_Y}) scale(${1 + squash / 2} ${1 - squash}) translate(-200 ${-FEET_Y})`}
+        >
           {showLines && (
-            <g id="legs" stroke={pen} strokeWidth={lw} strokeLinecap="round">
-              <line x1={200 - hipDx} y1={BODY_BOTTOM} x2={200 - hipDx - 4} y2={FEET_Y - 8} />
-              <line x1={200 + hipDx} y1={BODY_BOTTOM} x2={200 + hipDx + 4} y2={FEET_Y - 8} />
-              <line x1={200 - hipDx - 4} y1={FEET_Y - 4} x2={200 - hipDx - 34} y2={FEET_Y - 4} />
-              <line x1={200 + hipDx + 4} y1={FEET_Y - 4} x2={200 + hipDx + 34} y2={FEET_Y - 4} />
+            <g stroke={pen} strokeWidth={lw} strokeLinecap="round">
+              <Leg side="l" x={200 - hipDx} hip={legs.l[0]} knee={legs.l[1]} pen={pen} width={lw} />
+              <Leg side="r" x={200 + hipDx} hip={legs.r[0]} knee={legs.r[1]} pen={pen} width={lw} />
             </g>
           )}
           <g
             id="body"
-            transform={`translate(0 ${idle.bob}) translate(200 ${BODY_BOTTOM}) scale(1 ${idle.breath}) translate(-200 ${-BODY_BOTTOM})`}
+            transform={`rotate(${lean} 200 ${BODY_BOTTOM}) translate(0 ${idle.bob}) translate(200 ${BODY_BOTTOM}) scale(1 ${idle.breath}) translate(-200 ${-BODY_BOTTOM})`}
           >
             {showLines && (
               <g mask={masked ? `url(#${armMask})` : undefined}>
                 <Arm
+                  side="l"
                   x={s.x1 + 6}
                   y={armY}
-                  upper={pose.armL[0] + idle.armSwing}
+                  upper={pose.armL[0] + idle.armSwing + swing}
                   lower={pose.armL[1]}
                   pen={pen}
                   width={lw}
+                  prop={
+                    hold?.left && palette ? (
+                      <HandProp kind={hold.left} p={palette} frame={frame} />
+                    ) : undefined
+                  }
                 />
                 <Arm
+                  side="r"
                   x={s.x2 - 6}
                   y={armY}
-                  upper={pose.armR[0] - idle.armSwing}
+                  upper={pose.armR[0] - idle.armSwing + swing}
                   lower={pose.armR[1] + wave}
                   pen={pen}
                   width={lw}
+                  prop={
+                    hold?.right && palette ? (
+                      <HandProp kind={hold.right} p={palette} frame={frame} />
+                    ) : undefined
+                  }
                 />
               </g>
             )}
@@ -499,7 +585,18 @@ export const InvoiceRoll: React.FC<InvoiceRollProps> = ({
 
             {showLines && (
               <g id="head">
-                {happy ? (
+                {closed ? (
+                  <g stroke={look.ink} strokeWidth={7} strokeLinecap="round" fill="none">
+                    <path
+                      id="eye-l"
+                      d={`M ${200 - eyeDx - 11} ${eyeY} Q ${200 - eyeDx} ${eyeY + 9} ${200 - eyeDx + 11} ${eyeY}`}
+                    />
+                    <path
+                      id="eye-r"
+                      d={`M ${200 + eyeDx - 11} ${eyeY} Q ${200 + eyeDx} ${eyeY + 9} ${200 + eyeDx + 11} ${eyeY}`}
+                    />
+                  </g>
+                ) : happy ? (
                   <g stroke={look.ink} strokeWidth={7} strokeLinecap="round" fill="none">
                     <path
                       d={`M ${200 - eyeDx - 11} ${eyeY + 4} Q ${200 - eyeDx} ${eyeY - 12} ${200 - eyeDx + 11} ${eyeY + 4}`}
@@ -511,26 +608,31 @@ export const InvoiceRoll: React.FC<InvoiceRollProps> = ({
                 ) : (
                   <g fill={look.ink}>
                     <ellipse
+                      id="eye-l"
                       cx={200 - eyeDx + gx}
                       cy={eyeY + gy}
-                      rx={10.5}
+                      rx={eyeRx}
                       ry={Math.max(1.5, eyeRy)}
                     />
                     <ellipse
+                      id="eye-r"
                       cx={200 + eyeDx + gx}
                       cy={eyeY + gy}
-                      rx={10.5}
+                      rx={eyeRx}
                       ry={Math.max(1.5, eyeRy)}
                     />
                   </g>
                 )}
-                <MouthShape
-                  x={200 + gx * 0.5}
-                  y={eyeY + 36}
-                  shape={mouth}
-                  ink={look.ink}
-                  tongue={look.tongue}
-                />
+                <g id="mouth">
+                  <MouthShape
+                    x={200 + gx * 0.5}
+                    y={eyeY + 36}
+                    shape={mouth}
+                    ink={look.ink}
+                    tongue={look.tongue}
+                  />
+                </g>
+                {faceOverlay?.({ eyeY, eyeDx, ink: look.ink })}
               </g>
             )}
 

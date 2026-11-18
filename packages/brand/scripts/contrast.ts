@@ -10,8 +10,10 @@ import {
   cutoutPalettes,
   refattura,
   social,
+  sceneLayouts,
   visibleOn,
   type CutoutPalette,
+  type CutoutPaletteKey,
 } from '../src/index';
 
 const MIN = 4.5;
@@ -75,6 +77,13 @@ for (const p of cutoutPalettes as readonly CutoutPalette[]) {
   const hidden = [...p.motifs, p.highlight.color, p.pen].filter((c) => !visibleOn(c, p.bg));
   // Mascot pieces sit on the white sheet or on the white sticker border.
   hidden.push(...[p.pen, p.roll, p.pill].filter((c) => !visibleOn(c, refattura.sheetWhite)));
+  // Front motifs can cover the mascot: they must stand out from its white sheet (D-032).
+  const layout = sceneLayouts[p.key as CutoutPaletteKey];
+  hidden.push(
+    ...layout.motifs
+      .filter((m) => m.depth === 'front' && !visibleOn(p.motifs[m.color]!, refattura.sheetWhite))
+      .map((m) => p.motifs[m.color]!),
+  );
   if (hidden.length > 0) paletteFailures++;
   const weakest = Math.min(...p.motifs.map((c) => contrast(c, p.bg)));
   paletteRows[p.name] = {

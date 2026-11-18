@@ -1,0 +1,468 @@
+{
+  "postId": "2026-11-24-td17-servizi-esteri",
+  "stretch": [
+    {
+      "atMs": 5832,
+      "addMs": 244
+    }
+  ],
+  "moves": [
+    {
+      "atMs": 0,
+      "durationMs": 0,
+      "x": 540,
+      "gait": "stand",
+      "depth": "front"
+    },
+    {
+      "atMs": 3135,
+      "durationMs": 1464,
+      "x": 130,
+      "gait": "walk",
+      "depth": "behind"
+    },
+    {
+      "atMs": 5620,
+      "durationMs": 1067,
+      "x": 1380,
+      "gait": "walk",
+      "depth": "front"
+    },
+    {
+      "atMs": 6687,
+      "durationMs": 1077,
+      "x": 820,
+      "gait": "walk",
+      "depth": "front"
+    },
+    {
+      "atMs": 25477,
+      "durationMs": 538,
+      "x": 540,
+      "gait": "walk",
+      "depth": "front"
+    }
+  ],
+  "cues": [
+    {
+      "atMs": 224,
+      "pose": "wave",
+      "eyes": "open",
+      "lean": 0
+    },
+    {
+      "atMs": 1513,
+      "pose": "wave",
+      "eyes": "happy",
+      "lean": 0
+    },
+    {
+      "atMs": 2113,
+      "pose": "wave",
+      "eyes": "open",
+      "lean": 0
+    },
+    {
+      "atMs": 3135,
+      "pose": "neutral",
+      "eyes": "open",
+      "lean": 0
+    },
+    {
+      "atMs": 4599,
+      "pose": "hide",
+      "eyes": "wide",
+      "lean": -6
+    },
+    {
+      "atMs": 5220,
+      "pose": "pull",
+      "eyes": "wide",
+      "lean": 8
+    },
+    {
+      "atMs": 6687,
+      "pose": "arms-up",
+      "eyes": "open",
+      "lean": 0
+    },
+    {
+      "atMs": 8283,
+      "pose": "arms-up",
+      "eyes": "happy",
+      "lean": 0
+    },
+    {
+      "atMs": 8883,
+      "pose": "arms-up",
+      "eyes": "open",
+      "lean": 0
+    },
+    {
+      "atMs": 9220,
+      "pose": "neutral",
+      "eyes": "open",
+      "lean": 0
+    },
+    {
+      "atMs": 9859,
+      "pose": "neutral",
+      "eyes": "happy",
+      "lean": 0
+    },
+    {
+      "atMs": 10459,
+      "pose": "neutral",
+      "eyes": "open",
+      "lean": 0
+    },
+    {
+      "atMs": 10950,
+      "pose": "hold",
+      "eyes": "wide",
+      "lean": 0
+    },
+    {
+      "atMs": 12284,
+      "pose": "neutral",
+      "eyes": "open",
+      "lean": 0
+    },
+    {
+      "atMs": 12284,
+      "pose": "type",
+      "eyes": "half",
+      "lean": 2
+    },
+    {
+      "atMs": 14170,
+      "pose": "neutral",
+      "eyes": "open",
+      "lean": 0
+    },
+    {
+      "atMs": 14170,
+      "pose": "hold",
+      "eyes": "open",
+      "lean": 0
+    },
+    {
+      "atMs": 16899,
+      "pose": "arms-up",
+      "eyes": "happy",
+      "lean": 0
+    },
+    {
+      "atMs": 17574,
+      "pose": "arms-up",
+      "eyes": "open",
+      "lean": 0
+    },
+    {
+      "atMs": 20205,
+      "pose": "arms-up",
+      "eyes": "happy",
+      "lean": 0
+    },
+    {
+      "atMs": 20805,
+      "pose": "arms-up",
+      "eyes": "open",
+      "lean": 0
+    },
+    {
+      "atMs": 21062,
+      "pose": "neutral",
+      "eyes": "open",
+      "lean": 0
+    },
+    {
+      "atMs": 22345,
+      "pose": "point",
+      "eyes": "open",
+      "lean": 3
+    },
+    {
+      "atMs": 23772,
+      "pose": "wave",
+      "eyes": "open",
+      "lean": 0
+    },
+    {
+      "atMs": 24386,
+      "pose": "wave",
+      "eyes": "wide",
+      "lean": 0
+    },
+    {
+      "atMs": 24986,
+      "pose": "wave",
+      "eyes": "open",
+      "lean": 0
+    },
+    {
+      "atMs": 25777,
+      "pose": "wave",
+      "eyes": "happy",
+      "lean": 0
+    }
+  ],
+  "gaze": [
+    {
+      "atMs": 0,
+      "target": "camera"
+    },
+    {
+      "atMs": 224,
+      "target": "headline"
+    },
+    {
+      "atMs": 824,
+      "target": "camera"
+    },
+    {
+      "atMs": 1513,
+      "target": "label"
+    },
+    {
+      "atMs": 2113,
+      "target": "camera"
+    },
+    {
+      "atMs": 3135,
+      "target": "headline"
+    },
+    {
+      "atMs": 3735,
+      "target": "camera"
+    },
+    {
+      "atMs": 6687,
+      "target": "headline"
+    },
+    {
+      "atMs": 7287,
+      "target": "camera"
+    },
+    {
+      "atMs": 8283,
+      "target": "label"
+    },
+    {
+      "atMs": 8883,
+      "target": "camera"
+    },
+    {
+      "atMs": 9220,
+      "target": "headline"
+    },
+    {
+      "atMs": 9820,
+      "target": "camera"
+    },
+    {
+      "atMs": 9859,
+      "target": "label"
+    },
+    {
+      "atMs": 10459,
+      "target": "camera"
+    },
+    {
+      "atMs": 12284,
+      "target": "headline"
+    },
+    {
+      "atMs": 12884,
+      "target": "camera"
+    },
+    {
+      "atMs": 14170,
+      "target": "headline"
+    },
+    {
+      "atMs": 14770,
+      "target": "camera"
+    },
+    {
+      "atMs": 17574,
+      "target": "headline"
+    },
+    {
+      "atMs": 18174,
+      "target": "camera"
+    },
+    {
+      "atMs": 20205,
+      "target": "label"
+    },
+    {
+      "atMs": 20805,
+      "target": "camera"
+    },
+    {
+      "atMs": 21062,
+      "target": "headline"
+    },
+    {
+      "atMs": 22345,
+      "target": "headline"
+    },
+    {
+      "atMs": 23772,
+      "target": "headline"
+    },
+    {
+      "atMs": 24372,
+      "target": "camera"
+    },
+    {
+      "atMs": 24386,
+      "target": "label"
+    },
+    {
+      "atMs": 24986,
+      "target": "camera"
+    },
+    {
+      "atMs": 25477,
+      "target": "camera"
+    }
+  ],
+  "props": [
+    {
+      "fromMs": 10950,
+      "toMs": 12284,
+      "hand": "right",
+      "prop": "scissors"
+    },
+    {
+      "fromMs": 12284,
+      "toMs": 14170,
+      "hand": "right",
+      "prop": "calculator"
+    },
+    {
+      "fromMs": 14170,
+      "toMs": 16899,
+      "hand": "right",
+      "prop": "letter"
+    }
+  ],
+  "gags": [
+    {
+      "fromMs": 1513,
+      "toMs": 2113,
+      "kind": "react",
+      "source": "auto",
+      "beat": "b01"
+    },
+    {
+      "fromMs": 4599,
+      "toMs": 6287,
+      "kind": "hide",
+      "source": "script",
+      "beat": "b02",
+      "target": "blu-frond",
+      "sfx": "whoosh-soft"
+    },
+    {
+      "fromMs": 5220,
+      "toMs": 6687,
+      "kind": "pull",
+      "source": "script",
+      "beat": "b03",
+      "sfx": "paper-pull"
+    },
+    {
+      "fromMs": 8283,
+      "toMs": 8883,
+      "kind": "react",
+      "source": "auto",
+      "beat": "b03"
+    },
+    {
+      "fromMs": 9859,
+      "toMs": 10459,
+      "kind": "react",
+      "source": "auto",
+      "beat": "b04"
+    },
+    {
+      "fromMs": 10950,
+      "toMs": 12284,
+      "kind": "scissors",
+      "source": "script",
+      "beat": "b05",
+      "sfx": "snip"
+    },
+    {
+      "fromMs": 13018,
+      "toMs": 14170,
+      "kind": "type",
+      "source": "script",
+      "beat": "b05",
+      "target": "calculator",
+      "sfx": "typing"
+    },
+    {
+      "fromMs": 15192,
+      "toMs": 15992,
+      "kind": "tap",
+      "source": "auto",
+      "beat": "b06"
+    },
+    {
+      "fromMs": 16899,
+      "toMs": 17574,
+      "kind": "send",
+      "source": "script",
+      "beat": "b06",
+      "target": "envelope",
+      "sfx": "swish"
+    },
+    {
+      "fromMs": 20205,
+      "toMs": 20805,
+      "kind": "react",
+      "source": "auto",
+      "beat": "b07"
+    },
+    {
+      "fromMs": 22345,
+      "toMs": 23772,
+      "kind": "point",
+      "source": "script",
+      "beat": "b08"
+    },
+    {
+      "fromMs": 24386,
+      "toMs": 24986,
+      "kind": "react",
+      "source": "auto",
+      "beat": "b09"
+    }
+  ],
+  "transitions": [
+    {
+      "beat": "b03",
+      "kind": "pull",
+      "trigger": "pull",
+      "side": "left"
+    },
+    {
+      "beat": "b05",
+      "kind": "cut",
+      "trigger": "scissors"
+    },
+    {
+      "beat": "b07",
+      "kind": "bloom"
+    },
+    {
+      "beat": "b09",
+      "kind": "cut"
+    }
+  ],
+  "inputs": "fdeec715716355ea"
+}

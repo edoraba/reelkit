@@ -45,6 +45,9 @@ importers:
 
   packages/pipeline:
     dependencies:
+      '@reelkit/brand':
+        specifier: workspace:*
+        version: link:../brand
       '@reelkit/schema':
         specifier: workspace:*
         version: link:../schema

@@ -1,8 +1,13 @@
 import { spawnSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
 import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
-import { Post, ReelTimeline, Script, type PostStatus } from '@reelkit/schema';
+import { outroPalette, outroTiming } from '@reelkit/brand';
+import { MascotPlan, Post, ReelTimeline, Script, type PostStatus } from '@reelkit/schema';
 import { alignAudio, type AlignReport } from '../align/align';
+import { mixSound, planSound, type SoundPlan } from '../audio/sound';
+import { shiftMs, stretchVoice, type Stretch } from '../audio/stretch';
+import { planMascot } from '../mascot/plan';
 import { contentDir, rel, repoRoot } from '../paths';
 import type { WhisperModelName } from '../tools/registry';
 import { speechMap, spokenText, type SpeechUnit } from '../tts/pronounce';
@@ -21,6 +26,8 @@ export function postPaths(id: string) {
     script: path.join(dir, 'script.json'),
     voice: path.join(dir, 'voice.wav'),
     words: path.join(dir, 'words.json'),
+    mascot: path.join(dir, 'mascot.json'),
+    sound: path.join(dir, 'sound.json'),
     reel: path.join(dir, 'out', 'reel.mp4'),
   };
 }
@@ -79,9 +86,9 @@ export async function alignPost(id: string, model: WhisperModelName): Promise<Al
 }
 
 /** Builds the timeline the Reel composition renders. */
-export function timelineOf(id: string, audio: string): ReelTimeline {
+export function timelineOf(id: string, audio: string, mascot?: MascotPlan): ReelTimeline {
   const { script } = loadPost(id);
-  const report = readJson(postPaths(id).words) as AlignReport;
+  const report = shiftReport(readJson(postPaths(id).words) as AlignReport, mascot?.stretch ?? []);
   const beats = script.beats.map((b) => {
     const units = report.screen.filter((u) => u.beat === b.id);
     if (units.length === 0) throw new Error(`Beat ${b.id} has no timed words: re-run align`);
@@ -112,20 +119,70 @@ export function timelineOf(id: string, audio: string): ReelTimeline {
     durationMs: report.durationMs,
     beats,
     speech,
+    // Closing with the logo after the last word (D-033).
+    outro: {
+      startMs: report.words.at(-1)!.endMs + outroTiming.gapMs,
+      durationMs: outroTiming.durationMs,
+      palette: outroPalette(beats.at(-1)!.palette),
+    },
+    ...(mascot ? { mascot } : {}),
   });
 }
 
+/** The alignment moved to the final timeline: every time after a stretch is pushed later. */
+function shiftReport(report: AlignReport, stretch: readonly Stretch[]): AlignReport {
+  if (stretch.length === 0) return report;
+  const sh = (ms: number) => Math.round(shiftMs(ms, stretch));
+  const span = <T extends { startMs: number; endMs: number }>(x: T): T => ({
+    ...x,
+    startMs: sh(x.startMs),
+    endMs: sh(x.endMs),
+  });
+  return {
+    ...report,
+    durationMs: report.durationMs + stretch.reduce((s, x) => s + x.addMs, 0),
+    screen: report.screen.map(span),
+    words: report.words.map(span),
+    // A pause that holds an insertion grows by it.
+    pauses: report.pauses.map((q) => ({
+      startMs: sh(q.startMs),
+      endMs: Math.round(shiftMs(q.endMs, stretch)),
+    })),
+  };
+}
+
 /**
- * Renders out/reel.mp4: copies the voice into the Remotion public folder (assets/.scratch,
- * gitignored), writes the timeline as props and runs the Reel composition.
+ * Renders out/reel.mp4: puts the voice in the Remotion public folder (assets/.scratch,
+ * gitignored), stretched by the mascot plan when there is one (D-032), writes the timeline as
+ * props and runs the Reel composition.
  */
 export function renderPost(id: string, opts: { scale?: number } = {}): void {
   const p = postPaths(id);
   const audio = `.scratch/${id}/voice.wav`;
   const publicCopy = path.join(repoRoot, 'assets', audio);
-  mkdirSync(path.dirname(publicCopy), { recursive: true });
-  copyFileSync(p.voice, publicCopy);
-  const timeline = timelineOf(id, audio);
+  const mascot = existsSync(p.mascot) ? MascotPlan.parse(readJson(p.mascot)) : undefined;
+  if (mascot?.inputs && mascot.inputs !== inputsOf(id)) {
+    throw new Error(
+      `mascot.json of ${id} was planned on an older script.json or words.json: run "pnpm pipeline mascot ${id}" again`,
+    );
+  }
+  stretchVoice(p.voice, publicCopy, mascot?.stretch ?? []);
+  let timeline = timelineOf(id, audio, mascot);
+  // Voice, sound effects and music in one track (D-034), when the post has a sound plan.
+  if (existsSync(p.sound)) {
+    const sound = readJson(p.sound) as SoundPlan;
+    if (sound.inputs !== soundInputsOf(id)) {
+      throw new Error(
+        `sound.json of ${id} was planned on an older script, words or mascot plan: run "pnpm pipeline sound ${id}" again`,
+      );
+    }
+    const mix = `.scratch/${id}/mix.wav`;
+    const { lufs } = mixSound(publicCopy, sound, path.join(repoRoot, 'assets', mix));
+    console.log(`mix: ${sound.events.length} sounds, music ${sound.music?.file ?? 'none'}, ${lufs} LUFS`);
+    timeline = { ...timeline, audio: mix };
+  } else {
+    console.log(`no sound.json: voice only (run "pnpm pipeline sound ${id}")`);
+  }
   const props = path.join(repoRoot, 'packages', 'pipeline', 'out', 'render', `${id}.json`);
   mkdirSync(path.dirname(props), { recursive: true });
   writeFileSync(props, JSON.stringify(timeline));
@@ -140,4 +197,62 @@ export function renderPost(id: string, opts: { scale?: number } = {}): void {
   if (res.status !== 0) throw new Error('Remotion render failed');
   if (!opts.scale) setStatus(id, 'rendered');
   console.log(`-> ${rel(p.reel)}`);
+}
+
+/**
+ * Plans the mascot of a post (D-032) and writes mascot.json. Throws with every problem the
+ * planner found; warnings (a trigger without room) are printed.
+ */
+export function mascotPost(id: string): MascotPlan {
+  const { script } = loadPost(id);
+  const report = readJson(postPaths(id).words) as AlignReport;
+  const { plan, problems, warnings } = planMascot({ script, report, seed: id });
+  plan.inputs = inputsOf(id);
+  for (const w of warnings) console.log(`  warning: ${w}`);
+  if (problems.length > 0) {
+    throw new Error(`mascot plan of ${id}:\n  ${problems.join('\n  ')}`);
+  }
+  writeFileSync(postPaths(id).mascot, JSON.stringify(plan, null, 2) + '\n');
+  return plan;
+}
+
+/** Length of the rendered reel, as the Reel composition counts it (30 fps). */
+export function reelMs(t: ReelTimeline): number {
+  const f = (ms: number) => Math.round((ms / 1000) * 30);
+  const frames = Math.max(f(t.durationMs) + 12, t.outro ? f(t.outro.startMs + t.outro.durationMs) : 0);
+  return Math.round((frames * 1000) / 30);
+}
+
+/**
+ * Plans the sound of a post (D-034): effects from the mascot plan, transitions and closing,
+ * and the music loop. Writes sound.json; the render mixes it.
+ */
+export function soundPost(id: string): SoundPlan {
+  const p = postPaths(id);
+  if (!existsSync(p.mascot)) throw new Error(`No mascot plan yet: run \`pnpm pipeline mascot ${id}\``);
+  const mascot = MascotPlan.parse(readJson(p.mascot));
+  const timeline = timelineOf(id, '', mascot);
+  const plan = { inputs: soundInputsOf(id), ...planSound(timeline, reelMs(timeline)) };
+  writeFileSync(p.sound, JSON.stringify(plan, null, 2) + '\n');
+  return plan;
+}
+
+function soundInputsOf(id: string): string {
+  const paths = postPaths(id);
+  return createHash('sha256')
+    .update(readFileSync(paths.script))
+    .update(readFileSync(paths.words))
+    .update(readFileSync(paths.mascot))
+    .digest('hex')
+    .slice(0, 16);
+}
+
+/** Fingerprint of what a mascot plan depends on: the script and the word timings. */
+function inputsOf(id: string): string {
+  const paths = postPaths(id);
+  return createHash('sha256')
+    .update(readFileSync(paths.script))
+    .update(readFileSync(paths.words))
+    .digest('hex')
+    .slice(0, 16);
 }

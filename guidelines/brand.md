@@ -33,7 +33,7 @@ Highlighting the key word:
 
 The rotated lime box is retired. Not chosen: ruled ledger paper with margin, minimal flat counter (kept in `pnpm render:lab` for reference only).
 
-### Cut-paper direction (exploring, D-020 to D-028)
+### Cut-paper direction (exploring, D-020 to D-032)
 
 Edoardo prefers the Matisse papiers découpés direction. Rules so far (2026-11-18):
 
@@ -45,8 +45,10 @@ Edoardo prefers the Matisse papiers découpés direction. Rules so far (2026-11-
 - Headline font: **Sour Gummy 800** (D-024); DM Mono for numbers and labels.
 - Key word highlight (D-028): a cut-paper **label**, a strip behind the whole word (ascenders and descenders included). The word never sits half on the band and half on the background. The word turns to the band text color only where the strip has already arrived. The half-height highlighter (`marker`) is allowed only if its text color also reads on the background (3:1).
 - Colors come only from the six cut-paper palettes in `@reelkit/brand` (D-027, draft), all in Refattura tones: Blu Refattura, Notte, Azzurro, Ghiaccio, Viola, Lavanda. No warm colors: coral, lemon, pink and emerald made it look like a primary school (Edoardo, 2026-11-18). Stamp green, amber and red appear only on stamps, with their meaning. Consecutive scenes never share a palette; a reel alternates dark (Blu Refattura, Notte, Viola) and light (Azzurro, Ghiaccio, Lavanda) palettes.
-- Visibility (D-026): every cut piece needs at least 2:1 luminance contrast with what it sits on (the background or another piece), text 4.5:1. With only blues and violets, luminance is the only separation: never blue with violet (1.16:1), sky with lavender (1.36:1), white on ice (1.22:1). Office objects choose the color of each piece with `pickerFor(palette)`, bloom transitions take their layers from `bloomLayers(from, to)`, and `pnpm brand:contrast` fails on a palette that breaks the rule.
+- Visibility (D-026): every cut piece needs at least 2:1 luminance contrast with what it sits on (the background or another piece), text 4.5:1. With only blues and violets, luminance is the only separation: never blue with violet (1.16:1), sky with lavender (1.36:1), white on ice (1.22:1). Office objects choose the color of each piece with `pickerFor(palette)`, bloom transitions take their layers from `bloomLayers(from, to)`, and `pnpm brand:contrast` fails on a palette that breaks the rule. A side motif that can cover the mascot (depth front) must stand out from its white sheet and border by 2:1 too, or stay behind it (Edoardo, 2026-11-18: the mascot vanished behind the white frond).
 - Motifs mix organic cut-outs (fronds, stars, blobs, coral, waves, kelp) with office objects (calculator, scissors, stapler, binders, stamp, pencil, envelope, coins, calendar, coffee, magnifier, pinned note), each animated by what it does.
+- The mascot lives on a lane at the bottom (feet on y 1634, standing between x 160 and 860 so the face stays clear of the platform buttons). It walks sideways like a flat cartoon, never mirrored; side motifs marked `front` can cover it as it walks behind them, which gives the scene depth. It holds props (scissors, stamp, calculator, magnifier, letter, watering can, sheet) kept upright in the hand (D-032).
+- Mascot-triggered transitions decorate bloom and cut (scissors, blow) or add the pulled sheet, at most 2 per reel. The pulled sheet is paper with a torn, boiling edge held by the mascot, never a rigid slide.
 
 Token source: `refattura/DESIGN.md`, copied to `packages/brand/src/tokens.ts`. In code, colors always come from `@reelkit/brand`, never written by hand.
 
@@ -147,23 +149,25 @@ Name: to be decided.
 
 ### Poses and expressions
 
-Poses (full library in Phase 2): `neutral`, `arms-up`, `point-left`, `point-up`, `shrug`, `thinking`, `wave`, `facepalm`, `celebrate`. Today `neutral`, `arms-up` and `wave` exist.
+Poses (full library in Phase 2): `neutral`, `arms-up`, `point-left`, `point-up`, `shrug`, `thinking`, `wave`, `facepalm`, `celebrate`. The pose list is in `packages/video/src/mascot/poses.ts` (15 poses, D-032).
 
-Expressions (Phase 2): `happy`, `worried`, `skeptical`, `surprised`. With dot eyes and no eyebrows, expressions come from eye shape (round, squashed, arcs), mouth, roll and arm pose. Today `happy` (arc eyes) exists.
+Expressions: with dot eyes and no eyebrows, they come from the eyes (`open`, `happy` arcs, `wide`, `closed`, `half`), the mouth, the roll (tilt, lift, squash), the body lean and the arm pose (D-032).
 
 ### SVG layer naming
 
-Every animated part is a `<g>` group with this `id`. An SVG exported from Figma with the same layer names attaches to the rig without code changes. ViewBox 400×600, feet at y 566. Target contract for the invoice roll; Phase 2 aligns `InvoiceRoll.tsx` and `rig.ts` to it (today `rig.ts` still describes the old provisional mascot).
+Every animated part is a `<g>` group with this `id`. An SVG exported from Figma with the same layer names attaches to the rig without code changes. ViewBox 400×600, feet at y 566. `rig.ts` (`RIG_LAYERS`) and `InvoiceRoll.tsx` follow this table (D-032).
 
 | id                           | Content                                                | Pivot (rotation)              |
 | ---------------------------- | ------------------------------------------------------ | ----------------------------- |
 | `mascot`                     | the whole character                                    | 200, 566 (feet)               |
-| `leg-l`, `leg-r`             | pen leg and foot                                       | hip                           |
+| `leg-l`, `leg-r`             | pen thigh, contains the shin                           | hip                           |
+| `shin-l`, `shin-r`           | pen shin and foot (pointing outward)                   | knee                          |
 | `body`                       | sheet, roll, arms and face (breathes)                  | 200, 470 (bottom edge)        |
 | `roll`                       | rolled paper on top (squash on pose change, idle sway) | roll center                   |
 | `arm-l-upper`, `arm-r-upper` | pen upper arm, contains the forearm                    | shoulders at mid sheet height |
 | `arm-l-lower`, `arm-r-lower` | pen forearm, contains the hand                         | elbow                         |
 | `hand-l`, `hand-r`           | loop hand                                              | wrist                         |
+| `prop-l`, `prop-r`           | held prop, kept upright (scissors, stamp, calculator)  | hand                          |
 | `sheet`                      | A4 sheet: FATTURA header, number, table rows, TOT pill |                               |
 | `head`                       | the face area                                          |                               |
 | `eye-l`, `eye-r`             | dot eye (blink, happy arcs, gaze offset)               | eye center                    |

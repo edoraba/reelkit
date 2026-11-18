@@ -1,4 +1,107 @@
 {
-  "$comment": "Music loops with compatible licenses. Fields per file: file, moods, bpm, durationMs, license, source.",
-  "files": []
+  "$comment": "CC0 music loops from Freesound (D-034). Fields: tag, mood, file, durationMs, impactMs, lufs, source, license. Fetched by pnpm pipeline audio-fetch.",
+  "files": [
+    {
+      "tag": "music",
+      "mood": "ukulele",
+      "file": "music/ukulele/fs-395037.mp3",
+      "durationMs": 48485,
+      "impactMs": 3055,
+      "lufs": -20.3,
+      "peakDb": -3.8,
+      "source": {
+        "site": "freesound",
+        "id": 395037,
+        "name": "simple relaxing guitar loop",
+        "author": "Kodack",
+        "url": "https://freesound.org/s/395037/"
+      },
+      "license": "CC0-1.0"
+    },
+    {
+      "tag": "music",
+      "mood": "ukulele",
+      "file": "music/ukulele/fs-383023.mp3",
+      "durationMs": 15209,
+      "impactMs": 5005,
+      "lufs": -17,
+      "peakDb": -0.3,
+      "source": {
+        "site": "freesound",
+        "id": 383023,
+        "name": "short ukulele loop by rea.mp3",
+        "author": "reasanka",
+        "url": "https://freesound.org/s/383023/"
+      },
+      "license": "CC0-1.0"
+    },
+    {
+      "tag": "music",
+      "mood": "marimba",
+      "file": "music/marimba/fs-425971.mp3",
+      "durationMs": 18065,
+      "impactMs": 535,
+      "lufs": -13.7,
+      "peakDb": -2.8,
+      "source": {
+        "site": "freesound",
+        "id": 425971,
+        "name": "BirdFish Happy Loop.mp3",
+        "author": "pinkinblue",
+        "url": "https://freesound.org/s/425971/"
+      },
+      "license": "CC0-1.0"
+    },
+    {
+      "tag": "music",
+      "mood": "marimba",
+      "file": "music/marimba/fs-573973.mp3",
+      "durationMs": 34839,
+      "impactMs": 1450,
+      "lufs": -21.4,
+      "peakDb": -7,
+      "source": {
+        "site": "freesound",
+        "id": 573973,
+        "name": "Tropical Cruise",
+        "author": "code_box",
+        "url": "https://freesound.org/s/573973/"
+      },
+      "license": "CC0-1.0"
+    },
+    {
+      "tag": "music",
+      "mood": "upbeat",
+      "file": "music/upbeat/fs-561190.mp3",
+      "durationMs": 37647,
+      "impactMs": 5,
+      "lufs": -16.3,
+      "peakDb": -2,
+      "source": {
+        "site": "freesound",
+        "id": 561190,
+        "name": "Tropicorp Advertisement",
+        "author": "code_box",
+        "url": "https://freesound.org/s/561190/"
+      },
+      "license": "CC0-1.0"
+    },
+    {
+      "tag": "music",
+      "mood": "upbeat",
+      "file": "music/upbeat/fs-398941.mp3",
+      "durationMs": 13717,
+      "impactMs": 5,
+      "lufs": -7,
+      "peakDb": 0,
+      "source": {
+        "site": "freesound",
+        "id": 398941,
+        "name": "HappyLoop.wav",
+        "author": "envirOmaniac2",
+        "url": "https://freesound.org/s/398941/"
+      },
+      "license": "CC0-1.0"
+    }
+  ]
 }

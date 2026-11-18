@@ -35,6 +35,7 @@ import {
 } from './lab/moodboards/MoodBoard';
 import { Reel, reelDefaults, reelDuration } from './compositions/Reel';
 import { AlignCheck, alignCheckDefaults } from './lab/AlignCheck';
+import { choreoLabProps, MascotPoseSheet, MASCOT_POSE_SHEET } from './lab/ChoreoLab';
 import { Proposal, PROPOSALS } from './lab/Proposals';
 import { StyleLab, STYLE_SHEETS, styleSheetHeight } from './lab/StyleLab';
 import { StyleMotionLab, STYLE_MOTION_DURATION } from './lab/StyleMotionLab';
@@ -50,6 +51,21 @@ export const RemotionRoot: React.FC = () => (
       height={formats.reel.height}
       defaultProps={reelDefaults}
       calculateMetadata={({ props }) => ({ durationInFrames: reelDuration(props) })}
+    />
+    <Composition
+      id="ChoreoLab"
+      component={Reel}
+      durationInFrames={reelDuration(choreoLabProps)}
+      fps={formats.reel.fps}
+      width={formats.reel.width}
+      height={formats.reel.height}
+      defaultProps={choreoLabProps}
+    />
+    <Still
+      id="MascotPoseSheet"
+      component={MascotPoseSheet}
+      width={MASCOT_POSE_SHEET.width}
+      height={MASCOT_POSE_SHEET.height}
     />
     <Composition
       id="AlignCheck"
