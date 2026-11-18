@@ -6,7 +6,7 @@
       "file": "sfx/whoosh-soft/fs-485277.mp3",
       "atMs": 4599,
       "startMs": 4534,
-      "gainDb": 7.9,
+      "gainDb": 11.9,
       "reason": "hide in b02"
     },
     {
@@ -14,7 +14,7 @@
       "file": "sfx/paper-pull/fs-444431.mp3",
       "atMs": 5620,
       "startMs": 5175,
-      "gainDb": 9,
+      "gainDb": 12,
       "reason": "pull into b03"
     },
     {
@@ -22,7 +22,7 @@
       "file": "sfx/snip/fs-240474.mp3",
       "atMs": 11417,
       "startMs": 11392,
-      "gainDb": 0.3,
+      "gainDb": 5.3,
       "reason": "cut into b05"
     },
     {
@@ -30,7 +30,7 @@
       "file": "sfx/paper-tear/fs-272028.mp3",
       "atMs": 11684,
       "startMs": 11184,
-      "gainDb": 2.8,
+      "gainDb": 7.8,
       "reason": "pieces fall into b05"
     },
     {
@@ -38,7 +38,7 @@
       "file": "sfx/typing/fs-347544.mp3",
       "atMs": 13018,
       "startMs": 11178,
-      "gainDb": -9,
+      "gainDb": -5,
       "reason": "type in b05"
     },
     {
@@ -46,7 +46,7 @@
       "file": "sfx/tap/fs-91042.mp3",
       "atMs": 15292,
       "startMs": 15142,
-      "gainDb": 9,
+      "gainDb": 12,
       "reason": "foot tap in b06"
     },
     {
@@ -54,7 +54,7 @@
       "file": "sfx/swish/fs-60007.mp3",
       "atMs": 16899,
       "startMs": 16844,
-      "gainDb": -8,
+      "gainDb": -4,
       "reason": "send in b06"
     },
     {
@@ -62,7 +62,7 @@
       "file": "sfx/paper-swoosh/fs-346835.mp3",
       "atMs": 17307,
       "startMs": 17067,
-      "gainDb": -1,
+      "gainDb": 4,
       "reason": "bloom into b07"
     },
     {
@@ -70,7 +70,7 @@
       "file": "sfx/snip/fs-175522.mp3",
       "atMs": 23372,
       "startMs": 23352,
-      "gainDb": -5.7,
+      "gainDb": -0.7,
       "reason": "cut into b09"
     },
     {
@@ -78,7 +78,7 @@
       "file": "sfx/paper-tear/fs-342541.mp3",
       "atMs": 23639,
       "startMs": 23524,
-      "gainDb": 0.8,
+      "gainDb": 5.8,
       "reason": "pieces fall into b09"
     },
     {
@@ -86,7 +86,7 @@
       "file": "sfx/pop/fs-245646.mp3",
       "atMs": 25777,
       "startMs": 25772,
-      "gainDb": -10,
+      "gainDb": -6,
       "reason": "closing card"
     },
     {
@@ -94,16 +94,16 @@
       "file": "sfx/sting/fs-717771.mp3",
       "atMs": 26077,
       "startMs": 26072,
-      "gainDb": -9.1,
+      "gainDb": -5.1,
       "reason": "logo"
     }
   ],
   "durationMs": 27867,
   "music": {
-    "file": "music/marimba/fs-573973.mp3",
-    "gainDb": -11.6,
+    "file": "music/piano/fs-238748.mp3",
+    "gainDb": -14.1,
     "fadeInMs": 600,
     "fadeOutMs": 1400,
-    "author": "code_box"
+    "author": "arseniiv"
   }
 }

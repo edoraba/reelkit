@@ -1,4 +1,5 @@
 import { spawnSync } from 'node:child_process';
+import { rmSync } from 'node:fs';
 import path from 'node:path';
 import { transitionTiming } from '@reelkit/brand';
 import { holdsHighlight, seededRandom, type ReelTimeline } from '@reelkit/schema';
@@ -41,14 +42,21 @@ const FRAME_MS = 1000 / 30;
 const MIN_GAP_MS = 250;
 const ATTACK_GUARD_MS = 150;
 /** A quiet file is raised at most this much: more would raise its noise floor too. */
-const MAX_BOOST_DB = 9;
+const MAX_BOOST_DB = 12;
+/**
+ * Loudness of the music loop before ducking, against a raw voice around -21 LUFS: about 7 LU
+ * under it in the pauses and about 13 under it while the voice speaks (Edoardo: -33 was too low).
+ */
+const MUSIC_LUFS = -28;
+
+export const musicGainDb = (lufs: number): number => Math.round((MUSIC_LUFS - lufs) * 10) / 10;
 
 /** Target peak (dBFS, before the final loudness pass) and priority of each kind of event. */
 const LEVEL: Record<string, { peak: number; priority: number }> = {
-  script: { peak: -9, priority: 3 },
-  transition: { peak: -13, priority: 2 },
-  closing: { peak: -10, priority: 2 },
-  auto: { peak: -20, priority: 1 },
+  script: { peak: -5, priority: 3 },
+  transition: { peak: -8, priority: 2 },
+  closing: { peak: -6, priority: 2 },
+  auto: { peak: -15, priority: 1 },
 };
 
 interface Want {
@@ -74,15 +82,40 @@ function wants(t: ReelTimeline): Want[] {
       const kind = planned?.kind ?? 'bloom';
       const tStart = b.startMs - ms(transitionTiming[kind].lead);
       if (kind === 'bloom') {
-        out.push({ tag: 'paper-swoosh', atMs: tStart + ms(2), level: 'transition', reason: `bloom into ${b.id}` });
+        out.push({
+          tag: 'paper-swoosh',
+          atMs: tStart + ms(2),
+          level: 'transition',
+          reason: `bloom into ${b.id}`,
+        });
       } else if (kind === 'cut') {
-        out.push({ tag: 'snip', atMs: tStart + ms(2), level: 'transition', reason: `cut into ${b.id}` });
-        out.push({ tag: 'paper-tear', atMs: tStart + ms(10), level: 'transition', reason: `pieces fall into ${b.id}` });
+        out.push({
+          tag: 'snip',
+          atMs: tStart + ms(2),
+          level: 'transition',
+          reason: `cut into ${b.id}`,
+        });
+        out.push({
+          tag: 'paper-tear',
+          atMs: tStart + ms(10),
+          level: 'transition',
+          reason: `pieces fall into ${b.id}`,
+        });
       } else {
-        out.push({ tag: 'paper-pull', atMs: tStart, level: 'transition', reason: `pull into ${b.id}` });
+        out.push({
+          tag: 'paper-pull',
+          atMs: tStart,
+          level: 'transition',
+          reason: `pull into ${b.id}`,
+        });
       }
       if (planned?.trigger === 'blow') {
-        out.push({ tag: 'puff', atMs: tStart - 120, level: 'script', reason: `mascot blows into ${b.id}` });
+        out.push({
+          tag: 'puff',
+          atMs: tStart - 120,
+          level: 'script',
+          reason: `mascot blows into ${b.id}`,
+        });
       }
     }
     prev = b.palette;
@@ -103,13 +136,23 @@ function wants(t: ReelTimeline): Want[] {
     } else if (g.kind === 'hop') {
       out.push({ tag: 'hop', atMs: g.fromMs + 120, level: 'auto', reason: `hop in ${g.beat}` });
     } else if (g.kind === 'tap') {
-      out.push({ tag: 'tap', atMs: g.fromMs + 100, level: 'auto', reason: `foot tap in ${g.beat}` });
+      out.push({
+        tag: 'tap',
+        atMs: g.fromMs + 100,
+        level: 'auto',
+        reason: `foot tap in ${g.beat}`,
+      });
     }
   }
   // Closing: the card lands, the logo chimes.
   if (t.outro) {
     // Frames of reel/Outro.tsx: the card lands at 8, the tagline at 24.
-    out.push({ tag: 'pop', atMs: t.outro.startMs + ms(9), level: 'closing', reason: 'closing card' });
+    out.push({
+      tag: 'pop',
+      atMs: t.outro.startMs + ms(9),
+      level: 'closing',
+      reason: 'closing card',
+    });
     out.push({ tag: 'sting', atMs: t.outro.startMs + ms(18), level: 'closing', reason: 'logo' });
   }
   return out.sort((a, b) => a.atMs - b.atMs);
@@ -127,7 +170,8 @@ export function planSound(t: ReelTimeline, totalMs: number): SoundPlan {
     if (!w.onWord && attacks.some((a) => Math.abs(a - w.atMs) < ATTACK_GUARD_MS)) continue;
     const clash = chosen.find((c) => Math.abs(c.atMs - w.atMs) < MIN_GAP_MS);
     if (!clash) chosen.push(w);
-    else if (LEVEL[w.level]!.priority > LEVEL[clash.level]!.priority) chosen.splice(chosen.indexOf(clash), 1, w);
+    else if (LEVEL[w.level]!.priority > LEVEL[clash.level]!.priority)
+      chosen.splice(chosen.indexOf(clash), 1, w);
   }
   const lastFile = new Map<string, string>();
   const events: SoundEvent[] = [];
@@ -147,7 +191,9 @@ export function planSound(t: ReelTimeline, totalMs: number): SoundPlan {
       atMs: Math.round(w.atMs),
       startMs,
       gainDb: Math.round(Math.min(MAX_BOOST_DB, LEVEL[w.level]!.peak - pick.peakDb) * 10) / 10,
-      ...(w.maxMs && w.maxMs + pick.impactMs < pick.durationMs ? { maxMs: w.maxMs + pick.impactMs } : {}),
+      ...(w.maxMs && w.maxMs + pick.impactMs < pick.durationMs
+        ? { maxMs: w.maxMs + pick.impactMs }
+        : {}),
       reason: w.reason,
     });
   }
@@ -162,8 +208,7 @@ export function planSound(t: ReelTimeline, totalMs: number): SoundPlan {
       ? {
           music: {
             file: track.file,
-            // Music about 12 LU under the raw voice (around -21 LUFS), about 20 under it once ducked.
-            gainDb: Math.round((-33 - track.lufs) * 10) / 10,
+            gainDb: musicGainDb(track.lufs),
             fadeInMs: 600,
             fadeOutMs: 1400,
             author: track.source.author,
@@ -175,14 +220,19 @@ export function planSound(t: ReelTimeline, totalMs: number): SoundPlan {
 
 /**
  * Mixes voice, events and music into one WAV (48 kHz stereo), music ducked by the voice with a
- * sidechain compressor, then normalized to -14 LUFS integrated, true peak -1.5 dBTP.
+ * sidechain compressor, then normalized to -14 LUFS integrated, true peak -1.5 dBTP. The
+ * loudness pass is linear (measured first, then one gain for the whole reel), so the balance
+ * between voice, effects and music stays the one planned here.
  */
 export function mixSound(voice: string, plan: SoundPlan, out: string): { lufs: number } {
   const D = (plan.durationMs / 1000).toFixed(3);
   const assets = path.join(repoRoot, 'assets');
   const args = ['-v', 'error', '-y', '-i', voice];
   for (const e of plan.events) args.push('-i', path.join(assets, e.file));
-  if (plan.music) args.push('-stream_loop', '-1', '-i', path.join(assets, plan.music.file));
+  if (plan.music) {
+    const m = plan.music.file;
+    args.push('-stream_loop', '-1', '-i', path.isAbsolute(m) ? m : path.join(assets, m));
+  }
   const fmt = 'aresample=48000,aformat=sample_fmts=fltp:channel_layouts=stereo';
   const parts: string[] = [`[0:a]${fmt},apad=whole_dur=${D},asplit=2[v][key]`];
   const labels = ['[v]'];
@@ -201,18 +251,64 @@ export function mixSound(voice: string, plan: SoundPlan, out: string): { lufs: n
     const fadeOutStart = (plan.durationMs - m.fadeOutMs) / 1000;
     parts.push(
       `[${k}:a]${fmt},atrim=0:${D},volume=${m.gainDb}dB,afade=t=in:d=${m.fadeInMs / 1000},afade=t=out:st=${fadeOutStart.toFixed(3)}:d=${m.fadeOutMs / 1000}[mus]`,
-      // Ducking: the voice pushes the music down about 8 dB while it speaks.
-      `[mus][key]sidechaincompress=threshold=0.02:ratio=6:attack=15:release=350:makeup=1[duck]`,
+      // Ducking: the voice pushes the music down about 6 dB while it speaks.
+      `[mus][key]sidechaincompress=threshold=0.02:ratio=4:attack=15:release=350:makeup=1[duck]`,
     );
     labels.push('[duck]');
   } else {
     parts.push('[key]anullsink');
   }
   parts.push(
-    `${labels.join('')}amix=inputs=${labels.length}:normalize=0:duration=longest,atrim=0:${D},loudnorm=I=-14:TP=-1.5:LRA=11,aresample=48000[out]`,
+    `${labels.join('')}amix=inputs=${labels.length}:normalize=0:duration=longest,atrim=0:${D}[out]`,
   );
-  args.push('-filter_complex', parts.join(';'), '-map', '[out]', '-ac', '2', '-ar', '48000', '-c:a', 'pcm_s16le', out);
+  const pre = out.replace(/\.wav$/, '') + '.pre.wav';
+  args.push(
+    '-filter_complex',
+    parts.join(';'),
+    '-map',
+    '[out]',
+    '-ac',
+    '2',
+    '-ar',
+    '48000',
+    '-c:a',
+    'pcm_f32le',
+    pre,
+  );
   const res = spawnSync(bin.ffmpeg, args, { encoding: 'utf8', maxBuffer: 1 << 26 });
   if (res.status !== 0) throw new Error(`ffmpeg mix failed: ${res.stderr.slice(-1500)}`);
+  // Two-pass loudnorm: measure, then apply the measured values with linear=true.
+  const target = 'I=-14:TP=-1.5:LRA=11';
+  const measure = spawnSync(
+    bin.ffmpeg,
+    ['-hide_banner', '-i', pre, '-af', `loudnorm=${target}:print_format=json`, '-f', 'null', '-'],
+    { encoding: 'utf8', maxBuffer: 1 << 26 },
+  );
+  const json = /\{[^{}]*"input_i"[^{}]*\}/.exec(measure.stderr)?.[0];
+  if (!json) throw new Error(`loudnorm measure failed: ${measure.stderr.slice(-800)}`);
+  const m = JSON.parse(json) as Record<string, string>;
+  const apply = `loudnorm=${target}:measured_I=${m.input_i}:measured_TP=${m.input_tp}:measured_LRA=${m.input_lra}:measured_thresh=${m.input_thresh}:offset=${m.target_offset}:linear=true,aresample=48000`;
+  const norm = spawnSync(
+    bin.ffmpeg,
+    [
+      '-v',
+      'error',
+      '-y',
+      '-i',
+      pre,
+      '-af',
+      apply,
+      '-ac',
+      '2',
+      '-ar',
+      '48000',
+      '-c:a',
+      'pcm_s16le',
+      out,
+    ],
+    { encoding: 'utf8', maxBuffer: 1 << 26 },
+  );
+  if (norm.status !== 0) throw new Error(`loudnorm failed: ${norm.stderr.slice(-800)}`);
+  rmSync(pre, { force: true });
   return { lufs: analyze(out).lufs };
 }

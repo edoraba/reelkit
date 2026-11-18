@@ -10,13 +10,14 @@ import { bin } from '../tools/registry';
  * file. Only Creative Commons 0 is fetched, so the files can live in the public repository.
  * Previews in high quality mp3 (about 128 kbps) are enough under the voice and need only an
  * API key (FREESOUND_API_KEY in .env, free account).
- *   pnpm pipeline audio-fetch [--force]
+ *   pnpm pipeline audio-fetch [--force]     sound effects
+ * Music is chosen by ear instead: `pnpm pipeline music-test` and `music-pick` (music-test.ts).
  */
 
 const API = 'https://freesound.org/apiv2';
 
 /** One kind of sound the reels use, and how to find it. */
-interface Wanted {
+export interface Wanted {
   tag: string;
   query: string;
   /** Seconds. */
@@ -43,16 +44,6 @@ export const SFX_CATALOG: Wanted[] = [
   { tag: 'hop', query: 'cartoon jump boing', duration: [0.1, 0.9], count: 2 },
   { tag: 'tap', query: 'shoe tap', duration: [0.05, 0.6], count: 2 },
   { tag: 'sting', query: 'success chime', duration: [0.8, 3], count: 3 },
-];
-
-/**
- * Music: light, playful loops for an explainer (moods in the manifest). Freesound tag `loop`
- * required, ambience and noise words excluded.
- */
-export const MUSIC_CATALOG: Array<Wanted & { mood: string }> = [
-  { tag: 'music', mood: 'ukulele', query: 'ukulele', duration: [12, 120], count: 2 },
-  { tag: 'music', mood: 'marimba', query: 'marimba', duration: [12, 120], count: 2 },
-  { tag: 'music', mood: 'upbeat', query: 'happy upbeat', duration: [12, 120], count: 2 },
 ];
 
 /** Words in a name that betray the wrong kind of file for the reels. */
@@ -99,7 +90,12 @@ export function readManifest(kind: 'sfx' | 'music'): Manifest {
   return JSON.parse(readFileSync(manifestPath(kind), 'utf8')) as Manifest;
 }
 
-async function search(w: Wanted & { mood?: string }, key: string): Promise<FsSound[]> {
+export function writeManifest(kind: 'sfx' | 'music', files: LibraryFile[]): void {
+  const { $comment } = readManifest(kind);
+  writeFileSync(manifestPath(kind), JSON.stringify({ $comment, files }, null, 2) + '\n');
+}
+
+export async function search(w: Wanted & { mood?: string }, key: string): Promise<FsSound[]> {
   const params = new URLSearchParams({
     query: w.query,
     filter: `license:"Creative Commons 0" duration:[${w.duration[0]} TO ${w.duration[1]}]${w.mood ? ' tag:loop' : ''}${w.tag2 ? ` tag:${w.tag2}` : ''}`,
@@ -166,13 +162,13 @@ export function analyze(file: string): {
   };
 }
 
-/** Fetches what is missing from the catalogs and rewrites both manifests. */
+/** Fetches the sound effects missing from the catalog and rewrites their manifest. */
 export async function fetchLibrary(opts: { force?: boolean } = {}): Promise<void> {
   const key = process.env.FREESOUND_API_KEY;
   if (!key)
     throw new Error('FREESOUND_API_KEY missing in .env (free Freesound account, API credentials).');
-  for (const kind of ['sfx', 'music'] as const) {
-    const catalog: Array<Wanted & { mood?: string }> = kind === 'sfx' ? SFX_CATALOG : MUSIC_CATALOG;
+  for (const kind of ['sfx'] as const) {
+    const catalog: Array<Wanted & { mood?: string }> = SFX_CATALOG;
     const manifest = readManifest(kind);
     const keep = opts.force ? [] : manifest.files;
     const out: LibraryFile[] = [];

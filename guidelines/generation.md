@@ -67,7 +67,7 @@ The mascot is planned by `pnpm pipeline mascot <id>` (D-032): an automatic layer
 
 ## SFX
 
-Sound is planned by `pnpm pipeline sound <id>` (D-034) after the mascot plan, and never written by hand in the script or the video. Every file comes from the CC0 library in `assets/sfx` and `assets/music` (`pnpm pipeline audio-fetch`, Freesound), with source and author in the manifests.
+Sound is planned by `pnpm pipeline sound <id>` (D-034) after the mascot plan, and never written by hand in the script or the video. Every file comes from the CC0 library, with source and author in the manifests: effects in `assets/sfx` (`pnpm pipeline audio-fetch`, Freesound), music in `assets/music`, only loops Edoardo kept by ear (`pnpm pipeline music-test <id>`, then `music-pick`; dropped loops are listed in `assets/music/rejected.json` and never proposed again).
 
 - **Gestures of the script**: the SFX tag of each script gag (`stamp`, `typing`, `swish` on send, `whoosh-soft` on hide, `water`), on the gesture. Typing and pouring stop with the gesture.
 - **Transitions**: bloom `paper-swoosh`, cut `snip` then `paper-tear` as the pieces fall, pull `paper-pull`; a blow trigger adds `puff` just before.
@@ -76,13 +76,13 @@ Sound is planned by `pnpm pipeline sound <id>` (D-034) after the mascot plan, an
 
 Mix rules (in the code, `packages/pipeline/src/audio/sound.ts`):
 
-- the voice is the reference: SFX peaks from about 7 dB (script gestures) to 18 dB (automatic layer) under the voice peaks; a quiet file is raised by 9 dB at most;
+- the voice is the reference: SFX peaks from about 3 dB (script gestures) to 13 dB (automatic layer) under the voice peaks; a quiet file is raised by 12 dB at most;
 - every file is placed on its first transient, not on its start;
 - two SFX do not start less than 250 ms apart; on conflict the script gesture wins, then the transition, then the automatic layer;
 - no SFX over the attack of a highlighted word, except the gesture the script anchors there;
 - the same tag does not use the same file twice in a row; variants are seeded by the post id;
-- a single music loop per reel (seeded on its own, so it stays the same when the events change), about 12 LU under the voice, ducked by about 8 dB while the voice speaks, with fade in and fade out;
-- integrated loudness of the mix -14 LUFS (±1), true peak -1.5 dBTP.
+- a single music loop per reel (seeded on its own, so it stays the same when the events change), about 7 LU under the voice in the pauses and about 13 LU under it while the voice speaks (ducking of about 6 dB), with fade in and fade out;
+- integrated loudness of the mix -14 LUFS (±1), true peak -1.5 dBTP, with one linear gain for the whole reel (two-pass loudnorm), so the balance above is kept.
 
 ## Cover
 
