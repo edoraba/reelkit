@@ -5,6 +5,7 @@ import path from 'node:path';
 import { outroPalette, outroTiming } from '@reelkit/brand';
 import { MascotPlan, Post, ReelTimeline, Script, type PostStatus } from '@reelkit/schema';
 import { alignAudio, type AlignReport } from '../align/align';
+import { mixSound, planSound, type SoundPlan } from '../audio/sound';
 import { shiftMs, stretchVoice, type Stretch } from '../audio/stretch';
 import { planMascot } from '../mascot/plan';
 import { contentDir, rel, repoRoot } from '../paths';
@@ -26,6 +27,7 @@ export function postPaths(id: string) {
     voice: path.join(dir, 'voice.wav'),
     words: path.join(dir, 'words.json'),
     mascot: path.join(dir, 'mascot.json'),
+    sound: path.join(dir, 'sound.json'),
     reel: path.join(dir, 'out', 'reel.mp4'),
   };
 }
@@ -165,7 +167,22 @@ export function renderPost(id: string, opts: { scale?: number } = {}): void {
     );
   }
   stretchVoice(p.voice, publicCopy, mascot?.stretch ?? []);
-  const timeline = timelineOf(id, audio, mascot);
+  let timeline = timelineOf(id, audio, mascot);
+  // Voice, sound effects and music in one track (D-034), when the post has a sound plan.
+  if (existsSync(p.sound)) {
+    const sound = readJson(p.sound) as SoundPlan;
+    if (sound.inputs !== soundInputsOf(id)) {
+      throw new Error(
+        `sound.json of ${id} was planned on an older script, words or mascot plan: run "pnpm pipeline sound ${id}" again`,
+      );
+    }
+    const mix = `.scratch/${id}/mix.wav`;
+    const { lufs } = mixSound(publicCopy, sound, path.join(repoRoot, 'assets', mix));
+    console.log(`mix: ${sound.events.length} sounds, music ${sound.music?.file ?? 'none'}, ${lufs} LUFS`);
+    timeline = { ...timeline, audio: mix };
+  } else {
+    console.log(`no sound.json: voice only (run "pnpm pipeline sound ${id}")`);
+  }
   const props = path.join(repoRoot, 'packages', 'pipeline', 'out', 'render', `${id}.json`);
   mkdirSync(path.dirname(props), { recursive: true });
   writeFileSync(props, JSON.stringify(timeline));
@@ -197,6 +214,37 @@ export function mascotPost(id: string): MascotPlan {
   }
   writeFileSync(postPaths(id).mascot, JSON.stringify(plan, null, 2) + '\n');
   return plan;
+}
+
+/** Length of the rendered reel, as the Reel composition counts it (30 fps). */
+export function reelMs(t: ReelTimeline): number {
+  const f = (ms: number) => Math.round((ms / 1000) * 30);
+  const frames = Math.max(f(t.durationMs) + 12, t.outro ? f(t.outro.startMs + t.outro.durationMs) : 0);
+  return Math.round((frames * 1000) / 30);
+}
+
+/**
+ * Plans the sound of a post (D-034): effects from the mascot plan, transitions and closing,
+ * and the music loop. Writes sound.json; the render mixes it.
+ */
+export function soundPost(id: string): SoundPlan {
+  const p = postPaths(id);
+  if (!existsSync(p.mascot)) throw new Error(`No mascot plan yet: run \`pnpm pipeline mascot ${id}\``);
+  const mascot = MascotPlan.parse(readJson(p.mascot));
+  const timeline = timelineOf(id, '', mascot);
+  const plan = { inputs: soundInputsOf(id), ...planSound(timeline, reelMs(timeline)) };
+  writeFileSync(p.sound, JSON.stringify(plan, null, 2) + '\n');
+  return plan;
+}
+
+function soundInputsOf(id: string): string {
+  const paths = postPaths(id);
+  return createHash('sha256')
+    .update(readFileSync(paths.script))
+    .update(readFileSync(paths.words))
+    .update(readFileSync(paths.mascot))
+    .digest('hex')
+    .slice(0, 16);
 }
 
 /** Fingerprint of what a mascot plan depends on: the script and the word timings. */

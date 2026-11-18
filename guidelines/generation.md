@@ -67,20 +67,22 @@ The mascot is planned by `pnpm pipeline mascot <id>` (D-032): an automatic layer
 
 ## SFX
 
-SFX are resolved by the pipeline (`pipeline sfx-plan`), they are not written by hand in the video.
+Sound is planned by `pnpm pipeline sound <id>` (D-034) after the mascot plan, and never written by hand in the script or the video. Every file comes from the CC0 library in `assets/sfx` and `assets/music` (`pnpm pipeline audio-fetch`, Freesound), with source and author in the manifests.
 
-- **Component SFX**, automatic: lime sticker `pop`, stamp `stamp`, dashed arrow `swish`, strike-through `marker`, sliding cards `whoosh-soft`, counter `tick` at every step, background change `swoosh`.
-- **Semantic SFX**, chosen in the beat and anchored to a word: `cash-register` on an amount, `notification` on a message, `typing` on a chat, `ding` on an idea, `error` on a penalty.
+- **Gestures of the script**: the SFX tag of each script gag (`stamp`, `typing`, `swish` on send, `whoosh-soft` on hide, `water`), on the gesture. Typing and pouring stop with the gesture.
+- **Transitions**: bloom `paper-swoosh`, cut `snip` then `paper-tear` as the pieces fall, pull `paper-pull`; a blow trigger adds `puff` just before.
+- **Automatic layer**: `hop` and `tap` on the automatic hops and foot taps, quieter than everything else.
+- **Closing**: `pop` when the card lands, `sting` on the logo.
 
-Mix rules (in the code):
+Mix rules (in the code, `packages/pipeline/src/audio/sound.ts`):
 
-- voice as the reference; SFX from -12 to -18 dB below the voice; music from -20 to -24 dB with ducking when the voice speaks;
-- integrated loudness of the mix around -14 LUFS;
-- two SFX do not start less than 250 ms apart; on conflict the semantic one wins;
-- whoosh and swoosh anticipated by 2-3 frames relative to the movement;
-- no SFX over the attack of a highlighted word;
-- the same tag does not use the same file twice in a row;
-- a single music loop per reel, with fade in and fade out.
+- the voice is the reference: SFX peaks from about 7 dB (script gestures) to 18 dB (automatic layer) under the voice peaks; a quiet file is raised by 9 dB at most;
+- every file is placed on its first transient, not on its start;
+- two SFX do not start less than 250 ms apart; on conflict the script gesture wins, then the transition, then the automatic layer;
+- no SFX over the attack of a highlighted word, except the gesture the script anchors there;
+- the same tag does not use the same file twice in a row; variants are seeded by the post id;
+- a single music loop per reel (seeded on its own, so it stays the same when the events change), about 12 LU under the voice, ducked by about 8 dB while the voice speaks, with fade in and fade out;
+- integrated loudness of the mix -14 LUFS (±1), true peak -1.5 dBTP.
 
 ## Cover
 

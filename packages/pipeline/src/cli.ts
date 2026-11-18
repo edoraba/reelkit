@@ -10,6 +10,7 @@
  *   pnpm pipeline tts <id>                  voice.wav from script.json (one Gemini request)
  *   pnpm pipeline align <id>                words.json from voice.wav
  *   pnpm pipeline mascot <id>               mascot.json, the mascot choreography (D-032)
+ *   pnpm pipeline sound <id>                sound.json: effects and music of the reel (D-034)
  *   pnpm pipeline render <id> [--scale 0.5] out/reel.mp4 (full size sets status rendered)
  *   pnpm pipeline audio-fetch [--force]     CC0 sound effects and music from Freesound (D-034)
  */
@@ -20,7 +21,7 @@ import { alignAudio, type AlignReport } from './align/align';
 import { fetchLibrary } from './audio/library';
 import { bootstrap, check, TOOL_NAMES, type ToolName } from './bootstrap';
 import { rel, repoRoot } from './paths';
-import { alignPost, mascotPost, postPaths, renderPost, ttsPost } from './post/post';
+import { alignPost, mascotPost, postPaths, renderPost, soundPost, ttsPost } from './post/post';
 import { WHISPER_MODELS, type WhisperModelName } from './tools/registry';
 import { listeningTest } from './tts/listening-test';
 import { speechMap, spokenText } from './tts/pronounce';
@@ -156,6 +157,17 @@ async function main(): Promise<void> {
       );
       return;
     }
+    case 'sound': {
+      const id = postIdArg();
+      const plan = soundPost(id);
+      for (const e of plan.events) {
+        console.log(`  ${(e.atMs / 1000).toFixed(2)} s  ${e.tag.padEnd(12)} ${e.gainDb} dB  ${e.reason}`);
+      }
+      console.log(
+        `${plan.events.length} sounds, music ${plan.music ? `${plan.music.file} by ${plan.music.author}` : 'none'} -> ${rel(postPaths(id).sound)}`,
+      );
+      return;
+    }
     case 'audio-fetch':
       await fetchLibrary({ force: values.force ?? false });
       return;
@@ -168,7 +180,7 @@ async function main(): Promise<void> {
     default:
       console.error(
         `Unknown command "${command ?? ''}". ` +
-          'Commands: bootstrap, check, tts-test, say, tts, align, mascot, render, audio-fetch',
+          'Commands: bootstrap, check, tts-test, say, tts, align, mascot, sound, render, audio-fetch',
       );
       process.exitCode = 1;
   }
