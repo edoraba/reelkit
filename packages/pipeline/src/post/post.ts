@@ -3,6 +3,7 @@ import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from
 import path from 'node:path';
 import { MascotPlan, Post, ReelTimeline, Script, type PostStatus } from '@reelkit/schema';
 import { alignAudio, type AlignReport } from '../align/align';
+import { shiftMs, stretchVoice, type Stretch } from '../audio/stretch';
 import { planMascot } from '../mascot/plan';
 import { contentDir, rel, repoRoot } from '../paths';
 import type { WhisperModelName } from '../tools/registry';
@@ -81,9 +82,9 @@ export async function alignPost(id: string, model: WhisperModelName): Promise<Al
 }
 
 /** Builds the timeline the Reel composition renders. */
-export function timelineOf(id: string, audio: string): ReelTimeline {
+export function timelineOf(id: string, audio: string, mascot?: MascotPlan): ReelTimeline {
   const { script } = loadPost(id);
-  const report = readJson(postPaths(id).words) as AlignReport;
+  const report = shiftReport(readJson(postPaths(id).words) as AlignReport, mascot?.stretch ?? []);
   const beats = script.beats.map((b) => {
     const units = report.screen.filter((u) => u.beat === b.id);
     if (units.length === 0) throw new Error(`Beat ${b.id} has no timed words: re-run align`);
@@ -114,20 +115,44 @@ export function timelineOf(id: string, audio: string): ReelTimeline {
     durationMs: report.durationMs,
     beats,
     speech,
+    ...(mascot ? { mascot } : {}),
   });
 }
 
+/** The alignment moved to the final timeline: every time after a stretch is pushed later. */
+function shiftReport(report: AlignReport, stretch: readonly Stretch[]): AlignReport {
+  if (stretch.length === 0) return report;
+  const sh = (ms: number) => Math.round(shiftMs(ms, stretch));
+  const span = <T extends { startMs: number; endMs: number }>(x: T): T => ({
+    ...x,
+    startMs: sh(x.startMs),
+    endMs: sh(x.endMs),
+  });
+  return {
+    ...report,
+    durationMs: report.durationMs + stretch.reduce((s, x) => s + x.addMs, 0),
+    screen: report.screen.map(span),
+    words: report.words.map(span),
+    // A pause that holds an insertion grows by it.
+    pauses: report.pauses.map((q) => ({
+      startMs: sh(q.startMs),
+      endMs: Math.round(shiftMs(q.endMs, stretch)),
+    })),
+  };
+}
+
 /**
- * Renders out/reel.mp4: copies the voice into the Remotion public folder (assets/.scratch,
- * gitignored), writes the timeline as props and runs the Reel composition.
+ * Renders out/reel.mp4: puts the voice in the Remotion public folder (assets/.scratch,
+ * gitignored), stretched by the mascot plan when there is one (D-032), writes the timeline as
+ * props and runs the Reel composition.
  */
 export function renderPost(id: string, opts: { scale?: number } = {}): void {
   const p = postPaths(id);
   const audio = `.scratch/${id}/voice.wav`;
   const publicCopy = path.join(repoRoot, 'assets', audio);
-  mkdirSync(path.dirname(publicCopy), { recursive: true });
-  copyFileSync(p.voice, publicCopy);
-  const timeline = timelineOf(id, audio);
+  const mascot = existsSync(p.mascot) ? MascotPlan.parse(readJson(p.mascot)) : undefined;
+  stretchVoice(p.voice, publicCopy, mascot?.stretch ?? []);
+  const timeline = timelineOf(id, audio, mascot);
   const props = path.join(repoRoot, 'packages', 'pipeline', 'out', 'render', `${id}.json`);
   mkdirSync(path.dirname(props), { recursive: true });
   writeFileSync(props, JSON.stringify(timeline));
