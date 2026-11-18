@@ -317,7 +317,12 @@ export interface SceneType {
   cut?: boolean;
 }
 
-export const DEFAULT_TYPE: SceneType = { font: fonts.display, size: 118 };
+/** Headline type of the cut-paper direction: Sour Gummy, chosen by Edoardo (D-024). */
+export const DEFAULT_TYPE: SceneType = {
+  font: { fontFamily: "'Sour Gummy', sans-serif", fontWeight: 800 },
+  size: 112,
+  tracking: -0.01,
+};
 
 /** One cut-paper scene; frames are local (0 = scene start). */
 export const CutoutScene: React.FC<{ v: Variant; idSuffix?: string; type?: SceneType }> = ({

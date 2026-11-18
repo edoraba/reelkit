@@ -4,7 +4,7 @@
  *   pnpm brand:contrast
  */
 import { clampChroma, formatHex, parse, wcagContrast } from 'culori';
-import { backgrounds, refattura, social } from '../src/index';
+import { backgrounds, cutoutPalettes, refattura, social } from '../src/index';
 
 const MIN = 4.5;
 
@@ -44,5 +44,32 @@ console.table(rows);
 
 if (failures > 0) {
   console.error(`\n${failures} pair(s) below ${MIN}:1`);
+  process.exit(1);
+}
+
+// ------------------------------------------------------------------ cut-paper palettes (D-025)
+let paletteFailures = 0;
+const paletteRows: Record<string, Record<string, string>> = {};
+for (const p of cutoutPalettes) {
+  const text = wcagContrast(hex(p.bg), hex(p.text));
+  const mark =
+    p.highlight.kind === 'marker'
+      ? wcagContrast(hex(p.highlight.color), hex(p.highlight.text ?? p.text))
+      : wcagContrast(hex(p.bg), hex(p.highlight.color));
+  const fmt = (ratio: number, min: number) => {
+    if (ratio < min) paletteFailures++;
+    return `${ratio.toFixed(2)}${ratio < min ? ' FAIL' : ''}`;
+  };
+  paletteRows[p.name] = {
+    bg: hex(p.bg),
+    'text on bg': fmt(text, MIN),
+    // An underline only needs to be visible (3:1), a marker carries text (4.5:1).
+    highlight: fmt(mark, p.highlight.kind === 'marker' ? MIN : 3),
+  };
+}
+console.log('\nCut-paper palettes');
+console.table(paletteRows);
+if (paletteFailures > 0) {
+  console.error(`\n${paletteFailures} palette pair(s) below the minimum`);
   process.exit(1);
 }

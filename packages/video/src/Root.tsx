@@ -12,6 +12,8 @@ import {
   FONT_TEST,
   SPECIMEN_ROW,
 } from './lab/cutouts/FontTest';
+import { OfficeLab, OFFICE_LAB_DURATION } from './lab/cutouts/OfficeLab';
+import { PaletteBoard, PALETTE_BOARD } from './lab/cutouts/PaletteBoard';
 import { CutoutBackgrounds, CUTOUT_SHEET } from './lab/cutouts/scenes';
 import { TransitionReel, TRANSITION_REEL_DURATION } from './lab/cutouts/transitions';
 import { HighlightLab, HIGHLIGHT_LAB_HEIGHT } from './lab/HighlightLab';
@@ -108,6 +110,22 @@ export const RemotionRoot: React.FC = () => (
       component={FontSpecimen}
       width={1080}
       height={FONT_CANDIDATES.length * SPECIMEN_ROW}
+    />
+    <Composition
+      id="CutoutOffice"
+      component={OfficeLab}
+      durationInFrames={OFFICE_LAB_DURATION}
+      fps={formats.reel.fps}
+      width={formats.reel.width}
+      height={formats.reel.height}
+    />
+    <Composition
+      id="CutoutPalettes"
+      component={PaletteBoard}
+      durationInFrames={PALETTE_BOARD.frame + 1}
+      fps={formats.reel.fps}
+      width={PALETTE_BOARD.width}
+      height={PALETTE_BOARD.height}
     />
     <Still id="FontLab" component={FontLab} width={1080} height={FONTLAB_HEIGHT} />
     <Still id="HighlightLab" component={HighlightLab} width={1080} height={HIGHLIGHT_LAB_HEIGHT} />
