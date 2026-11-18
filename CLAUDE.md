@@ -41,6 +41,7 @@ Repo that generates vertical reels, covers, carousels and post texts for **Refat
 | `pnpm render:styles`       | The mascot in 18 rendering styles in `packages/video/out/lab/styles-*.png`                                                 |
 | `pnpm render:style-motion` | Motion test of styles 01 and 02 on three backgrounds in `packages/video/out/lab/style-motion.mp4`                          |
 | `pnpm render:moodboards`   | Seven art direction moodboards and an overview in `packages/video/out/lab/moodboards/`                                     |
+| `pnpm render:cutouts`      | Papiers découpés lab: animated motif catalogue, 8 backgrounds and a 12 s reel in `packages/video/out/lab/cutouts/`         |
 | `pnpm brand:contrast`      | Token hex values and WCAG contrast of the text/background pairs                                                            |
 | `pnpm typecheck`           | Types of the whole monorepo                                                                                                |
 | `pnpm guard`               | Pre-commit checks on staged files                                                                                          |

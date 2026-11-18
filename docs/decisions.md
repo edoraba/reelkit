@@ -132,3 +132,13 @@ Edoardo asked to push the look further, towards Matisse or other simple 2D art, 
 7. Pictograms, after Isotype (repeated symbols for numbers): a module for data scenes, combinable with any direction.
 
 We take methods, never copy artworks. Choice open.
+
+## D-021 Papiers découpés: animated motifs and backgrounds (2026-11-18, exploring)
+
+Edoardo prefers the Matisse cut-out direction (D-020, moodboard 1) and asked for more backgrounds, more motifs, and real animation of the motifs, not only moves and rotations. `packages/video/src/lab/cutouts/`:
+
+- Motifs are generated from parameters and animated by changing them frame by frame: a frond whose stem grows and bends while leaves sprout and flutter; blobs whose outline keeps changing; a star whose points shoot out and twinkle; coral that branches; a spiral that unrolls; scallop waves that ripple; swallows whose wings change shape; a palmette that opens like a hand; a shape cut along a dashed line, then lifted off the page; a sun with pulsing rays; kelp with a wave travelling up the blade.
+- Stop-motion feel: motion runs on twos, and the scissor-cut edge "boils" (the wobble is re-cut every 4 frames with a new noise seed), with gouache grain. The mascot gets the same boiling paper finish.
+- Eight backgrounds tested (ultramarine, coral, lemon, emerald, paper, black, collage blocks, kraft) and a 12 s reel where each scene slides in like a new sheet of paper.
+
+`pnpm render:cutouts` renders the motif catalogue, the backgrounds sheet and the reel. Choice of palette, motifs and how far to push the style is open.
