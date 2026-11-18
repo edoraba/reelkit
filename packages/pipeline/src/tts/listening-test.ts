@@ -6,6 +6,7 @@ import { bin, KOKORO_VOICES, PIPER_VOICES } from '../tools/registry';
 import { geminiTts } from './gemini';
 import { kokoroTts, piperTts } from './local';
 import { TtsQuotaError, type TtsProvider, type TtsProviderName } from './types';
+import { VOICE_STYLE } from './voice';
 
 /**
  * TTS listening test (D-003): the same Italian text through every free option, normalized to
@@ -27,10 +28,8 @@ export const TEST_TEXT =
   'Refattura carichi il PDF, lui legge fornitore e importo, 49,99 euro, e ti prepara ' +
   "l'autofattura. Tu controlli e invii. Fine. Provalo: il link è in bio.";
 
-/** Delivery direction for Gemini (tone and pace only: never age, gender or accent). */
-export const TEST_STYLE =
-  'Friendly, lightly ironic narrator of a short social video. Lively but clear pace, ' +
-  'smiling while speaking, short natural pauses at full stops.';
+/** Delivery direction for Gemini: the house style (D-030). */
+export const TEST_STYLE = VOICE_STYLE;
 
 interface Candidate {
   id: string;

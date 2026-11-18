@@ -12,6 +12,9 @@ dist/
 packages/video/out/
 packages/pipeline/out/
 
+# scratch media served to Remotion for checks (align check audio)
+/assets/.scratch/
+
 # auto-review frames and caches
 content/posts/*/review/
 .remotion/

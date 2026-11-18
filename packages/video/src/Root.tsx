@@ -33,12 +33,25 @@ import {
   MOODBOARD_OVERVIEW,
   MOODBOARD_SIZE,
 } from './lab/moodboards/MoodBoard';
+import { AlignCheck, alignCheckDefaults } from './lab/AlignCheck';
 import { Proposal, PROPOSALS } from './lab/Proposals';
 import { StyleLab, STYLE_SHEETS, styleSheetHeight } from './lab/StyleLab';
 import { StyleMotionLab, STYLE_MOTION_DURATION } from './lab/StyleMotionLab';
 
 export const RemotionRoot: React.FC = () => (
   <>
+    <Composition
+      id="AlignCheck"
+      component={AlignCheck}
+      durationInFrames={30}
+      fps={formats.reel.fps}
+      width={formats.reel.width}
+      height={formats.reel.height}
+      defaultProps={alignCheckDefaults}
+      calculateMetadata={({ props }) => ({
+        durationInFrames: Math.max(30, Math.ceil((props.durationMs / 1000) * formats.reel.fps)),
+      })}
+    />
     <Composition
       id="Demo"
       component={Demo}

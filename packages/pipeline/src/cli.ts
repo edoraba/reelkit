@@ -4,12 +4,15 @@
  *   pnpm bootstrap [--only ffmpeg,rhubarb,whisper,browser,tts] [--model medium] [--force]
  *   pnpm tools:check [--model medium]
  *   pnpm tts:test [--only kokoro,piper,gemini] [--force]
+ *   pnpm pipeline align --audio voice.wav --text "script text" --out words.json [--model medium]
  */
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { parseArgs } from 'node:util';
+import { alignAudio } from './align/align';
 import { bootstrap, check, TOOL_NAMES, type ToolName } from './bootstrap';
-import { repoRoot } from './paths';
+import { rel, repoRoot } from './paths';
+import { spoken } from './tts/pronounce';
 import { WHISPER_MODELS, type WhisperModelName } from './tools/registry';
 import { listeningTest } from './tts/listening-test';
 import type { TtsProviderName } from './tts/types';
@@ -36,6 +39,9 @@ const { positionals, values } = parseArgs({
     only: { type: 'string' },
     model: { type: 'string' },
     force: { type: 'boolean', default: false },
+    audio: { type: 'string' },
+    text: { type: 'string' },
+    out: { type: 'string' },
   },
 });
 
@@ -74,8 +80,28 @@ async function main(): Promise<void> {
     case 'tts-test':
       await listeningTest({ only: parseProviders(values.only), force: values.force ?? false });
       return;
+    case 'align': {
+      if (!values.audio || !values.text || !values.out) {
+        throw new Error('align needs --audio, --text and --out');
+      }
+      const report = await alignAudio({
+        audio: path.resolve(values.audio),
+        text: spoken(values.text),
+        out: path.resolve(values.out),
+        model: parseModel(values.model),
+      });
+      console.log(
+        `${report.words.length} words, ${(report.heardRatio * 100).toFixed(0)}% heard, ` +
+          `${report.issues.length} to check -> ${rel(path.resolve(values.out))}`,
+      );
+      for (const i of report.issues)
+        console.log(`  #${i.index} "${i.word}" heard "${i.heard ?? ''}"`);
+      return;
+    }
     default:
-      console.error(`Unknown command "${command ?? ''}". Commands: bootstrap, check, tts-test`);
+      console.error(
+        `Unknown command "${command ?? ''}". Commands: bootstrap, check, tts-test, align`,
+      );
       process.exitCode = 1;
   }
 }
