@@ -1,6 +1,6 @@
 # Mascot choreography: design
 
-Date: 2026-11-18. Status: draft for Edoardo's approval. Brings forward part of Phase 2 (mascot).
+Date: 2026-11-18. Status: approved by Edoardo on 2026-11-18. Brings forward part of Phase 2 (mascot).
 
 ## Intent
 
