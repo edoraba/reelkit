@@ -1,4 +1,5 @@
 import { spawnSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
 import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { MascotPlan, Post, ReelTimeline, Script, type PostStatus } from '@reelkit/schema';
@@ -151,6 +152,11 @@ export function renderPost(id: string, opts: { scale?: number } = {}): void {
   const audio = `.scratch/${id}/voice.wav`;
   const publicCopy = path.join(repoRoot, 'assets', audio);
   const mascot = existsSync(p.mascot) ? MascotPlan.parse(readJson(p.mascot)) : undefined;
+  if (mascot?.inputs && mascot.inputs !== inputsOf(id)) {
+    throw new Error(
+      `mascot.json of ${id} was planned on an older script.json or words.json: run "pnpm pipeline mascot ${id}" again`,
+    );
+  }
   stretchVoice(p.voice, publicCopy, mascot?.stretch ?? []);
   const timeline = timelineOf(id, audio, mascot);
   const props = path.join(repoRoot, 'packages', 'pipeline', 'out', 'render', `${id}.json`);
@@ -177,10 +183,21 @@ export function mascotPost(id: string): MascotPlan {
   const { script } = loadPost(id);
   const report = readJson(postPaths(id).words) as AlignReport;
   const { plan, problems, warnings } = planMascot({ script, report, seed: id });
+  plan.inputs = inputsOf(id);
   for (const w of warnings) console.log(`  warning: ${w}`);
   if (problems.length > 0) {
     throw new Error(`mascot plan of ${id}:\n  ${problems.join('\n  ')}`);
   }
   writeFileSync(postPaths(id).mascot, JSON.stringify(plan, null, 2) + '\n');
   return plan;
+}
+
+/** Fingerprint of what a mascot plan depends on: the script and the word timings. */
+function inputsOf(id: string): string {
+  const paths = postPaths(id);
+  return createHash('sha256')
+    .update(readFileSync(paths.script))
+    .update(readFileSync(paths.words))
+    .digest('hex')
+    .slice(0, 16);
 }

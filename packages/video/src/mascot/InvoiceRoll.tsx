@@ -140,6 +140,8 @@ export interface InvoiceRollProps {
   hold?: { left?: PropKind; right?: PropKind };
   /** Palette for the colors of held props. */
   palette?: CutoutPalette;
+  /** Mouth when the voice is silent (default smile); `o` for the cheek puff of a blow. */
+  restMouth?: 'smile' | 'o';
   /** Drawn on the face, moving with it (glasses of an alternative scene, D-032). */
   faceOverlay?: (face: { eyeY: number; eyeDx: number; ink: string }) => React.ReactNode;
 }
@@ -314,6 +316,7 @@ export const InvoiceRoll: React.FC<InvoiceRollProps> = ({
   hold,
   palette,
   faceOverlay,
+  restMouth,
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -348,7 +351,7 @@ export const InvoiceRoll: React.FC<InvoiceRollProps> = ({
   const bounce = cue.at > 0 && since < 12 ? Math.sin((since / 12) * Math.PI) * 0.14 : 0;
   const rollCy = s.top - 6;
 
-  const mouth = mouthAt(frame, talk, cue.mouth === 'open' ? 'open' : 'smile', seed);
+  const mouth = mouthAt(frame, talk, restMouth ?? (cue.mouth === 'open' ? 'open' : 'smile'), seed);
   const eyes: Eyes = eyesOverride ?? (cue.eyes === 'happy' ? 'happy' : 'open');
   const happy = eyes === 'happy';
   const closed = eyes === 'closed';

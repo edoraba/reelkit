@@ -149,7 +149,7 @@ Name: to be decided.
 
 ### Poses and expressions
 
-Poses (full library in Phase 2): `neutral`, `arms-up`, `point-left`, `point-up`, `shrug`, `thinking`, `wave`, `facepalm`, `celebrate`. Today `neutral`, `arms-up` and `wave` exist.
+Poses (full library in Phase 2): `neutral`, `arms-up`, `point-left`, `point-up`, `shrug`, `thinking`, `wave`, `facepalm`, `celebrate`. The pose list is in `packages/video/src/mascot/poses.ts` (15 poses, D-032).
 
 Expressions: with dot eyes and no eyebrows, they come from the eyes (`open`, `happy` arcs, `wide`, `closed`, `half`), the mouth, the roll (tilt, lift, squash), the body lean and the arm pose (D-032).
 

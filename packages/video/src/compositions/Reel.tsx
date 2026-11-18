@@ -33,7 +33,8 @@ function triggerGeometry(s: Scene, plan?: MascotPlan) {
   if (s.trigger === 'blow') return { origin: { x, y: 1280 } };
   if (s.trigger === 'scissors') return { lineFrom: { x: x + 150, y: 1400 } };
   // The sheet comes from the mascot's side and its edge follows the trailing hand.
-  const side = x < 540 ? ('left' as const) : ('right' as const);
+  const planned = plan.transitions.find((t) => t.beat === s.beats[0]?.id)?.side;
+  const side = planned ?? (x < 540 ? ('left' as const) : ('right' as const));
   const edgeAt = (lf: number) => {
     const mx = mascotAt(plan, s.from + lf, FPS).x;
     return side === 'left' ? mx - 150 : mx + 150;

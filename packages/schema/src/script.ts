@@ -59,6 +59,12 @@ export const Beat = z
         message: `beat ${beat.id}: highlight "${beat.highlight}" is not a word of "${beat.say}"`,
       });
     }
+    if (beat.mascot?.scene && beat.mascot.action) {
+      ctx.addIssue({
+        code: 'custom',
+        message: `beat ${beat.id}: an alternative scene replaces the mascot, it cannot also have an action`,
+      });
+    }
     const at = beat.mascot?.at;
     if (at && !holdsHighlight(beat.say, at)) {
       ctx.addIssue({

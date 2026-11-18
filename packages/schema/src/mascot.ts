@@ -43,6 +43,8 @@ const GazeTarget = z.union([
 
 export const MascotPlan = z.object({
   postId: PostId,
+  /** Fingerprint of script.json and words.json the plan was made from (render refuses a stale plan). */
+  inputs: z.string().optional(),
   /** Silence inserted into the voice before a mascot-triggered transition (original time). */
   stretch: z.array(z.object({ atMs: z.number(), addMs: z.number().min(0).max(400) })),
   moves: z.array(
@@ -92,6 +94,8 @@ export const MascotPlan = z.object({
       beat: z.string(),
       kind: z.enum(['bloom', 'cut', 'pull']),
       trigger: Trigger.optional(),
+      /** pull: the side the new sheet comes from (the mascot runs to the other one). */
+      side: z.enum(['left', 'right']).optional(),
     }),
   ),
   alternate: z.object({ beat: z.string(), scene: AltScene }).optional(),

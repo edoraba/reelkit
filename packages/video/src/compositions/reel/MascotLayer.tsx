@@ -31,6 +31,7 @@ export const MascotLayer: React.FC<{
   if (s.depth !== depth) return null;
   const ms = (frame / fps) * 1000;
   const send = plan.gags.find((g) => g.kind === 'send' && g.fromMs <= ms && ms < g.fromMs + 700);
+  const puff = plan.gags.some((g) => g.kind === 'puff' && g.fromMs <= ms && ms < g.toMs);
   const id = `reelMascot${depth}`;
   // Paper flip between the mascot and the alternative scene: a horizontal squash to nothing
   // and back, never a mirror.
@@ -79,9 +80,10 @@ export const MascotLayer: React.FC<{
             eyes={s.eyes}
             lean={s.lean}
             legs={s.legs}
-            squash={s.squash}
             swing={s.swing}
             hold={s.hold}
+            restMouth={puff ? 'o' : undefined}
+            squash={puff ? -0.04 : s.squash}
             look={{ limbWidth: 12, roll: p.roll, accent: p.pill, rule: 'oklch(85% 0.04 264)' }}
             defs={<CutoutStickerFilter id={id} frame={frame} />}
             filter={`url(#${id})`}

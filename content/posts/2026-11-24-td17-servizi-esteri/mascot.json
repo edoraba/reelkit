@@ -67,7 +67,13 @@
       "lean": 0
     },
     {
-      "atMs": 2963,
+      "atMs": 2663,
+      "pose": "neutral",
+      "eyes": "open",
+      "lean": 0
+    },
+    {
+      "atMs": 4127,
       "pose": "hide",
       "eyes": "wide",
       "lean": -6
@@ -81,7 +87,7 @@
     {
       "atMs": 7275,
       "pose": "arms-up",
-      "eyes": "wide",
+      "eyes": "happy",
       "lean": 0
     },
     {
@@ -97,28 +103,28 @@
       "lean": 0
     },
     {
-      "atMs": 8498,
-      "pose": "neutral",
-      "eyes": "wide",
-      "lean": 0
-    },
-    {
-      "atMs": 9098,
-      "pose": "neutral",
-      "eyes": "open",
-      "lean": 0
-    },
-    {
       "atMs": 9717,
       "pose": "hold",
       "eyes": "wide",
       "lean": 0
     },
     {
-      "atMs": 10584,
+      "atMs": 11051,
+      "pose": "neutral",
+      "eyes": "open",
+      "lean": 0
+    },
+    {
+      "atMs": 11051,
       "pose": "type",
       "eyes": "half",
       "lean": 2
+    },
+    {
+      "atMs": 12969,
+      "pose": "neutral",
+      "eyes": "open",
+      "lean": 0
     },
     {
       "atMs": 12969,
@@ -133,13 +139,13 @@
       "lean": 0
     },
     {
-      "atMs": 15425,
+      "atMs": 15785,
       "pose": "pull",
       "eyes": "wide",
       "lean": 8
     },
     {
-      "atMs": 16492,
+      "atMs": 16892,
       "pose": "arms-up",
       "eyes": "open",
       "lean": 0
@@ -147,7 +153,7 @@
     {
       "atMs": 18987,
       "pose": "arms-up",
-      "eyes": "happy",
+      "eyes": "wide",
       "lean": 0
     },
     {
@@ -157,7 +163,13 @@
       "lean": 0
     },
     {
-      "atMs": 20070,
+      "atMs": 19770,
+      "pose": "neutral",
+      "eyes": "open",
+      "lean": 0
+    },
+    {
+      "atMs": 20830,
       "pose": "point",
       "eyes": "open",
       "lean": 3
@@ -171,7 +183,7 @@
     {
       "atMs": 22276,
       "pose": "wave",
-      "eyes": "happy",
+      "eyes": "wide",
       "lean": 0
     },
     {
@@ -231,23 +243,15 @@
       "target": "headline"
     },
     {
-      "atMs": 8498,
-      "target": "label"
-    },
-    {
       "atMs": 8828,
       "target": "camera"
     },
     {
-      "atMs": 9098,
-      "target": "camera"
-    },
-    {
-      "atMs": 10584,
+      "atMs": 11051,
       "target": "headline"
     },
     {
-      "atMs": 11184,
+      "atMs": 11651,
       "target": "camera"
     },
     {
@@ -259,11 +263,11 @@
       "target": "camera"
     },
     {
-      "atMs": 16492,
+      "atMs": 16892,
       "target": "headline"
     },
     {
-      "atMs": 17092,
+      "atMs": 17492,
       "target": "camera"
     },
     {
@@ -279,12 +283,8 @@
       "target": "headline"
     },
     {
-      "atMs": 20070,
+      "atMs": 20830,
       "target": "headline"
-    },
-    {
-      "atMs": 20370,
-      "target": "camera"
     },
     {
       "atMs": 22276,
@@ -311,7 +311,7 @@
       "prop": "scissors"
     },
     {
-      "fromMs": 10584,
+      "fromMs": 11051,
       "toMs": 12969,
       "hand": "right",
       "prop": "calculator"
@@ -332,7 +332,7 @@
       "beat": "b01"
     },
     {
-      "fromMs": 2963,
+      "fromMs": 4127,
       "toMs": 5405,
       "kind": "hide",
       "source": "script",
@@ -346,13 +346,6 @@
       "kind": "react",
       "source": "auto",
       "beat": "b03"
-    },
-    {
-      "fromMs": 8498,
-      "toMs": 9098,
-      "kind": "react",
-      "source": "auto",
-      "beat": "b04"
     },
     {
       "fromMs": 9717,
@@ -370,6 +363,13 @@
       "beat": "b05",
       "target": "calculator",
       "sfx": "typing"
+    },
+    {
+      "fromMs": 14397,
+      "toMs": 15197,
+      "kind": "tap",
+      "source": "auto",
+      "beat": "b06"
     },
     {
       "fromMs": 15385,
@@ -396,7 +396,7 @@
       "beat": "b07"
     },
     {
-      "fromMs": 20070,
+      "fromMs": 20830,
       "toMs": 22276,
       "kind": "point",
       "source": "script",
@@ -423,11 +423,13 @@
     {
       "beat": "b07",
       "kind": "pull",
-      "trigger": "pull"
+      "trigger": "pull",
+      "side": "left"
     },
     {
       "beat": "b09",
       "kind": "bloom"
     }
-  ]
+  ],
+  "inputs": "c2628344b64be280"
 }
