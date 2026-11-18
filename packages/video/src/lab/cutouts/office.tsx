@@ -6,7 +6,11 @@ import { onTwos, pop, ramp, smoothOpen, type Pt } from './geometry';
  * by what they do: keys press and the display counts, scissors snip, the stapler bites,
  * binders settle, the stamp stamps, the pencil writes, the envelope opens, coins drop,
  * the calendar flips, coffee steams, the magnifier searches, the note flutters on its pin.
- * Colors come from a palette: `a`, `b`, `c` are the three motif colors, `hole` the background.
+ *
+ * Colors come from a palette: `a`, `b`, `c` are its three motif colors (all visible on the
+ * background by palette rule), `hole` is the background (used for real holes), `ink` the
+ * text color. Any piece that sits on another piece takes its color from `pick(base, ...)`,
+ * which only returns colors visible on that base (D-026).
  */
 export interface ObjectProps {
   f: number;
@@ -20,11 +24,13 @@ export interface ObjectProps {
   c: string;
   hole: string;
   ink: string;
+  pick: (base: string, ...prefer: string[]) => string;
 }
 
 const g = (x: number, y: number, scale = 1, rotate = 0) =>
   `translate(${x} ${y}) rotate(${rotate}) scale(${scale})`;
 const MONO = "'DM Mono', monospace";
+const HEAD = "'Sour Gummy', sans-serif";
 
 /** Pulse 0..1..0 every `period` frames: quick down in `down` frames, back up in `up`. */
 function pulse(t: number, period: number, offset = 0, down = 4, up = 7): number {
@@ -46,12 +52,15 @@ export const Calculator: React.FC<ObjectProps> = ({
   c,
   hole,
   ink,
+  pick,
 }) => {
   const t = onTwos(f);
   const k = pop(t, start, 14);
   const value = Math.floor(ramp(t, start + 10, 60) * 1220);
   const label = `${value.toLocaleString('it-IT')} €`;
   const pressed = Math.floor((t - start) / 6) % 16;
+  const key = pick(a, c, b);
+  const op = pick(a, b, c);
   return (
     <g transform={g(x, y, scale * k, rotate)}>
       <rect x={-95} y={-140} width={190} height={280} rx={26} fill={a} />
@@ -63,7 +72,6 @@ export const Calculator: React.FC<ObjectProps> = ({
         const cx = -57 + (i % 4) * 38;
         const cy = -28 + Math.floor(i / 4) * 40;
         const on = i === pressed && t >= start + 10;
-        const color = i % 4 === 3 ? b : i === 15 ? b : c;
         return (
           <rect
             key={i}
@@ -72,11 +80,11 @@ export const Calculator: React.FC<ObjectProps> = ({
             width={30}
             height={30}
             rx={8}
-            fill={color}
+            fill={i % 4 === 3 ? op : key}
             transform={
               on ? `translate(${cx} ${cy}) scale(0.78) translate(${-cx} ${-cy})` : undefined
             }
-            opacity={on ? 0.75 : 1}
+            opacity={on ? 0.7 : 1}
           />
         );
       })}
@@ -98,18 +106,18 @@ export const Scissors: React.FC<ObjectProps> = ({
   const t = onTwos(f);
   const k = pop(t, start, 14);
   const open = 4 + 18 * Math.abs(Math.sin((t - start) * 0.22));
-  const half = (dir: 1 | -1, color: string) => (
+  const half = (dir: 1 | -1) => (
     <g transform={`rotate(${dir * open}) scale(1 ${dir})`}>
       <path d="M -6 -9 Q 90 -16 168 -2 Q 90 7 -6 10 Z" fill={a} />
-      <path d="M -6 -9 L -58 -26 L -50 -6 Z" fill={color} />
-      <circle cx={-82} cy={-34} r={32} fill={color} />
+      <path d="M -6 -9 L -58 -26 L -50 -6 Z" fill={b} />
+      <circle cx={-82} cy={-34} r={32} fill={b} />
       <circle cx={-82} cy={-34} r={15} fill={hole} />
     </g>
   );
   return (
     <g transform={g(x, y, scale * k, rotate)}>
-      {half(1, b)}
-      {half(-1, b)}
+      {half(1)}
+      {half(-1)}
       <circle r={9} fill={hole} />
     </g>
   );
@@ -137,7 +145,7 @@ export const Stapler: React.FC<ObjectProps> = ({
       <rect x={-120} y={14} width={240} height={34} rx={14} fill={b} />
       <g transform={`rotate(${angle} -110 6)`}>
         <rect x={-120} y={-34} width={240} height={42} rx={18} fill={a} />
-        <rect x={60} y={-24} width={46} height={10} rx={5} fill={hole} opacity={0.5} />
+        <rect x={60} y={-24} width={46} height={10} rx={5} fill={hole} />
       </g>
       {bite > 0.6 && (
         <path d="M 82 6 L 82 -2 L 104 -2 L 104 6" fill="none" stroke={hole} strokeWidth={5} />
@@ -173,7 +181,7 @@ export const Binders: React.FC<ObjectProps> = ({
             opacity={inP > 0 ? 1 : 0}
           >
             <rect x={bx} y={-130} width={70} height={260} rx={8} fill={color} />
-            <rect x={bx + 12} y={-92} width={46} height={70} rx={6} fill={hole} opacity={0.85} />
+            <rect x={bx + 12} y={-92} width={46} height={70} rx={6} fill={hole} />
             <circle cx={bx + 35} cy={70} r={13} fill={hole} />
           </g>
         );
@@ -193,15 +201,17 @@ export const RubberStamp: React.FC<ObjectProps> = ({
   b,
   c,
   hole,
+  pick,
 }) => {
   const t = onTwos(f);
   const k = pop(t, start, 14);
   const hit = t < start + 14 ? 0 : pulse(t, 40, start + 14, 5, 10);
   const stamped = t >= start + 18;
+  const knob = pick(a, b, c);
   return (
     <g transform={g(x, y, scale * k, rotate)}>
       {stamped && (
-        <g opacity={0.9} transform={`translate(0 120) scale(${pop(t, start + 18, 10)})`}>
+        <g transform={`translate(0 120) scale(${pop(t, start + 18, 10)})`}>
           <ellipse rx={92} ry={30} fill="none" stroke={c} strokeWidth={9} />
           <path
             d="M -28 0 L -8 16 L 30 -16"
@@ -214,11 +224,11 @@ export const RubberStamp: React.FC<ObjectProps> = ({
         </g>
       )}
       <g transform={`translate(0 ${-40 + hit * 46})`}>
-        <circle cx={0} cy={-120} r={38} fill={b} />
+        <circle cx={0} cy={-120} r={38} fill={knob} />
         <rect x={-16} y={-92} width={32} height={46} fill={a} />
         <rect x={-74} y={-50} width={148} height={64} rx={16} fill={a} />
-        <rect x={-82} y={12} width={164} height={18} rx={6} fill={c} />
-        <rect x={-60} y={-34} width={44} height={10} rx={5} fill={hole} opacity={0.45} />
+        <rect x={-82} y={12} width={164} height={18} rx={6} fill={pick(a, c, b)} />
+        <rect x={-60} y={-34} width={44} height={10} rx={5} fill={hole} />
       </g>
     </g>
   );
@@ -235,6 +245,7 @@ export const Pencil: React.FC<ObjectProps> = ({
   b,
   c,
   ink,
+  pick,
 }) => {
   const t = onTwos(f);
   const p = ramp(t, start, 70);
@@ -249,10 +260,10 @@ export const Pencil: React.FC<ObjectProps> = ({
       )}
       <g transform={`translate(${tip[0]} ${tip[1]}) rotate(-35)`}>
         <polygon points="0,0 22,-12 22,12" fill={c} />
-        <polygon points="0,0 8,-4 8,4" fill={ink} />
+        <polygon points="0,0 8,-4 8,4" fill={pick(c, ink)} />
         <rect x={22} y={-13} width={210} height={26} fill={a} />
-        <rect x={22} y={-4} width={210} height={6} fill={b} opacity={0.35} />
-        <rect x={232} y={-13} width={30} height={26} rx={5} fill={b} />
+        <rect x={22} y={-4} width={210} height={6} fill={pick(a, b, c)} />
+        <rect x={232} y={-13} width={30} height={26} rx={5} fill={pick(a, b, c)} />
       </g>
     </g>
   );
@@ -269,14 +280,16 @@ export const Envelope: React.FC<ObjectProps> = ({
   b,
   c,
   hole,
+  pick,
 }) => {
   const t = onTwos(f);
   const k = pop(t, start, 14);
   const open = ramp(t, start + 14, 14);
   const letter = ramp(t, start + 26, 16);
+  const fold = pick(a, b, c);
   const flap = (
     <g transform={`translate(0 -70) scale(1 ${1 - 2 * open}) translate(0 70)`}>
-      <path d="M -110 -70 L 0 20 L 110 -70 Z" fill={b} />
+      <path d="M -110 -70 L 0 20 L 110 -70 Z" fill={fold} />
     </g>
   );
   // Once open, the flap folds behind the letter coming out.
@@ -285,12 +298,12 @@ export const Envelope: React.FC<ObjectProps> = ({
     <g transform={g(x, y, scale * k, rotate)}>
       {isOpen && flap}
       <g transform={`translate(0 ${-letter * 90})`}>
-        <rect x={-90} y={-60} width={180} height={130} rx={6} fill={c} />
+        <rect x={-90} y={-60} width={180} height={130} rx={6} fill={pick(fold, c, b)} />
         <rect x={-62} y={-36} width={100} height={12} rx={6} fill={hole} />
         <rect x={-62} y={-12} width={124} height={12} rx={6} fill={hole} opacity={0.6} />
       </g>
       <rect x={-110} y={-70} width={220} height={150} rx={10} fill={a} />
-      <path d="M -110 80 L 0 0 L 110 80 Z" fill={b} opacity={0.85} />
+      <path d="M -110 80 L 0 0 L 110 80 Z" fill={fold} />
       {!isOpen && flap}
     </g>
   );
@@ -306,9 +319,11 @@ export const Coins: React.FC<ObjectProps> = ({
   a,
   b,
   ink,
+  pick,
 }) => {
   const t = onTwos(f);
   const coins = 6;
+  const top = pick(b, a);
   return (
     <g transform={g(x, y, scale, rotate)}>
       {Array.from({ length: coins }, (_, i) => {
@@ -320,7 +335,7 @@ export const Coins: React.FC<ObjectProps> = ({
           <g key={i} transform={`translate(${(i % 2) * 6 - 3} ${yy - (1 - p) * 300})`}>
             <rect x={-62} y={0} width={124} height={20} fill={b} />
             <ellipse cx={0} cy={20} rx={62} ry={20} fill={b} />
-            <ellipse cx={0} cy={0} rx={62} ry={20} fill={a} />
+            <ellipse cx={0} cy={0} rx={62} ry={20} fill={top} />
             {i === coins - 1 && (
               <text
                 x={0}
@@ -328,7 +343,7 @@ export const Coins: React.FC<ObjectProps> = ({
                 textAnchor="middle"
                 fontSize={26}
                 fontWeight={800}
-                fill={ink}
+                fill={pick(top, ink)}
                 fontFamily={MONO}
               >
                 €
@@ -351,8 +366,8 @@ export const CalendarPage: React.FC<ObjectProps> = ({
   a,
   b,
   c,
-  hole,
   ink,
+  pick,
 }) => {
   const t = onTwos(f);
   const k = pop(t, start, 14);
@@ -361,13 +376,16 @@ export const CalendarPage: React.FC<ObjectProps> = ({
   const flipping = t >= start + 10 && phase < 8;
   const squash = flipping ? Math.abs(Math.cos((phase / 8) * Math.PI)) : 1;
   const day = 14 + flips + (flipping && phase >= 4 ? 1 : 0);
+  // The page is a palette color (visible on the background), the header must stand out on it.
+  const page = c;
+  const header = pick(page, a, b);
   return (
     <g transform={g(x, y, scale * k, rotate)}>
-      <rect x={-100} y={-110} width={200} height={230} rx={16} fill={hole} />
-      <rect x={-100} y={-110} width={200} height={62} rx={16} fill={a} />
-      <rect x={-100} y={-70} width={200} height={22} fill={a} />
-      <rect x={-56} y={-128} width={14} height={40} rx={7} fill={b} />
-      <rect x={42} y={-128} width={14} height={40} rx={7} fill={b} />
+      <rect x={-100} y={-110} width={200} height={230} rx={16} fill={page} />
+      <rect x={-100} y={-110} width={200} height={62} rx={16} fill={header} />
+      <rect x={-100} y={-70} width={200} height={22} fill={header} />
+      <rect x={-56} y={-128} width={14} height={40} rx={7} fill={pick(header, b, a)} />
+      <rect x={42} y={-128} width={14} height={40} rx={7} fill={pick(header, b, a)} />
       <g transform={`translate(0 30) scale(1 ${squash}) translate(0 -30)`}>
         <text
           x={0}
@@ -375,8 +393,8 @@ export const CalendarPage: React.FC<ObjectProps> = ({
           textAnchor="middle"
           fontSize={110}
           fontWeight={800}
-          fill={day === 16 ? c : ink}
-          fontFamily="'Sour Gummy', sans-serif"
+          fill={pick(page, ink)}
+          fontFamily={HEAD}
         >
           {day}
         </text>
@@ -395,6 +413,8 @@ export const CoffeeCup: React.FC<ObjectProps> = ({
   a,
   b,
   c,
+  hole,
+  pick,
 }) => {
   const t = onTwos(f);
   const k = pop(t, start, 14);
@@ -421,9 +441,9 @@ export const CoffeeCup: React.FC<ObjectProps> = ({
       {[0, 1, 2].map(steam)}
       <ellipse cx={0} cy={86} rx={140} ry={26} fill={b} />
       <circle cx={94} cy={-6} r={44} fill={a} />
-      <circle cx={94} cy={-6} r={22} fill={b} />
+      <circle cx={94} cy={-6} r={22} fill={hole} />
       <path d="M -96 -90 L 96 -90 L 76 70 Q 0 96 -76 70 Z" fill={a} />
-      <ellipse cx={0} cy={-90} rx={96} ry={18} fill={c} opacity={0.9} />
+      <ellipse cx={0} cy={-90} rx={96} ry={18} fill={pick(a, c, b)} />
     </g>
   );
 };
@@ -448,14 +468,14 @@ export const Magnifier: React.FC<ObjectProps> = ({
     <g transform={g(x + mx, y + my, scale * k, rotate)}>
       <rect x={52} y={52} width={34} height={120} rx={14} fill={b} transform="rotate(-45 69 112)" />
       <circle r={86} fill={a} />
-      <circle r={62} fill={hole} opacity={0.75} />
+      <circle r={62} fill={hole} />
       <ellipse
         cx={-24}
         cy={-26}
         rx={18}
         ry={10}
-        fill="white"
-        opacity={0.6}
+        fill={a}
+        opacity={0.7}
         transform="rotate(-35 -24 -26)"
       />
     </g>
@@ -473,30 +493,24 @@ export const PinnedNote: React.FC<ObjectProps> = ({
   b,
   c,
   ink,
+  pick,
 }) => {
   const t = onTwos(f);
   const pin = pop(t, start + 10, 10);
   const swing = Math.sin(t * 0.12) * 5 * ramp(t, start + 14, 10) + (1 - pop(t, start, 14)) * 30;
+  const lines = pick(a, c, b);
   return (
     <g transform={g(x, y, scale, rotate)}>
       <g transform={`rotate(${swing} 0 -110)`}>
         <rect x={-110} y={-110} width={220} height={210} rx={6} fill={a} />
-        <rect x={-80} y={-50} width={150} height={14} rx={7} fill={c} />
-        <rect x={-80} y={-20} width={120} height={14} rx={7} fill={c} opacity={0.7} />
-        <text
-          x={-80}
-          y={52}
-          fontSize={40}
-          fontWeight={800}
-          fill={ink}
-          fontFamily="'Sour Gummy', sans-serif"
-        >
+        <rect x={-80} y={-50} width={150} height={14} rx={7} fill={lines} />
+        <rect x={-80} y={-20} width={120} height={14} rx={7} fill={lines} opacity={0.7} />
+        <text x={-80} y={52} fontSize={40} fontWeight={800} fill={pick(a, ink)} fontFamily={HEAD}>
           TD17
         </text>
       </g>
       <g transform={`translate(0 -110) scale(${pin})`}>
-        <circle r={22} fill={b} />
-        <circle cx={-7} cy={-7} r={7} fill="white" opacity={0.5} />
+        <circle r={22} fill={pick(a, b, c)} />
       </g>
     </g>
   );

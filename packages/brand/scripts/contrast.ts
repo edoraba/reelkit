@@ -4,7 +4,7 @@
  *   pnpm brand:contrast
  */
 import { clampChroma, formatHex, parse, wcagContrast } from 'culori';
-import { backgrounds, cutoutPalettes, refattura, social } from '../src/index';
+import { backgrounds, contrast, cutoutPalettes, refattura, social, visibleOn } from '../src/index';
 
 const MIN = 4.5;
 
@@ -60,11 +60,19 @@ for (const p of cutoutPalettes) {
     if (ratio < min) paletteFailures++;
     return `${ratio.toFixed(2)}${ratio < min ? ' FAIL' : ''}`;
   };
+  // Every motif color and the marker band must be visible on the background (D-026).
+  const hidden = [...p.motifs, p.highlight.color, p.pen].filter((c) => !visibleOn(c, p.bg));
+  // Mascot pieces sit on the white sheet or on the white sticker border.
+  hidden.push(...[p.pen, p.roll, p.pill].filter((c) => !visibleOn(c, refattura.sheetWhite)));
+  if (hidden.length > 0) paletteFailures++;
+  const weakest = Math.min(...p.motifs.map((c) => contrast(c, p.bg)));
   paletteRows[p.name] = {
     bg: hex(p.bg),
     'text on bg': fmt(text, MIN),
     // An underline only needs to be visible (3:1), a marker carries text (4.5:1).
     highlight: fmt(mark, p.highlight.kind === 'marker' ? MIN : 3),
+    'weakest motif': weakest.toFixed(2),
+    visibility: hidden.length > 0 ? `FAIL ${hidden.map(hex).join(' ')}` : 'ok',
   };
 }
 console.log('\nCut-paper palettes');

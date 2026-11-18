@@ -1,4 +1,4 @@
-import { contrast, cutoutPalettes, toHex, type CutoutPalette } from '@reelkit/brand';
+import { contrast, cutoutPalettes, pickerFor, toHex, type CutoutPalette } from '@reelkit/brand';
 import { AbsoluteFill, useCurrentFrame } from 'remotion';
 import { fontsOf } from '../../brand/fonts';
 import { RevealText, type RevealWord } from '../../components/RevealText';
@@ -18,7 +18,7 @@ import { BoilFilter, CutoutStickerFilter } from './paper';
 import { DEFAULT_TYPE } from './scenes';
 
 /**
- * The six cut-paper palettes (D-025) on one board: swatches with hex and contrast, and a
+ * The six cut-paper palettes (D-027, Refattura tones) on one board: swatches with hex and contrast, and a
  * sample scene per palette (Sour Gummy headline, organic motifs, an office object, the
  * mascot with its sticker border). Rendered as a still at frame PALETTE_BOARD.frame.
  *   pnpm render:cutouts  ->  packages/video/out/lab/cutouts/palettes.png
@@ -53,7 +53,7 @@ const LAYOUTS: Record<string, Layout> = {
       </>
     ),
   },
-  corallo: {
+  notte: {
     headline: 'Ogni fattura estera vuole la sua autofattura.',
     mark: 6,
     object: Stapler,
@@ -65,7 +65,7 @@ const LAYOUTS: Record<string, Layout> = {
       </>
     ),
   },
-  panna: {
+  azzurro: {
     headline: 'Tu come le fai?',
     mark: 1,
     object: CalendarPage,
@@ -86,7 +86,7 @@ const LAYOUTS: Record<string, Layout> = {
       </>
     ),
   },
-  limone: {
+  ghiaccio: {
     headline: 'L’IVA la integri tu con il TD17.',
     mark: 6,
     object: RubberStamp,
@@ -98,7 +98,7 @@ const LAYOUTS: Record<string, Layout> = {
       </>
     ),
   },
-  smeraldo: {
+  viola: {
     headline: 'Refattura legge il PDF e prepara l’autofattura.',
     mark: 6,
     object: Envelope,
@@ -128,7 +128,7 @@ const LAYOUTS: Record<string, Layout> = {
       </>
     ),
   },
-  rosa: {
+  lavanda: {
     headline: 'Provalo: link in bio.',
     mark: 1,
     object: CoffeeCup,
@@ -178,6 +178,7 @@ export const PaletteScene: React.FC<{ p: CutoutPalette; idSuffix?: string }> = (
             c={p.motifs[2]}
             hole={p.bg}
             ink={p.text}
+            pick={pickerFor(p)}
           />
         </g>
       </svg>

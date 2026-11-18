@@ -67,7 +67,7 @@ export const VARIANTS: Variant[] = [
           y={1930}
           scale={1.3}
           rotate={14}
-          color={C.green}
+          color={C.lemon}
           start={16}
           seed="u4"
           leaves={6}
@@ -90,7 +90,7 @@ export const VARIANTS: Variant[] = [
     bg: C.coral,
     motifs: (f) => (
       <>
-        <Kelp f={f} x={110} y={1930} scale={1.5} color={C.green} start={4} phase={0} />
+        <Kelp f={f} x={110} y={1930} scale={1.5} color={C.lemon} start={4} phase={0} />
         <Kelp
           f={f}
           x={230}
@@ -101,7 +101,7 @@ export const VARIANTS: Variant[] = [
           phase={1.7}
           height={300}
         />
-        <Kelp f={f} x={930} y={1930} scale={1.6} color={C.green} start={14} phase={3} />
+        <Kelp f={f} x={930} y={1930} scale={1.6} color={C.cream} start={14} phase={3} />
         <Spiral f={f} x={880} y={300} r={110} color={C.lemon} start={6} />
         <Swallow
           f={f}
@@ -164,7 +164,7 @@ export const VARIANTS: Variant[] = [
           start={12}
           seed="e2"
         />
-        <Blob f={f} x={150} y={1620} r={85} color={C.coral} start={16} seed="e3" />
+        <Blob f={f} x={150} y={1620} r={85} color={C.pink} start={16} seed="e3" />
       </>
     ),
     headline: 'Refattura legge il PDF e prepara l’autofattura.',
@@ -236,7 +236,7 @@ export const VARIANTS: Variant[] = [
       <>
         <rect x={-20} y={1240} width={600} height={720} fill={C.lemon} />
         <rect x={540} y={1180} width={600} height={780} fill={C.coral} />
-        <rect x={700} y={-20} width={420} height={330} fill={C.green} />
+        <rect x={700} y={-20} width={420} height={330} fill={C.coral} />
       </>
     ),
     motifs: (f) => (

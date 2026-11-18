@@ -15,6 +15,12 @@ import {
 import { OfficeLab, OFFICE_LAB_DURATION } from './lab/cutouts/OfficeLab';
 import { PaletteBoard, PALETTE_BOARD } from './lab/cutouts/PaletteBoard';
 import { CutoutBackgrounds, CUTOUT_SHEET } from './lab/cutouts/scenes';
+import {
+  ObjectsOnPalettes,
+  OBJECTS_ON_PALETTES,
+  VISIBILITY,
+  VisibilityMatrix,
+} from './lab/cutouts/Visibility';
 import { TransitionReel, TRANSITION_REEL_DURATION } from './lab/cutouts/transitions';
 import { HighlightLab, HIGHLIGHT_LAB_HEIGHT } from './lab/HighlightLab';
 import { InvoiceRollLab, INVOICE_ROLL_LAB_DURATION } from './lab/InvoiceRollLab';
@@ -126,6 +132,15 @@ export const RemotionRoot: React.FC = () => (
       fps={formats.reel.fps}
       width={PALETTE_BOARD.width}
       height={PALETTE_BOARD.height}
+    />
+    <Still id="CutoutVisibility" component={VisibilityMatrix} width={VISIBILITY.width} height={VISIBILITY.height} />
+    <Composition
+      id="CutoutObjectsPalettes"
+      component={ObjectsOnPalettes}
+      durationInFrames={OBJECTS_ON_PALETTES.frame + 1}
+      fps={formats.reel.fps}
+      width={OBJECTS_ON_PALETTES.width}
+      height={OBJECTS_ON_PALETTES.height}
     />
     <Still id="FontLab" component={FontLab} width={1080} height={FONTLAB_HEIGHT} />
     <Still id="HighlightLab" component={HighlightLab} width={1080} height={HIGHLIGHT_LAB_HEIGHT} />

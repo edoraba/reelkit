@@ -1,4 +1,4 @@
-import { cutoutPalettes } from '@reelkit/brand';
+import { cutoutPalettes, pickerFor } from '@reelkit/brand';
 import { AbsoluteFill, useCurrentFrame } from 'remotion';
 import { fontsOf } from '../../brand/fonts';
 import { Grain } from '../moodboards/kit';
@@ -50,6 +50,7 @@ export const OfficeLab: React.FC = () => {
                   c={p.motifs[2]}
                   hole={p.bg}
                   ink={p.text}
+                  pick={pickerFor(p)}
                 />
               </g>
             </svg>

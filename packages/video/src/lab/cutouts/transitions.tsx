@@ -1,16 +1,22 @@
+import {
+  bloomLayers,
+  cutoutPalette,
+  type CutoutPalette,
+  type CutoutPaletteKey,
+} from '@reelkit/brand';
 import { seededRandom } from '@reelkit/schema';
 import { AbsoluteFill, Sequence, useCurrentFrame } from 'remotion';
 import { fontsOf } from '../../brand/fonts';
-import { C } from '../moodboards/boards';
 import { onTwos, pop, ramp, smoothClosed, type Pt } from './geometry';
 import { BoilFilter } from './paper';
-import { CutoutScene, variant, type Variant } from './scenes';
+import { PaletteScene } from './PaletteBoard';
 
 /**
- * Paper transitions between cut-out scenes (no sliding, Edoardo 2026-11-18). Chosen: bloom and
+ * Paper transitions between cut-out scenes (no sliding, Edoardo 2026-11-18), on the six
+ * palettes in Refattura tones (D-027), dark and light alternated. Chosen: bloom and
  * cut, alternated (D-023); collage and star stay available but are not used in the reel.
- * - bloom: an organic cut shape in the accent color grows from the mascot, the new scene
- *   grows inside it, like layered paper;
+ * - bloom: two organic paper layers grow from the star in the corner, the new scene grows
+ *   inside them (layer colors from bloomLayers, visible on both scenes);
  * - cut: a dashed scissor line crosses the old scene, then the two pieces fall away;
  * - collage: sheets of the new color fly in and stack until they cover the frame, then the
  *   accent pieces fly off;
@@ -22,13 +28,13 @@ export type TransitionKind = 'bloom' | 'cut' | 'collage' | 'star';
 const SCENE = 90;
 const DURATION: Record<TransitionKind, number> = { bloom: 20, cut: 28, collage: 24, star: 20 };
 
-/** accents: colors of the paper layers of the transition, chosen to contrast with both scenes. */
-const PLAN: Array<{ key: string; transition?: TransitionKind; accents?: [string, string] }> = [
-  { key: 'ultramarine' },
-  { key: 'coral', transition: 'bloom', accents: [C.lemon, C.cream] },
-  { key: 'blocks', transition: 'cut' },
-  { key: 'cream', transition: 'bloom', accents: [C.coral, C.lemon] },
-  { key: 'emerald', transition: 'cut' },
+const PLAN: Array<{ key: CutoutPaletteKey; transition?: TransitionKind }> = [
+  { key: 'blu' },
+  { key: 'lavanda', transition: 'bloom' },
+  { key: 'notte', transition: 'cut' },
+  { key: 'azzurro', transition: 'bloom' },
+  { key: 'viola', transition: 'cut' },
+  { key: 'ghiaccio', transition: 'bloom' },
 ];
 export const TRANSITION_REEL_DURATION = PLAN.length * SCENE;
 
@@ -90,14 +96,13 @@ const clip = (d: string): React.CSSProperties => ({ clipPath: `path('${d}')` });
 
 /** Incoming scene (on top), revealed by the transition. `lf` = frames since the scene start. */
 const Incoming: React.FC<{
-  v: Variant;
+  v: CutoutPalette;
   kind?: TransitionKind;
-  prev?: Variant;
-  accents?: [string, string];
-}> = ({ v, kind, prev, accents }) => {
-  const [a1, a2] = accents ?? [v.accent, prev?.accent ?? v.accent];
+  prev?: CutoutPalette;
+}> = ({ v, kind, prev }) => {
+  const [a1, a2] = prev ? bloomLayers(prev, v) : v.bloom;
   const lf = useCurrentFrame();
-  const scene = <CutoutScene v={v} />;
+  const scene = <PaletteScene p={v} />;
   if (!kind || !prev || lf >= DURATION[kind]) return <AbsoluteFill>{scene}</AbsoluteFill>;
 
   if (kind === 'bloom') {
@@ -224,7 +229,7 @@ const Incoming: React.FC<{
             transformOrigin: '540px 1400px',
           }}
         >
-          <CutoutScene v={prev} idSuffix="b" />
+          <PaletteScene p={prev} idSuffix="b" />
         </AbsoluteFill>
         <AbsoluteFill
           style={{
@@ -233,7 +238,7 @@ const Incoming: React.FC<{
             transformOrigin: '540px 500px',
           }}
         >
-          <CutoutScene v={prev} idSuffix="t" />
+          <PaletteScene p={prev} idSuffix="t" />
         </AbsoluteFill>
       </Sequence>
       {lf < CUT + 2 && (
@@ -244,7 +249,7 @@ const Incoming: React.FC<{
           <path
             d={lineD}
             fill="none"
-            stroke={C.ink}
+            stroke={prev.text}
             strokeWidth={7}
             strokeDasharray="22 14"
             mask="url(#cutMask)"
@@ -283,9 +288,9 @@ const Caption: React.FC = () => {
 };
 
 export const TransitionReel: React.FC = () => (
-  <AbsoluteFill style={{ backgroundColor: C.ink }}>
+  <AbsoluteFill style={{ backgroundColor: cutoutPalette('notte').bg }}>
     {PLAN.map((p, i) => {
-      const v = variant(p.key);
+      const v = cutoutPalette(p.key);
       const next = PLAN[i + 1];
       // The outgoing scene stays underneath while the next transition runs.
       const tail = next?.transition && next.transition !== 'cut' ? DURATION[next.transition] : 0;
@@ -294,8 +299,7 @@ export const TransitionReel: React.FC = () => (
           <Incoming
             v={v}
             kind={p.transition}
-            accents={p.accents}
-            prev={i > 0 ? variant(PLAN[i - 1]!.key) : undefined}
+            prev={i > 0 ? cutoutPalette(PLAN[i - 1]!.key) : undefined}
           />
         </Sequence>
       );
