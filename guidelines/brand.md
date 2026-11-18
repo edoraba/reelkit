@@ -33,6 +33,16 @@ Highlighting the key word:
 
 The rotated lime box is retired. Not chosen: ruled ledger paper with margin, minimal flat counter (kept in `pnpm render:lab` for reference only).
 
+### Cut-paper direction (exploring, D-020 to D-022)
+
+Edoardo prefers the Matisse papiers découpés direction. Rules so far (2026-11-18):
+
+- The mascot always keeps the white sticker border, also in the cut-paper style; the border boils together with the scissor-cut edge.
+- Never a pure white background: use cream (`oklch(95% 0.03 90)`), kraft or a saturated paper color. White is only for small cut pieces.
+- Limbs are never white: they would disappear on the sticker border.
+- No sliding between scenes. Transitions are paper actions: an organic shape that blooms in layers, a scissor cut after which the pieces fall, sheets that stack like a collage, a turning cut-paper star.
+- Motifs move by changing shape (growing, opening, branching, flapping), not only by moving or rotating; motion runs on twos and edges boil every four frames.
+
 Token source: `refattura/DESIGN.md`, copied to `packages/brand/src/tokens.ts`. In code, colors always come from `@reelkit/brand`, never written by hand.
 
 ## Palette

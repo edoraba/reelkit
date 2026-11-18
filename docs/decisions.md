@@ -142,3 +142,7 @@ Edoardo prefers the Matisse cut-out direction (D-020, moodboard 1) and asked for
 - Eight backgrounds tested (ultramarine, coral, lemon, emerald, paper, black, collage blocks, kraft) and a 12 s reel where each scene slides in like a new sheet of paper.
 
 `pnpm render:cutouts` renders the motif catalogue, the backgrounds sheet and the reel. Choice of palette, motifs and how far to push the style is open.
+
+## D-022 Cut-paper rules: sticker border, no white, paper transitions (2026-11-18)
+
+Feedback on the cut-paper reel: keep the white sticker border on the mascot, never use a pure white background (cream instead), and drop the sliding transition. The mascot now uses `CutoutStickerFilter` (boiling cut edge plus a sticker border that boils with it); the paper scene became cream; limbs are never white. Four paper transitions replace the slide (`packages/video/src/lab/cutouts/transitions.tsx`, `pnpm render:cutouts`): bloom (layered organic shapes growing out of a motif), cut (dashed scissor line, then the two pieces fall away), collage (stacking sheets with shadows, accent pieces fly off), star (turning cut-paper star iris). Each transition has explicit accent colors that contrast with both scenes. Rules recorded in `guidelines/brand.md`.
