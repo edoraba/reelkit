@@ -7,7 +7,8 @@ import { BoilFilter } from './paper';
 import { CutoutScene, variant, type Variant } from './scenes';
 
 /**
- * Paper transitions between cut-out scenes (no sliding, Edoardo 2026-11-18):
+ * Paper transitions between cut-out scenes (no sliding, Edoardo 2026-11-18). Chosen: bloom and
+ * cut, alternated (D-023); collage and star stay available but are not used in the reel.
  * - bloom: an organic cut shape in the accent color grows from the mascot, the new scene
  *   grows inside it, like layered paper;
  * - cut: a dashed scissor line crosses the old scene, then the two pieces fall away;
@@ -26,8 +27,8 @@ const PLAN: Array<{ key: string; transition?: TransitionKind; accents?: [string,
   { key: 'ultramarine' },
   { key: 'coral', transition: 'bloom', accents: [C.lemon, C.cream] },
   { key: 'blocks', transition: 'cut' },
-  { key: 'cream', transition: 'collage', accents: [C.coral, C.lemon] },
-  { key: 'emerald', transition: 'star', accents: [C.lemon, C.coral] },
+  { key: 'cream', transition: 'bloom', accents: [C.coral, C.lemon] },
+  { key: 'emerald', transition: 'cut' },
 ];
 export const TRANSITION_REEL_DURATION = PLAN.length * SCENE;
 

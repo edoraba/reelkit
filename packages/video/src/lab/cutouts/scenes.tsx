@@ -48,7 +48,8 @@ export interface Variant {
   accent: string;
 }
 
-const BASE_LOOK: Partial<Look> = { outlineWidth: 0, limbWidth: 16, rule: 'oklch(85% 0.04 264)' };
+// Graphite outline under the white sticker border, as in the sticker test reel (Edoardo, 2026-11-18).
+const BASE_LOOK: Partial<Look> = { limbWidth: 12, rule: 'oklch(85% 0.04 264)' };
 
 export const VARIANTS: Variant[] = [
   {
