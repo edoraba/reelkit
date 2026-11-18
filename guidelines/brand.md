@@ -33,7 +33,7 @@ Highlighting the key word:
 
 The rotated lime box is retired. Not chosen: ruled ledger paper with margin, minimal flat counter (kept in `pnpm render:lab` for reference only).
 
-### Cut-paper direction (exploring, D-020 to D-023)
+### Cut-paper direction (exploring, D-020 to D-025)
 
 Edoardo prefers the Matisse papiers découpés direction. Rules so far (2026-11-18):
 
@@ -42,6 +42,9 @@ Edoardo prefers the Matisse papiers découpés direction. Rules so far (2026-11-
 - Limbs are never white: they would disappear on the sticker border.
 - No sliding between scenes. Transitions are paper actions, alternated: **bloom** (layered organic shapes growing out of a motif) and **cut** (a dashed scissor line, then the two pieces fall away). Collage and star exist but are not used.
 - Motifs move by changing shape (growing, opening, branching, flapping), not only by moving or rotating; motion runs on twos and edges boil every four frames.
+- Headline font: **Sour Gummy 800** (D-024); DM Mono for numbers and labels.
+- Colors come only from the six cut-paper palettes in `@reelkit/brand` (D-025, draft): Blu Refattura, Corallo, Panna, Limone, Smeraldo, Rosa. Consecutive scenes never share a palette; a reel alternates dark (Blu Refattura, Smeraldo) and light palettes.
+- Motifs mix organic cut-outs (fronds, stars, blobs, coral, waves, kelp) with office objects (calculator, scissors, stapler, binders, stamp, pencil, envelope, coins, calendar, coffee, magnifier, pinned note), each animated by what it does.
 
 Token source: `refattura/DESIGN.md`, copied to `packages/brand/src/tokens.ts`. In code, colors always come from `@reelkit/brand`, never written by hand.
 

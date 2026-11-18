@@ -151,6 +151,13 @@ Feedback on the cut-paper reel: keep the white sticker border on the mascot, nev
 
 Edoardo kept two of the four paper transitions, **bloom** and **cut**, to alternate between scenes (collage and star stay in the code, unused). The cut-paper mascot goes back to the graphite outline under the white sticker border, as in the sticker test reel (D-019): outline, sticker border and limbs all boil with the scissor-cut edge.
 
-## D-024 Headline font for the cut-paper direction (2026-11-18, open)
+## D-024 Headline font for the cut-paper direction: Sour Gummy (2026-11-18)
 
 Edoardo asked whether Bricolage Grotesque suits the cut-paper style. Ten OFL candidates were added to `assets/fonts/` (each with its `OFL.txt`) and compared on the same scene and in a real-size specimen (`pnpm render:cutouts`, `packages/video/src/lab/cutouts/FontTest.tsx`): Bricolage Grotesque, Bricolage with "cut letters" (each letter a slightly rotated, shifted piece with a boiling edge, a treatment that works with any font), Fraunces with the SOFT and WONK axes, Young Serif, Gloock, Instrument Serif (already used by the Refattura app), Bagel Fat One, Gluten, Sour Gummy and Caveat Brush. Choice open.
+
+**Chosen:** Sour Gummy 800 (puffy, friendly, legible at reel size), now the default headline type of the cut-paper scenes. DM Mono stays for numbers and labels.
+
+## D-025 Cut-paper palettes and office objects (2026-11-18, palettes to approve)
+
+- **Palettes** in `@reelkit/brand` (`paper`, `cutoutPalettes`, draft): six palettes, each with background, text, three motif colors, highlight, limb color, mascot roll and pill colors, bloom transition layers and a dark/light tone for alternation: Blu Refattura, Corallo, Panna, Limone, Smeraldo, Rosa. `pnpm brand:contrast` checks text on background (min 4.5:1, lowest 4.97 on Blu Refattura) and the highlight (marker text 4.5:1, underline visibility 3:1). Coral fails with light text (2.67:1), so Corallo uses dark text. Board: `palettes.png` from `pnpm render:cutouts`.
+- **Office objects** as animated cut-paper motifs, asked by Edoardo: calculator (keys press, display counts), scissors (snip), stapler (bites), binders (slide in and lean), rubber stamp (stamps a check), pencil (writes a line), envelope (opens, the letter comes out), coins (drop and stack), calendar page (flips), coffee cup (steams), magnifier (searches), pinned note (flutters). Colors come from the palette. Code in `packages/video/src/lab/cutouts/office.tsx`.
