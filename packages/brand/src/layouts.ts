@@ -5,6 +5,9 @@ import type { CutoutPaletteKey } from './cutout';
  * and the office object sit, whether a motif is drawn behind the mascot (`back`) or can cover
  * it (`front`), and, for motifs on the mascot's lane, the x range they occupy and what the
  * mascot can do with them. The video draws from this; the pipeline plans the mascot with it.
+ * A `front` motif can cover the mascot, so its color must stand out from the mascot's white
+ * sheet and border (at least 2:1, checked by `pnpm brand:contrast`; Edoardo, 2026-11-18: the
+ * mascot vanished behind the white frond).
  */
 export type MotifKind =
   'frond' | 'blob' | 'kelp' | 'starBloom' | 'spiral' | 'sun' | 'waveBand' | 'palmette';
@@ -72,7 +75,8 @@ export const sceneLayouts: Record<CutoutPaletteKey, SceneLayout> = {
         x: 130,
         y: 1760,
         params: { scale: 1.5, rotate: -6, seed: 'pb2' },
-        color: 0,
+        // Navy, not white: the mascot hides behind it.
+        color: 2,
         start: 4,
         depth: 'front',
         lane: { from: 40, to: 230, interactions: ['lean', 'water', 'hide'] },
@@ -229,7 +233,8 @@ export const sceneLayouts: Record<CutoutPaletteKey, SceneLayout> = {
         params: { scale: 1.4, rotate: 10, seed: 'ps2' },
         color: 0,
         start: 12,
-        depth: 'front',
+        // Lavender is too close to the white mascot to cover it: always behind it.
+        depth: 'back',
         lane: { from: 860, to: 1040, interactions: ['lean', 'water'] },
       },
       {
