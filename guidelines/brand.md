@@ -33,7 +33,7 @@ Highlighting the key word:
 
 The rotated lime box is retired. Not chosen: ruled ledger paper with margin, minimal flat counter (kept in `pnpm render:lab` for reference only).
 
-### Cut-paper direction (exploring, D-020 to D-027)
+### Cut-paper direction (exploring, D-020 to D-028)
 
 Edoardo prefers the Matisse papiers découpés direction. Rules so far (2026-11-18):
 
@@ -43,6 +43,7 @@ Edoardo prefers the Matisse papiers découpés direction. Rules so far (2026-11-
 - No sliding between scenes. Transitions are paper actions, alternated: **bloom** (layered organic shapes growing out of a motif) and **cut** (a dashed scissor line, then the two pieces fall away). Collage and star exist but are not used.
 - Motifs move by changing shape (growing, opening, branching, flapping), not only by moving or rotating; motion runs on twos and edges boil every four frames.
 - Headline font: **Sour Gummy 800** (D-024); DM Mono for numbers and labels.
+- Key word highlight (D-028): a cut-paper **label**, a strip behind the whole word (ascenders and descenders included). The word never sits half on the band and half on the background. The word turns to the band text color only where the strip has already arrived. The half-height highlighter (`marker`) is allowed only if its text color also reads on the background (3:1).
 - Colors come only from the six cut-paper palettes in `@reelkit/brand` (D-027, draft), all in Refattura tones: Blu Refattura, Notte, Azzurro, Ghiaccio, Viola, Lavanda. No warm colors: coral, lemon, pink and emerald made it look like a primary school (Edoardo, 2026-11-18). Stamp green, amber and red appear only on stamps, with their meaning. Consecutive scenes never share a palette; a reel alternates dark (Blu Refattura, Notte, Viola) and light (Azzurro, Ghiaccio, Lavanda) palettes.
 - Visibility (D-026): every cut piece needs at least 2:1 luminance contrast with what it sits on (the background or another piece), text 4.5:1. With only blues and violets, luminance is the only separation: never blue with violet (1.16:1), sky with lavender (1.36:1), white on ice (1.22:1). Office objects choose the color of each piece with `pickerFor(palette)`, bloom transitions take their layers from `bloomLayers(from, to)`, and `pnpm brand:contrast` fails on a palette that breaks the rule.
 - Motifs mix organic cut-outs (fronds, stars, blobs, coral, waves, kelp) with office objects (calculator, scissors, stapler, binders, stamp, pencil, envelope, coins, calendar, coffee, magnifier, pinned note), each animated by what it does.
