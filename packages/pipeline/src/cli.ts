@@ -4,7 +4,8 @@
  *   pnpm bootstrap [--only ffmpeg,rhubarb,whisper,browser,tts] [--model medium] [--force]
  *   pnpm tools:check [--model medium]
  *   pnpm tts:test [--only kokoro,piper,gemini] [--force]
- *   pnpm pipeline align --audio voice.wav --text "script text" --out words.json [--model medium]
+ *   pnpm pipeline say --text "screen text" --out voice.wav
+ *   pnpm pipeline align --audio voice.wav --text "screen text" --out words.json [--model medium]
  */
 import { existsSync } from 'node:fs';
 import path from 'node:path';
@@ -12,10 +13,11 @@ import { parseArgs } from 'node:util';
 import { alignAudio } from './align/align';
 import { bootstrap, check, TOOL_NAMES, type ToolName } from './bootstrap';
 import { rel, repoRoot } from './paths';
-import { spoken } from './tts/pronounce';
 import { WHISPER_MODELS, type WhisperModelName } from './tools/registry';
 import { listeningTest } from './tts/listening-test';
+import { speechMap, spokenText } from './tts/pronounce';
 import type { TtsProviderName } from './tts/types';
+import { houseVoice, providerOf } from './tts/voice';
 
 const TTS_PROVIDERS: TtsProviderName[] = ['kokoro', 'piper', 'gemini'];
 
@@ -80,13 +82,27 @@ async function main(): Promise<void> {
     case 'tts-test':
       await listeningTest({ only: parseProviders(values.only), force: values.force ?? false });
       return;
+    case 'say': {
+      if (!values.text || !values.out) throw new Error('say needs --text and --out');
+      const voice = houseVoice();
+      const text = spokenText(speechMap(values.text));
+      console.log(`${voice.provider} ${voice.model} ${voice.voice}: ${text}`);
+      const r = await providerOf(voice).synthesize({
+        text,
+        out: path.resolve(values.out),
+        voice: voice.voice,
+        style: voice.style,
+      });
+      console.log(`${(r.durationMs / 1000).toFixed(1)} s -> ${rel(r.file)}`);
+      return;
+    }
     case 'align': {
       if (!values.audio || !values.text || !values.out) {
         throw new Error('align needs --audio, --text and --out');
       }
       const report = await alignAudio({
         audio: path.resolve(values.audio),
-        text: spoken(values.text),
+        text: values.text,
         out: path.resolve(values.out),
         model: parseModel(values.model),
       });
@@ -100,7 +116,7 @@ async function main(): Promise<void> {
     }
     default:
       console.error(
-        `Unknown command "${command ?? ''}". Commands: bootstrap, check, tts-test, align`,
+        `Unknown command "${command ?? ''}". Commands: bootstrap, check, tts-test, say, align`,
       );
       process.exitCode = 1;
   }

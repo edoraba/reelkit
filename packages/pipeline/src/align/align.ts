@@ -5,7 +5,7 @@ import path from 'node:path';
 import { transcribe } from '@remotion/install-whisper-cpp';
 import { detectPauses, type Pause } from '../audio/pauses';
 import { bin, pinned, readInstalled, type WhisperModelName } from '../tools/registry';
-import { spoken } from '../tts/pronounce';
+import { speechMap, spoken } from '../tts/pronounce';
 
 /**
  * Word timings for the voice track (brief, step 3), in three passes:
@@ -29,8 +29,20 @@ export interface TimedWord {
   match: 'exact' | 'close' | 'guessed';
 }
 
+/** A unit of screen text ("TD17,") timed over the spoken words it stands for. */
+export interface TimedUnit {
+  text: string;
+  startMs: number;
+  endMs: number;
+  /** Index range [first, last] in `words`. */
+  words: [number, number];
+}
+
 export interface AlignReport {
   durationMs: number;
+  /** Screen text with timings: what captions show. */
+  screen: TimedUnit[];
+  /** Spoken words with timings: what the voice says (mouth, word-level SFX). */
   words: TimedWord[];
   /** Silences of the voice (at least 150 ms): mouth closed, room for SFX. */
   pauses: Pause[];
@@ -326,23 +338,40 @@ function fitSegment(seg: TimedWord[], from: number, to: number): void {
   });
 }
 
-/** Full step: hear the audio, align it to the spoken text, fit it to the pauses, write words.json. */
+/**
+ * Full step: hear the audio, align it to the spoken form of the screen text, fit it to the
+ * pauses, time the screen units, write words.json.
+ */
 export async function alignAudio(opts: {
   audio: string;
+  /** Screen text ("TD17", "49,99 €"); the spoken form is derived with speechMap. */
   text: string;
   out: string;
   model: WhisperModelName;
 }): Promise<AlignReport> {
-  const script = opts.text.split(/\s+/).filter(Boolean);
+  const units = speechMap(opts.text);
+  const script = units.flatMap((u) => u.spoken);
   const heard = await hear(opts.audio, opts.model);
   const { pauses, durationMs } = detectPauses(opts.audio);
   const words = fitToPauses(alignWords(script, heard), pauses, durationMs);
+  let next = 0;
+  const screen: TimedUnit[] = units.map((u) => {
+    const first = next;
+    const last = next + Math.max(1, u.spoken.length) - 1;
+    next = last + 1;
+    return {
+      text: u.screen,
+      startMs: words[first]!.startMs,
+      endMs: words[last]!.endMs,
+      words: [first, last],
+    };
+  });
   const issues = words
     .map((w, index) => ({ index, w }))
     .filter(({ w }) => w.match === 'guessed' || (w.heard && w.match === 'close'))
     .map(({ index, w }) => ({ index, word: w.word, ...(w.heard ? { heard: w.heard } : {}) }));
   const heardRatio = words.filter((w) => w.match !== 'guessed').length / Math.max(1, words.length);
-  const report: AlignReport = { durationMs, words, pauses, heardRatio, issues };
+  const report: AlignReport = { durationMs, screen, words, pauses, heardRatio, issues };
   mkdirSync(path.dirname(opts.out), { recursive: true });
   writeFileSync(opts.out, JSON.stringify(report, null, 2) + '\n');
   return report;
