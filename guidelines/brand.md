@@ -33,7 +33,7 @@ Highlighting the key word:
 
 The rotated lime box is retired. Not chosen: ruled ledger paper with margin, minimal flat counter (kept in `pnpm render:lab` for reference only).
 
-### Cut-paper direction (exploring, D-020 to D-028)
+### Cut-paper direction (exploring, D-020 to D-032)
 
 Edoardo prefers the Matisse papiers découpés direction. Rules so far (2026-11-18):
 
@@ -47,6 +47,8 @@ Edoardo prefers the Matisse papiers découpés direction. Rules so far (2026-11-
 - Colors come only from the six cut-paper palettes in `@reelkit/brand` (D-027, draft), all in Refattura tones: Blu Refattura, Notte, Azzurro, Ghiaccio, Viola, Lavanda. No warm colors: coral, lemon, pink and emerald made it look like a primary school (Edoardo, 2026-11-18). Stamp green, amber and red appear only on stamps, with their meaning. Consecutive scenes never share a palette; a reel alternates dark (Blu Refattura, Notte, Viola) and light (Azzurro, Ghiaccio, Lavanda) palettes.
 - Visibility (D-026): every cut piece needs at least 2:1 luminance contrast with what it sits on (the background or another piece), text 4.5:1. With only blues and violets, luminance is the only separation: never blue with violet (1.16:1), sky with lavender (1.36:1), white on ice (1.22:1). Office objects choose the color of each piece with `pickerFor(palette)`, bloom transitions take their layers from `bloomLayers(from, to)`, and `pnpm brand:contrast` fails on a palette that breaks the rule.
 - Motifs mix organic cut-outs (fronds, stars, blobs, coral, waves, kelp) with office objects (calculator, scissors, stapler, binders, stamp, pencil, envelope, coins, calendar, coffee, magnifier, pinned note), each animated by what it does.
+- The mascot lives on a lane at the bottom (feet on y 1634, standing between x 160 and 860 so the face stays clear of the platform buttons). It walks sideways like a flat cartoon, never mirrored; side motifs marked `front` can cover it as it walks behind them, which gives the scene depth. It holds props (scissors, stamp, calculator, magnifier, letter, watering can, sheet) kept upright in the hand (D-032).
+- Mascot-triggered transitions decorate bloom and cut (scissors, blow) or add the pulled sheet, at most 2 per reel. The pulled sheet is paper with a torn, boiling edge held by the mascot, never a rigid slide.
 
 Token source: `refattura/DESIGN.md`, copied to `packages/brand/src/tokens.ts`. In code, colors always come from `@reelkit/brand`, never written by hand.
 
@@ -149,7 +151,7 @@ Name: to be decided.
 
 Poses (full library in Phase 2): `neutral`, `arms-up`, `point-left`, `point-up`, `shrug`, `thinking`, `wave`, `facepalm`, `celebrate`. Today `neutral`, `arms-up` and `wave` exist.
 
-Expressions (Phase 2): `happy`, `worried`, `skeptical`, `surprised`. With dot eyes and no eyebrows, expressions come from eye shape (round, squashed, arcs), mouth, roll and arm pose. Today `happy` (arc eyes) exists.
+Expressions: with dot eyes and no eyebrows, they come from the eyes (`open`, `happy` arcs, `wide`, `closed`, `half`), the mouth, the roll (tilt, lift, squash), the body lean and the arm pose (D-032).
 
 ### SVG layer naming
 

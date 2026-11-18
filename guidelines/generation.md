@@ -56,9 +56,13 @@
 
 ## Mascot in the beat
 
-- Every beat can specify `pose` and `expression`. If it does not, the mascot stays in idle and makes a micro-gesture on the highlighted word.
-- Gaze toward the element entering the scene, then back to the camera.
-- Mouth closed when the voice is silent.
+The mascot is planned by `pnpm pipeline mascot <id>` (D-032): an automatic layer keeps it alive (weight shifts, hops, a look at the headline and the label, a reaction on the highlighted word, a foot tap in long stretches, a walk or a lean on a side motif now and then). The script adds only what the automatic layer cannot know:
+
+- `mascot.pose`: `neutral`, `arms-up`, `wave`, `point`, `shrug`, `think`, `hold`, `lean`, `lean-r`, `hide`, `type`, `stamp`, `walk`, `push`, `pull`. Without one the beat goes back to idle.
+- `mascot.action` (and optionally `mascot.at`, a word of the beat): `stamp` on an outcome, `type` on an amount, `send` when something goes to the SDI or to someone, `inspect` on a check, `point` at a key line, `water` and `hide` with a side motif of the scene (the planner refuses them when the scene has none). At most one action per beat, a few per reel.
+- `transition.trigger` on the first beat of a scene: `scissors` (cut), `blow` (bloom), `pull` (the mascot runs across pulling the new sheet). At most 2 per reel, at most one `pull`, never on the first beat; without room the planner falls back to the plain transition and says so.
+- `mascot.scene`: a rare alternative scene for one beat (`reading`); at most one per reel.
+- Mouth closed when the voice is silent; the mascot, its props and its marks never touch the headline.
 
 ## SFX
 
