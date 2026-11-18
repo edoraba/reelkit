@@ -23,7 +23,7 @@ import { PaletteScene } from './PaletteBoard';
  * - star: a turning cut-paper star opens onto the new scene.
  *   pnpm render:cutouts  ->  packages/video/out/lab/cutouts/transitions.mp4
  */
-export type TransitionKind = 'bloom' | 'cut' | 'collage' | 'star';
+export type TransitionKind = 'bloom' | 'cut' | 'collage' | 'star' | 'pull';
 
 const SCENE = 90;
 /** Length of each transition in frames. */
@@ -32,6 +32,7 @@ export const TRANSITION_FRAMES: Record<TransitionKind, number> = {
   cut: 28,
   collage: 24,
   star: 20,
+  pull: 32,
 };
 const DURATION = TRANSITION_FRAMES;
 
@@ -99,6 +100,9 @@ function sheet(x: number, y: number, w: number, h: number, seed: string): string
 
 const clip = (d: string): React.CSSProperties => ({ clipPath: `path('${d}')` });
 
+/** Soft edge under a pulled sheet. */
+const paperShadow = 'oklch(0% 0 0 / 0.22)';
+
 // ------------------------------------------------------------------------------- transitions
 
 /**
@@ -118,15 +122,35 @@ export const PaperIn: React.FC<{
    * motifs above the mascot (D-032): there the old front motifs disappear under the bloom.
    */
   decor?: boolean;
-}> = ({ to: v, from: prev, kind, scene, prevScene, prevOffset = 0, decor = true }) => {
+  /** Bloom center (default the corner motif, 880, 320); the mascot's mouth for `blow`. */
+  origin?: { x: number; y: number };
+  /** Where the cut starts (default a line across at y 980); the scissors tip for `scissors`. */
+  lineFrom?: { x: number; y: number };
+  /** `pull`: the side the new sheet comes from (the mascot runs to the other one). */
+  side?: 'left' | 'right';
+  /** `pull`: x of the sheet's torn edge at a frame of the transition (the mascot's hand). */
+  edgeAt?: (lf: number) => number;
+}> = ({
+  to: v,
+  from: prev,
+  kind,
+  scene,
+  prevScene,
+  prevOffset = 0,
+  decor = true,
+  origin,
+  lineFrom,
+  side = 'left',
+  edgeAt,
+}) => {
   const [a1, a2] = prev ? bloomLayers(prev, v) : v.bloom;
   const lf = useCurrentFrame();
   if (!kind || !prev || lf >= DURATION[kind]) return <AbsoluteFill>{scene}</AbsoluteFill>;
 
   if (kind === 'bloom') {
-    // Blooms out of the star in the top-right corner of the old scene.
-    const cx = 880;
-    const cy = 320;
+    // Blooms out of the star in the top-right corner of the old scene, or out of the mascot.
+    const cx = origin?.x ?? 880;
+    const cy = origin?.y ?? 320;
     const maxR = 2500;
     const ra = maxR * ramp(lf, 0, 14);
     const rs = maxR * ramp(lf, 5, 14);
@@ -243,8 +267,65 @@ export const PaperIn: React.FC<{
     );
   }
 
-  // cut: the new scene is underneath, the old one is cut in two and falls away.
-  const wave = (x: number) => 980 + 70 * Math.sin((x / W) * Math.PI * 3);
+  if (kind === 'pull') {
+    // A sheet of the new scene pulled in by the mascot: torn, boiling edge, a little wobble,
+    // stepped on twos. Never a rigid slide (Edoardo, 2026-11-18).
+    const t = Math.min(1, onTwos(lf) / (DURATION.pull - 4));
+    // Fast start: the sheet covers the headline area before the first word of the scene.
+    const e = 1 - (1 - t) ** 2;
+    // The sheet comes from `side`; its edge is held by the mascot when there is one.
+    const toLeft = side === 'right';
+    const edge = edgeAt ? edgeAt(lf) : toLeft ? W + 60 - (W + 160) * e : -60 + (W + 160) * e;
+    const rnd = seededRandom('pull', Math.floor(lf / 2));
+    const tear: Pt[] = Array.from({ length: 29 }, (_, i) => {
+      const y = -40 + (i / 28) * (H + 80);
+      return [edge + (rnd() - 0.5) * 30 + 14 * Math.sin(y / 150 + lf * 0.2), y];
+    });
+    const tearD = tear
+      .map((p, i) => `${i ? 'L' : 'M'} ${p[0].toFixed(1)} ${p[1].toFixed(1)}`)
+      .join(' ');
+    const far = toLeft ? W + 120 : -120;
+    const sheet = `${tearD} L ${far} ${H + 40} L ${far} -40 Z`;
+    const wobble = `rotate(${((1 - e) * 2.4 * (toLeft ? 1 : -1)).toFixed(2)}deg)`;
+    const pivot = `${edge.toFixed(0)}px 960px`;
+    return (
+      <AbsoluteFill>
+        {!decor && prevScene && (
+          <Sequence from={-prevOffset} layout="none">
+            <AbsoluteFill
+              style={{ clipPath: `path(evenodd, 'M 0 0 H ${W} V ${H} H 0 Z ${sheet}')` }}
+            >
+              {prevScene('f')}
+            </AbsoluteFill>
+          </Sequence>
+        )}
+        <AbsoluteFill style={{ ...clip(sheet), transform: wobble, transformOrigin: pivot }}>
+          {scene}
+        </AbsoluteFill>
+        {decor && (
+          <svg
+            width={W}
+            height={H}
+            style={{ position: 'absolute', inset: 0, transform: wobble, transformOrigin: pivot }}
+          >
+            <path
+              d={tearD}
+              fill="none"
+              stroke={paperShadow}
+              strokeWidth={14}
+              strokeLinejoin="round"
+            />
+            <path d={tearD} fill="none" stroke={v.bg} strokeWidth={5} strokeLinejoin="round" />
+          </svg>
+        )}
+      </AbsoluteFill>
+    );
+  }
+
+  // cut: the new scene is underneath, the old one is cut in two and falls away. With
+  // `lineFrom` the line runs at the scissors' height and opens from there to both sides.
+  const y0 = lineFrom?.y ?? 980;
+  const wave = (x: number) => y0 + 70 * Math.sin((x / W) * Math.PI * 3);
   const line: Pt[] = Array.from({ length: 25 }, (_, i) => [
     (i / 24) * (W + 40) - 20,
     wave((i / 24) * W),
@@ -264,7 +345,7 @@ export const PaperIn: React.FC<{
           style={{
             ...clip(bottom),
             transform: `translateY(${0.5 * 7 * fall * fall}px) rotate(${fall * 1.1}deg)`,
-            transformOrigin: '540px 1400px',
+            transformOrigin: `540px ${y0 + 420}px`,
           }}
         >
           {prevScene?.('b')}
@@ -273,7 +354,7 @@ export const PaperIn: React.FC<{
           style={{
             ...clip(top),
             transform: `translate(${-fallTop * fallTop * 1.6}px, ${-fallTop * fallTop * 2.6}px) rotate(${-fallTop * 1.4}deg)`,
-            transformOrigin: '540px 500px',
+            transformOrigin: `540px ${y0 - 480}px`,
           }}
         >
           {prevScene?.('t')}
@@ -282,7 +363,17 @@ export const PaperIn: React.FC<{
       {decor && lf < CUT + 2 && (
         <svg width={W} height={H} style={{ position: 'absolute', inset: 0 }}>
           <mask id="cutMask" maskUnits="userSpaceOnUse" x={0} y={0} width={W} height={H}>
-            <rect x={0} y={0} width={(W + 40) * drawn} height={H} fill="white" />
+            {lineFrom ? (
+              <rect
+                x={lineFrom.x - (W + 40) * drawn}
+                y={0}
+                width={2 * (W + 40) * drawn}
+                height={H}
+                fill="white"
+              />
+            ) : (
+              <rect x={0} y={0} width={(W + 40) * drawn} height={H} fill="white" />
+            )}
           </mask>
           <path
             d={lineD}

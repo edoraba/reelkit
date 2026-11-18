@@ -42,6 +42,8 @@ export const LIMITS = {
   laneMax: 860,
   hideLeftMin: 120,
   walkPxPerSecond: 280,
+  /** Time the scene must last after a pull, for the mascot to walk back in. */
+  pullTailMs: 1300,
 } as const;
 
 /** Frame geometry used by the checks. */
@@ -216,9 +218,19 @@ export function planMascot(input: { script: Script; report: AlignReport; seed: s
     const need =
       f2ms(transitionTiming[s.kind].lead) + (s.trigger === 'blow' ? LIMITS.blowPuffMs : 0);
     const add = Math.max(0, Math.ceil(need - silence));
-    if (add > LIMITS.maxStretchMs) {
-      const msg = `beat ${first.beat.id}: no room for the ${s.trigger} gesture (needs ${add} ms more), plain ${s.kind}`;
+    // A pull ends with the mascot walking back in: the scene must last long enough after it.
+    const sceneLeft =
+      s.beats.at(-1)!.endMs -
+      first.startMs -
+      f2ms(transitionTiming.pull.frames - transitionTiming.pull.lead);
+    if (add > LIMITS.maxStretchMs || (s.trigger === 'pull' && sceneLeft < LIMITS.pullTailMs)) {
+      const why =
+        add > LIMITS.maxStretchMs
+          ? `needs ${add} ms more`
+          : 'the scene is too short to walk back in';
+      const msg = `beat ${first.beat.id}: no room for the ${s.trigger} gesture (${why}), plain transition`;
       if (first.beat.transition) warnings.push(msg);
+      if (s.trigger === 'pull') s.kind = scenes[i - 1]?.kind === 'bloom' ? 'cut' : 'bloom';
       s.trigger = undefined;
       continue;
     }
@@ -237,12 +249,17 @@ export function planMascot(input: { script: Script; report: AlignReport; seed: s
   let x = 540;
 
   const lastMove = () => moves.at(-1)!;
-  const walkMs = (target: number) => {
+  const walkMs = (target: number, speed: number = LIMITS.walkPxPerSecond) => {
     const dist = Math.abs(target - x);
-    return dist < 20 ? 0 : Math.min(1800, Math.round((dist / LIMITS.walkPxPerSecond) * 1000));
+    return dist < 20 ? 0 : Math.min(1800, Math.round((dist / speed) * 1000));
   };
-  const walkTo = (atMs: number, target: number, depth: 'front' | 'behind' = 'front') => {
-    const durationMs = walkMs(target);
+  const walkTo = (
+    atMs: number,
+    target: number,
+    depth: 'front' | 'behind' = 'front',
+    speed: number = LIMITS.walkPxPerSecond,
+  ) => {
+    const durationMs = walkMs(target, speed);
     if (durationMs === 0) return atMs;
     moves.push({ atMs, durationMs, x: target, gait: 'walk', depth });
     x = target;
@@ -285,17 +302,20 @@ export function planMascot(input: { script: Script; report: AlignReport; seed: s
           sfx: SFX.blow,
         });
       } else if (s.trigger === 'pull') {
-        const side = x < 540 ? -300 : 1380;
-        cues.push({ atMs: gStart, pose: 'pull', eyes: 'open', lean: side < 0 ? -8 : 8 });
+        // The mascot grabs the edge of the new sheet on its side and runs across the frame
+        // pulling it: the torn edge follows its trailing hand. Then it walks back in.
+        const exit = x < 540 ? 1380 : -300;
+        cues.push({ atMs: gStart, pose: 'pull', eyes: 'wide', lean: exit > 0 ? 8 : -8 });
         moves.push({
-          atMs: gStart,
-          durationMs: Math.round(tEnd - gStart),
-          x: side,
+          atMs: Math.round(tStart),
+          durationMs: Math.round(tEnd - tStart),
+          x: exit,
           gait: 'walk',
           depth: 'front',
         });
-        x = side;
-        walkTo(Math.round(tEnd), side < 0 ? 300 : 780);
+        x = exit;
+        // Back in quickly on the new sheet, so a pull near the end still lands in the frame.
+        walkTo(Math.round(tEnd), exit > 0 ? 820 : 260, 'front', 520);
       }
       if (s.trigger) {
         gags.push({
@@ -518,11 +538,16 @@ export function planMascot(input: { script: Script; report: AlignReport; seed: s
         problems.push(`stand at x ${m.x} at ${m.atMs} ms is outside the lane 160..860`);
     }
   }
-  const finalStand = [...plan.moves]
-    .reverse()
-    .find((m) => m.atMs + m.durationMs <= sh(report.durationMs));
-  if (finalStand && (finalStand.x < 0 || finalStand.x > 1080)) {
-    problems.push(`the mascot ends outside the frame (x ${finalStand.x})`);
+  // Where the mascot actually is on the last frame (a walk may still be running).
+  const end = sh(report.durationMs);
+  let endX = 540;
+  for (const m of plan.moves) {
+    if (m.atMs > end) break;
+    const t = m.durationMs > 0 ? Math.min(1, (end - m.atMs) / m.durationMs) : 1;
+    endX = endX + (m.x - endX) * t;
+  }
+  if (endX < 60 || endX > 1020) {
+    problems.push(`the mascot ends outside the frame (x ${Math.round(endX)})`);
   }
   const autos = plan.gags.filter(
     (g) => g.source === 'auto' && ['hop', 'shift', 'tap', 'lean', 'tickle'].includes(g.kind),

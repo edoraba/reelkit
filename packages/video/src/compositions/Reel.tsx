@@ -23,7 +23,23 @@ import { DEFAULT_TYPE } from '../lab/cutouts/scenes';
 import { PaperIn, type TransitionKind } from '../lab/cutouts/transitions';
 import { InvoiceRoll } from '../mascot/InvoiceRoll';
 import { poses, type PoseName } from '../mascot/poses';
+import { mascotAt } from '../mascot/choreo';
 import { MascotLayer } from './reel/MascotLayer';
+
+/** Where a mascot-triggered transition comes from: its mouth, its scissors, its walk. */
+function triggerGeometry(s: Scene, plan?: MascotPlan) {
+  if (!plan || !s.trigger) return {};
+  const x = mascotAt(plan, s.from, FPS).x;
+  if (s.trigger === 'blow') return { origin: { x, y: 1280 } };
+  if (s.trigger === 'scissors') return { lineFrom: { x: x + 150, y: 1400 } };
+  // The sheet comes from the mascot's side and its edge follows the trailing hand.
+  const side = x < 540 ? ('left' as const) : ('right' as const);
+  const edgeAt = (lf: number) => {
+    const mx = mascotAt(plan, s.from + lf, FPS).x;
+    return side === 'left' ? mx - 150 : mx + 150;
+  };
+  return { side, edgeAt };
+}
 
 /**
  * A reel from its resolved timeline (`pnpm pipeline render <post>`), cut-paper direction
@@ -58,10 +74,9 @@ interface Scene {
   /** First frame of the scene sequence (transition start). */
   from: number;
   kind?: TransitionKind;
+  /** Mascot gesture that starts the transition (D-032). */
+  trigger?: 'scissors' | 'blow' | 'pull';
 }
-
-/** The pulled sheet arrives in Task 8 of the plan; until then it is drawn as a bloom. */
-const kindOf = (k: 'bloom' | 'cut' | 'pull'): TransitionKind => (k === 'pull' ? 'bloom' : k);
 
 function scenesOf(beats: TimelineBeat[], plan?: MascotPlan): Scene[] {
   const scenes: Scene[] = [];
@@ -74,12 +89,12 @@ function scenesOf(beats: TimelineBeat[], plan?: MascotPlan): Scene[] {
         scenes.length === 0
           ? undefined
           : planned
-            ? kindOf(planned.kind)
+            ? planned.kind
             : scenes.length % 2 === 1
               ? 'bloom'
               : 'cut';
       const from = kind ? Math.max(0, toFrame(b.startMs) - transitionTiming[kind].lead) : 0;
-      scenes.push({ p: palette(b.palette), beats: [b], from, kind });
+      scenes.push({ p: palette(b.palette), beats: [b], from, kind, trigger: planned?.trigger });
     }
   }
   return scenes;
@@ -189,6 +204,7 @@ export const Reel: React.FC<ReelProps> = (props) => {
             from={prev?.p}
             kind={s.kind}
             decor={layer !== 'front'}
+            {...triggerGeometry(s, plan)}
             scene={backdrop(s.p, `r${i}`, fx)}
             prevScene={(sfx) =>
               prev ? backdrop(prev.p, `r${i - 1}${sfx}`, sceneEffects(prev, plan)) : null

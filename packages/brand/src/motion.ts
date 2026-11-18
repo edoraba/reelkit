@@ -10,5 +10,5 @@ export const transitionTiming: Record<TransitionName, { lead: number; frames: nu
   cut: { lead: 14, frames: 28 },
   collage: { lead: 10, frames: 24 },
   star: { lead: 10, frames: 20 },
-  pull: { lead: 16, frames: 36 },
+  pull: { lead: 20, frames: 32 },
 };
