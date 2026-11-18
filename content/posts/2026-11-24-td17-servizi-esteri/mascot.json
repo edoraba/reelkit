@@ -1,0 +1,433 @@
+{
+  "postId": "2026-11-24-td17-servizi-esteri",
+  "stretch": [
+    {
+      "atMs": 10334,
+      "addMs": 33
+    },
+    {
+      "atMs": 16017,
+      "addMs": 217
+    }
+  ],
+  "moves": [
+    {
+      "atMs": 0,
+      "durationMs": 0,
+      "x": 540,
+      "gait": "stand",
+      "depth": "front"
+    },
+    {
+      "atMs": 2663,
+      "durationMs": 1464,
+      "x": 130,
+      "gait": "walk",
+      "depth": "behind"
+    },
+    {
+      "atMs": 5405,
+      "durationMs": 893,
+      "x": 380,
+      "gait": "walk",
+      "depth": "front"
+    },
+    {
+      "atMs": 15825,
+      "durationMs": 1067,
+      "x": 1380,
+      "gait": "walk",
+      "depth": "front"
+    },
+    {
+      "atMs": 16892,
+      "durationMs": 1077,
+      "x": 820,
+      "gait": "walk",
+      "depth": "front"
+    }
+  ],
+  "cues": [
+    {
+      "atMs": 197,
+      "pose": "wave",
+      "eyes": "open",
+      "lean": 0
+    },
+    {
+      "atMs": 1239,
+      "pose": "wave",
+      "eyes": "happy",
+      "lean": 0
+    },
+    {
+      "atMs": 1839,
+      "pose": "wave",
+      "eyes": "open",
+      "lean": 0
+    },
+    {
+      "atMs": 2963,
+      "pose": "hide",
+      "eyes": "wide",
+      "lean": -6
+    },
+    {
+      "atMs": 5405,
+      "pose": "arms-up",
+      "eyes": "open",
+      "lean": 0
+    },
+    {
+      "atMs": 7275,
+      "pose": "arms-up",
+      "eyes": "wide",
+      "lean": 0
+    },
+    {
+      "atMs": 7875,
+      "pose": "arms-up",
+      "eyes": "open",
+      "lean": 0
+    },
+    {
+      "atMs": 8228,
+      "pose": "neutral",
+      "eyes": "open",
+      "lean": 0
+    },
+    {
+      "atMs": 8498,
+      "pose": "neutral",
+      "eyes": "wide",
+      "lean": 0
+    },
+    {
+      "atMs": 9098,
+      "pose": "neutral",
+      "eyes": "open",
+      "lean": 0
+    },
+    {
+      "atMs": 9717,
+      "pose": "hold",
+      "eyes": "wide",
+      "lean": 0
+    },
+    {
+      "atMs": 10584,
+      "pose": "type",
+      "eyes": "half",
+      "lean": 2
+    },
+    {
+      "atMs": 12969,
+      "pose": "hold",
+      "eyes": "open",
+      "lean": 0
+    },
+    {
+      "atMs": 15385,
+      "pose": "arms-up",
+      "eyes": "happy",
+      "lean": 0
+    },
+    {
+      "atMs": 15425,
+      "pose": "pull",
+      "eyes": "wide",
+      "lean": 8
+    },
+    {
+      "atMs": 16492,
+      "pose": "arms-up",
+      "eyes": "open",
+      "lean": 0
+    },
+    {
+      "atMs": 18987,
+      "pose": "arms-up",
+      "eyes": "happy",
+      "lean": 0
+    },
+    {
+      "atMs": 19587,
+      "pose": "arms-up",
+      "eyes": "open",
+      "lean": 0
+    },
+    {
+      "atMs": 20070,
+      "pose": "point",
+      "eyes": "open",
+      "lean": 3
+    },
+    {
+      "atMs": 22276,
+      "pose": "wave",
+      "eyes": "open",
+      "lean": 0
+    },
+    {
+      "atMs": 22276,
+      "pose": "wave",
+      "eyes": "happy",
+      "lean": 0
+    },
+    {
+      "atMs": 22876,
+      "pose": "wave",
+      "eyes": "open",
+      "lean": 0
+    }
+  ],
+  "gaze": [
+    {
+      "atMs": 0,
+      "target": "camera"
+    },
+    {
+      "atMs": 197,
+      "target": "headline"
+    },
+    {
+      "atMs": 797,
+      "target": "camera"
+    },
+    {
+      "atMs": 1239,
+      "target": "label"
+    },
+    {
+      "atMs": 1839,
+      "target": "camera"
+    },
+    {
+      "atMs": 2663,
+      "target": "headline"
+    },
+    {
+      "atMs": 3263,
+      "target": "camera"
+    },
+    {
+      "atMs": 5405,
+      "target": "headline"
+    },
+    {
+      "atMs": 6005,
+      "target": "camera"
+    },
+    {
+      "atMs": 7275,
+      "target": "label"
+    },
+    {
+      "atMs": 7875,
+      "target": "camera"
+    },
+    {
+      "atMs": 8228,
+      "target": "headline"
+    },
+    {
+      "atMs": 8498,
+      "target": "label"
+    },
+    {
+      "atMs": 8828,
+      "target": "camera"
+    },
+    {
+      "atMs": 9098,
+      "target": "camera"
+    },
+    {
+      "atMs": 10584,
+      "target": "headline"
+    },
+    {
+      "atMs": 11184,
+      "target": "camera"
+    },
+    {
+      "atMs": 12969,
+      "target": "headline"
+    },
+    {
+      "atMs": 13569,
+      "target": "camera"
+    },
+    {
+      "atMs": 16492,
+      "target": "headline"
+    },
+    {
+      "atMs": 17092,
+      "target": "camera"
+    },
+    {
+      "atMs": 18987,
+      "target": "label"
+    },
+    {
+      "atMs": 19587,
+      "target": "camera"
+    },
+    {
+      "atMs": 19770,
+      "target": "headline"
+    },
+    {
+      "atMs": 20070,
+      "target": "headline"
+    },
+    {
+      "atMs": 20370,
+      "target": "camera"
+    },
+    {
+      "atMs": 22276,
+      "target": "headline"
+    },
+    {
+      "atMs": 22276,
+      "target": "label"
+    },
+    {
+      "atMs": 22876,
+      "target": "camera"
+    },
+    {
+      "atMs": 22876,
+      "target": "camera"
+    }
+  ],
+  "props": [
+    {
+      "fromMs": 9717,
+      "toMs": 11051,
+      "hand": "right",
+      "prop": "scissors"
+    },
+    {
+      "fromMs": 10584,
+      "toMs": 12969,
+      "hand": "right",
+      "prop": "calculator"
+    },
+    {
+      "fromMs": 12969,
+      "toMs": 15385,
+      "hand": "right",
+      "prop": "letter"
+    }
+  ],
+  "gags": [
+    {
+      "fromMs": 1239,
+      "toMs": 1839,
+      "kind": "react",
+      "source": "auto",
+      "beat": "b01"
+    },
+    {
+      "fromMs": 2963,
+      "toMs": 5405,
+      "kind": "hide",
+      "source": "script",
+      "beat": "b02",
+      "target": "blu-frond",
+      "sfx": "whoosh-soft"
+    },
+    {
+      "fromMs": 7275,
+      "toMs": 7875,
+      "kind": "react",
+      "source": "auto",
+      "beat": "b03"
+    },
+    {
+      "fromMs": 8498,
+      "toMs": 9098,
+      "kind": "react",
+      "source": "auto",
+      "beat": "b04"
+    },
+    {
+      "fromMs": 9717,
+      "toMs": 11051,
+      "kind": "scissors",
+      "source": "script",
+      "beat": "b05",
+      "sfx": "snip"
+    },
+    {
+      "fromMs": 11991,
+      "toMs": 12969,
+      "kind": "type",
+      "source": "script",
+      "beat": "b05",
+      "target": "calculator",
+      "sfx": "typing"
+    },
+    {
+      "fromMs": 15385,
+      "toMs": 16492,
+      "kind": "send",
+      "source": "script",
+      "beat": "b06",
+      "target": "envelope",
+      "sfx": "swish"
+    },
+    {
+      "fromMs": 15425,
+      "toMs": 16892,
+      "kind": "pull",
+      "source": "script",
+      "beat": "b07",
+      "sfx": "paper-pull"
+    },
+    {
+      "fromMs": 18987,
+      "toMs": 19587,
+      "kind": "react",
+      "source": "auto",
+      "beat": "b07"
+    },
+    {
+      "fromMs": 20070,
+      "toMs": 22276,
+      "kind": "point",
+      "source": "script",
+      "beat": "b08"
+    },
+    {
+      "fromMs": 22276,
+      "toMs": 22876,
+      "kind": "react",
+      "source": "auto",
+      "beat": "b09"
+    }
+  ],
+  "transitions": [
+    {
+      "beat": "b03",
+      "kind": "bloom"
+    },
+    {
+      "beat": "b05",
+      "kind": "cut",
+      "trigger": "scissors"
+    },
+    {
+      "beat": "b07",
+      "kind": "pull",
+      "trigger": "pull"
+    },
+    {
+      "beat": "b09",
+      "kind": "bloom"
+    }
+  ]
+}

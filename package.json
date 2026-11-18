@@ -28,7 +28,8 @@
     "typecheck": "turbo run typecheck && tsc -p tsconfig.json",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "postinstall": "simple-git-hooks"
+    "postinstall": "simple-git-hooks",
+    "render:choreo": "pnpm --filter @reelkit/video render:choreo"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm exec tsx scripts/guard.ts",
