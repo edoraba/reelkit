@@ -5,7 +5,7 @@ import path from 'node:path';
 import { transcribe } from '@remotion/install-whisper-cpp';
 import { detectPauses, type Pause } from '../audio/pauses';
 import { bin, pinned, readInstalled, type WhisperModelName } from '../tools/registry';
-import { speechMap, spoken } from '../tts/pronounce';
+import { speechMap, spoken, type SpeechUnit } from '../tts/pronounce';
 
 /**
  * Word timings for the voice track (brief, step 3), in three passes:
@@ -36,6 +36,8 @@ export interface TimedUnit {
   endMs: number;
   /** Index range [first, last] in `words`. */
   words: [number, number];
+  /** Beat id when the text comes from a script. */
+  beat?: string;
 }
 
 export interface AlignReport {
@@ -345,11 +347,13 @@ function fitSegment(seg: TimedWord[], from: number, to: number): void {
 export async function alignAudio(opts: {
   audio: string;
   /** Screen text ("TD17", "49,99 €"); the spoken form is derived with speechMap. */
-  text: string;
+  text?: string;
+  /** Or ready-made units, e.g. one speechMap per beat tagged with the beat id. */
+  units?: Array<SpeechUnit & { beat?: string }>;
   out: string;
   model: WhisperModelName;
 }): Promise<AlignReport> {
-  const units = speechMap(opts.text);
+  const units: Array<SpeechUnit & { beat?: string }> = opts.units ?? speechMap(opts.text ?? '');
   const script = units.flatMap((u) => u.spoken);
   const heard = await hear(opts.audio, opts.model);
   const { pauses, durationMs } = detectPauses(opts.audio);
@@ -364,6 +368,7 @@ export async function alignAudio(opts: {
       startMs: words[first]!.startMs,
       endMs: words[last]!.endMs,
       words: [first, last],
+      ...(u.beat ? { beat: u.beat } : {}),
     };
   });
   const issues = words

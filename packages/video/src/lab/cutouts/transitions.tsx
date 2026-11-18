@@ -26,7 +26,14 @@ import { PaletteScene } from './PaletteBoard';
 export type TransitionKind = 'bloom' | 'cut' | 'collage' | 'star';
 
 const SCENE = 90;
-const DURATION: Record<TransitionKind, number> = { bloom: 20, cut: 28, collage: 24, star: 20 };
+/** Length of each transition in frames. */
+export const TRANSITION_FRAMES: Record<TransitionKind, number> = {
+  bloom: 20,
+  cut: 28,
+  collage: 24,
+  star: 20,
+};
+const DURATION = TRANSITION_FRAMES;
 
 const PLAN: Array<{ key: CutoutPaletteKey; transition?: TransitionKind }> = [
   { key: 'blu' },
@@ -94,15 +101,21 @@ const clip = (d: string): React.CSSProperties => ({ clipPath: `path('${d}')` });
 
 // ------------------------------------------------------------------------------- transitions
 
-/** Incoming scene (on top), revealed by the transition. `lf` = frames since the scene start. */
-const Incoming: React.FC<{
-  v: CutoutPalette;
+/**
+ * Incoming scene (on top), revealed by a paper transition. `lf` = frames since the incoming
+ * scene started. The cut needs the outgoing scene again (`prevScene`), drawn at the frame it
+ * had reached: `prevOffset` frames after its own start.
+ */
+export const PaperIn: React.FC<{
+  to: CutoutPalette;
+  from?: CutoutPalette;
   kind?: TransitionKind;
-  prev?: CutoutPalette;
-}> = ({ v, kind, prev }) => {
+  scene: React.ReactNode;
+  prevScene?: (idSuffix: string) => React.ReactNode;
+  prevOffset?: number;
+}> = ({ to: v, from: prev, kind, scene, prevScene, prevOffset = 0 }) => {
   const [a1, a2] = prev ? bloomLayers(prev, v) : v.bloom;
   const lf = useCurrentFrame();
-  const scene = <PaletteScene p={v} />;
   if (!kind || !prev || lf >= DURATION[kind]) return <AbsoluteFill>{scene}</AbsoluteFill>;
 
   if (kind === 'bloom') {
@@ -221,7 +234,7 @@ const Incoming: React.FC<{
   return (
     <AbsoluteFill>
       {scene}
-      <Sequence from={-SCENE} layout="none">
+      <Sequence from={-prevOffset} layout="none">
         <AbsoluteFill
           style={{
             ...clip(bottom),
@@ -229,7 +242,7 @@ const Incoming: React.FC<{
             transformOrigin: '540px 1400px',
           }}
         >
-          <PaletteScene p={prev} idSuffix="b" />
+          {prevScene?.('b')}
         </AbsoluteFill>
         <AbsoluteFill
           style={{
@@ -238,7 +251,7 @@ const Incoming: React.FC<{
             transformOrigin: '540px 500px',
           }}
         >
-          <PaletteScene p={prev} idSuffix="t" />
+          {prevScene?.('t')}
         </AbsoluteFill>
       </Sequence>
       {lf < CUT + 2 && (
@@ -259,6 +272,21 @@ const Incoming: React.FC<{
     </AbsoluteFill>
   );
 };
+
+const Incoming: React.FC<{ v: CutoutPalette; kind?: TransitionKind; prev?: CutoutPalette }> = ({
+  v,
+  kind,
+  prev,
+}) => (
+  <PaperIn
+    to={v}
+    from={prev}
+    kind={kind}
+    scene={<PaletteScene p={v} />}
+    prevScene={(s) => (prev ? <PaletteScene p={prev} idSuffix={s} /> : null)}
+    prevOffset={SCENE}
+  />
+);
 
 const Caption: React.FC = () => {
   const frame = useCurrentFrame();

@@ -155,16 +155,15 @@ export function headlineWords(p: CutoutPalette): RevealWord[] {
   }));
 }
 
-/** One cut-paper scene driven entirely by a palette. */
-export const PaletteScene: React.FC<{ p: CutoutPalette; idSuffix?: string }> = ({
+/** The paper background of a palette: color, animated motifs and the office object. */
+export const PaletteBackdrop: React.FC<{ p: CutoutPalette; idSuffix?: string }> = ({
   p,
   idSuffix = '',
 }) => {
   const f = useCurrentFrame();
   const layout = LAYOUTS[p.key]!;
-  const id = `pal${p.key}${idSuffix}`;
+  const id = `bd${p.key}${idSuffix}`;
   const Obj = layout.object;
-  const words = headlineWords(p);
   return (
     <AbsoluteFill style={{ backgroundColor: p.bg, overflow: 'hidden' }}>
       <svg width={1080} height={1920} style={{ position: 'absolute', inset: 0 }}>
@@ -188,6 +187,22 @@ export const PaletteScene: React.FC<{ p: CutoutPalette; idSuffix?: string }> = (
           />
         </g>
       </svg>
+      <Grain id={`${id}g`} opacity={0.16} width={1080} height={1920} />
+    </AbsoluteFill>
+  );
+};
+
+/** One cut-paper scene driven entirely by a palette. */
+export const PaletteScene: React.FC<{ p: CutoutPalette; idSuffix?: string }> = ({
+  p,
+  idSuffix = '',
+}) => {
+  const f = useCurrentFrame();
+  const id = `pal${p.key}${idSuffix}`;
+  const words = headlineWords(p);
+  return (
+    <AbsoluteFill>
+      <PaletteBackdrop p={p} idSuffix={idSuffix} />
       <RevealText
         words={words}
         font={DEFAULT_TYPE.font}
@@ -211,7 +226,6 @@ export const PaletteScene: React.FC<{ p: CutoutPalette; idSuffix?: string }> = (
         filter={`url(#${id}m)`}
         style={{ position: 'absolute', left: 330, top: 1040 }}
       />
-      <Grain id={`${id}g`} opacity={0.16} width={1080} height={1920} />
     </AbsoluteFill>
   );
 };

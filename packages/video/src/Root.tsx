@@ -33,6 +33,7 @@ import {
   MOODBOARD_OVERVIEW,
   MOODBOARD_SIZE,
 } from './lab/moodboards/MoodBoard';
+import { Reel, reelDefaults, reelDuration } from './compositions/Reel';
 import { AlignCheck, alignCheckDefaults } from './lab/AlignCheck';
 import { Proposal, PROPOSALS } from './lab/Proposals';
 import { StyleLab, STYLE_SHEETS, styleSheetHeight } from './lab/StyleLab';
@@ -40,6 +41,16 @@ import { StyleMotionLab, STYLE_MOTION_DURATION } from './lab/StyleMotionLab';
 
 export const RemotionRoot: React.FC = () => (
   <>
+    <Composition
+      id="Reel"
+      component={Reel}
+      durationInFrames={30}
+      fps={formats.reel.fps}
+      width={formats.reel.width}
+      height={formats.reel.height}
+      defaultProps={reelDefaults}
+      calculateMetadata={({ props }) => ({ durationInFrames: reelDuration(props) })}
+    />
     <Composition
       id="AlignCheck"
       component={AlignCheck}
