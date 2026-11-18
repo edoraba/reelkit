@@ -1,11 +1,10 @@
-import { AbsoluteFill, Sequence, useCurrentFrame } from 'remotion';
+import { AbsoluteFill, useCurrentFrame } from 'remotion';
 import { fontsOf } from '../../brand/fonts';
 import { RevealText, type RevealWord } from '../../components/RevealText';
 import type { HighlightKind } from '../../highlights/Highlight';
 import { InvoiceRoll, type Look } from '../../mascot/InvoiceRoll';
 import { C } from '../moodboards/boards';
 import { Grain } from '../moodboards/kit';
-import { ramp } from './geometry';
 import {
   Blob,
   Coral,
@@ -18,15 +17,17 @@ import {
   Swallow,
   WaveBand,
 } from './motifs';
-import { BoilFilter } from './paper';
+import { BoilFilter, CutoutStickerFilter } from './paper';
 
 /**
  * Cut-paper scenes on eight backgrounds: same building blocks (animated motifs, word reveal,
- * mascot in cut-paper finish), different paper colors and layouts.
- *   pnpm render:cutouts  ->  packages/video/out/lab/cutouts/{backgrounds.png,reel.mp4}
+ * mascot in cut-paper finish with the white sticker border), different paper colors and layouts.
+ * Rules from Edoardo (2026-11-18): the mascot always keeps the sticker border; never a pure
+ * white background (cream instead).
+ *   pnpm render:cutouts  ->  packages/video/out/lab/cutouts/backgrounds.png
  */
 
-interface Variant {
+export interface Variant {
   key: string;
   label: string;
   bg: string;
@@ -40,8 +41,11 @@ interface Variant {
   markColor: string;
   markText?: string;
   text: string;
+  /** Limb ink: never white, it would vanish on the sticker border. */
   pen: string;
   look: Partial<Look>;
+  /** Accent color used by transitions that lead into this scene. */
+  accent: string;
 }
 
 const BASE_LOOK: Partial<Look> = { outlineWidth: 0, limbWidth: 16, rule: 'oklch(85% 0.04 264)' };
@@ -77,6 +81,7 @@ export const VARIANTS: Variant[] = [
     text: C.white,
     pen: C.coral,
     look: { roll: C.lemon, accent: C.coral },
+    accent: C.lemon,
   },
   {
     key: 'coral',
@@ -102,7 +107,7 @@ export const VARIANTS: Variant[] = [
           x={0}
           y={180}
           scale={1.2}
-          color={C.white}
+          color={C.cream}
           travel={1080}
           speed={6}
           seed="c1"
@@ -114,9 +119,10 @@ export const VARIANTS: Variant[] = [
     markKind: 'marker',
     markColor: C.lemon,
     markText: C.ink,
-    text: C.white,
-    pen: C.white,
+    text: C.cream,
+    pen: C.blue,
     look: { roll: C.lemon, accent: C.blue },
+    accent: C.blue,
   },
   {
     key: 'lemon',
@@ -137,6 +143,7 @@ export const VARIANTS: Variant[] = [
     text: C.ink,
     pen: C.blue,
     look: { roll: C.coral, accent: C.blue },
+    accent: C.coral,
   },
   {
     key: 'emerald',
@@ -144,7 +151,7 @@ export const VARIANTS: Variant[] = [
     bg: C.green,
     motifs: (f) => (
       <>
-        <Spiral f={f} x={190} y={300} r={100} color={C.white} start={4} />
+        <Spiral f={f} x={190} y={300} r={100} color={C.cream} start={4} />
         <StarBloom f={f} x={900} y={280} r={95} color={C.lemon} start={8} points={7} seed="e1" />
         <Frond
           f={f}
@@ -152,7 +159,7 @@ export const VARIANTS: Variant[] = [
           y={1760}
           scale={1.4}
           rotate={10}
-          color={C.white}
+          color={C.cream}
           start={12}
           seed="e2"
         />
@@ -164,14 +171,15 @@ export const VARIANTS: Variant[] = [
     markKind: 'marker',
     markColor: C.lemon,
     markText: C.ink,
-    text: C.white,
-    pen: C.white,
+    text: C.cream,
+    pen: C.coral,
     look: { roll: C.lemon, accent: C.coral },
+    accent: C.lemon,
   },
   {
-    key: 'paper',
-    label: 'Paper',
-    bg: C.white,
+    key: 'cream',
+    label: 'Cream',
+    bg: C.cream,
     motifs: (f) => (
       <>
         <Frond f={f} x={120} y={1660} scale={1.5} rotate={-8} color={C.blue} start={4} seed="p1" />
@@ -186,7 +194,8 @@ export const VARIANTS: Variant[] = [
     markText: C.ink,
     text: C.ink,
     pen: C.blue,
-    look: { roll: C.lemon, accent: C.coral, sheet: 'oklch(97% 0.01 90)' },
+    look: { roll: C.lemon, accent: C.coral },
+    accent: C.coral,
   },
   {
     key: 'black',
@@ -201,7 +210,7 @@ export const VARIANTS: Variant[] = [
           x={0}
           y={260}
           scale={1}
-          color={C.white}
+          color={C.cream}
           travel={1080}
           speed={5}
           seed="k1"
@@ -213,9 +222,10 @@ export const VARIANTS: Variant[] = [
     mark: 0,
     markKind: 'underline',
     markColor: C.coral,
-    text: C.white,
-    pen: C.lemon,
+    text: C.cream,
+    pen: C.coral,
     look: { roll: C.lemon, accent: C.coral },
+    accent: C.coral,
   },
   {
     key: 'blocks',
@@ -237,7 +247,7 @@ export const VARIANTS: Variant[] = [
           y={1900}
           scale={1.2}
           rotate={8}
-          color={C.white}
+          color={C.cream}
           start={10}
           seed="bl1"
         />
@@ -249,9 +259,10 @@ export const VARIANTS: Variant[] = [
     markKind: 'marker',
     markColor: C.lemon,
     markText: C.ink,
-    text: C.white,
-    pen: C.white,
+    text: C.cream,
+    pen: C.blue,
     look: { roll: C.lemon, accent: C.blue },
+    accent: C.coral,
   },
   {
     key: 'kraft',
@@ -273,8 +284,15 @@ export const VARIANTS: Variant[] = [
     text: C.ink,
     pen: C.blue,
     look: { roll: C.lemon, accent: C.coral },
+    accent: C.green,
   },
 ];
+
+export const variant = (key: string): Variant => {
+  const v = VARIANTS.find((x) => x.key === key);
+  if (!v) throw new Error(`Unknown cutout variant ${key}`);
+  return v;
+};
 
 const fonts = fontsOf('brand');
 
@@ -288,9 +306,9 @@ function words(v: Variant): RevealWord[] {
 }
 
 /** One cut-paper scene; frames are local (0 = scene start). */
-export const CutoutScene: React.FC<{ v: Variant }> = ({ v }) => {
+export const CutoutScene: React.FC<{ v: Variant; idSuffix?: string }> = ({ v, idSuffix = '' }) => {
   const f = useCurrentFrame();
-  const id = `cs${v.key}`;
+  const id = `cs${v.key}${idSuffix}`;
   return (
     <AbsoluteFill style={{ backgroundColor: v.bg, overflow: 'hidden' }}>
       <svg width={1080} height={1920} style={{ position: 'absolute', inset: 0 }}>
@@ -320,7 +338,7 @@ export const CutoutScene: React.FC<{ v: Variant }> = ({ v }) => {
         seed={`cutout-${v.key}`}
         pen={v.pen}
         look={{ ...BASE_LOOK, ...v.look }}
-        defs={<BoilFilter id={`${id}m`} frame={f} scale={4} grain={0.1} />}
+        defs={<CutoutStickerFilter id={`${id}m`} frame={f} />}
         filter={`url(#${id}m)`}
         style={{ position: 'absolute', left: 330, top: 1030 }}
       />
@@ -328,38 +346,6 @@ export const CutoutScene: React.FC<{ v: Variant }> = ({ v }) => {
     </AbsoluteFill>
   );
 };
-
-// ---------------------------------------------------------------- reel: 4 scenes, paper slides
-
-const REEL_KEYS = ['ultramarine', 'coral', 'blocks', 'paper'];
-const SCENE = 90;
-const SLIDE = 10;
-export const CUTOUT_REEL_DURATION = REEL_KEYS.length * SCENE;
-
-const Slide: React.FC<{ children: React.ReactNode; first: boolean }> = ({ children, first }) => {
-  const f = useCurrentFrame();
-  const p = first ? 1 : ramp(f, 0, SLIDE);
-  return (
-    <AbsoluteFill style={{ transform: `translateX(${(1 - p) * 100}%) rotate(${(1 - p) * 4}deg)` }}>
-      {children}
-    </AbsoluteFill>
-  );
-};
-
-export const CutoutReel: React.FC = () => (
-  <AbsoluteFill style={{ backgroundColor: C.ink }}>
-    {REEL_KEYS.map((key, i) => {
-      const v = VARIANTS.find((x) => x.key === key)!;
-      return (
-        <Sequence key={key} from={i * SCENE} durationInFrames={SCENE + SLIDE}>
-          <Slide first={i === 0}>
-            <CutoutScene v={v} />
-          </Slide>
-        </Sequence>
-      );
-    })}
-  </AbsoluteFill>
-);
 
 // --------------------------------------------------- static sheet: 8 backgrounds side by side
 

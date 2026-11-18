@@ -5,12 +5,8 @@ import { Demo, DEMO_DURATION, demoDefaultProps } from './compositions/Demo';
 import { FontLab, FONTLAB_HEIGHT } from './compositions/FontLab';
 import { TestReel, TEST_REEL_DURATION } from './compositions/TestReel';
 import { MotifLab, MOTIF_LAB_DURATION } from './lab/cutouts/MotifLab';
-import {
-  CutoutBackgrounds,
-  CutoutReel,
-  CUTOUT_REEL_DURATION,
-  CUTOUT_SHEET,
-} from './lab/cutouts/scenes';
+import { CutoutBackgrounds, CUTOUT_SHEET } from './lab/cutouts/scenes';
+import { TransitionReel, TRANSITION_REEL_DURATION } from './lab/cutouts/transitions';
 import { HighlightLab, HIGHLIGHT_LAB_HEIGHT } from './lab/HighlightLab';
 import { InvoiceRollLab, INVOICE_ROLL_LAB_DURATION } from './lab/InvoiceRollLab';
 import { MascotLab, MASCOT_SHEETS, sheetHeight, type MascotSheet } from './lab/mascots/MascotLab';
@@ -73,9 +69,9 @@ export const RemotionRoot: React.FC = () => (
       height={formats.reel.height}
     />
     <Composition
-      id="CutoutReel"
-      component={CutoutReel}
-      durationInFrames={CUTOUT_REEL_DURATION}
+      id="CutoutTransitions"
+      component={TransitionReel}
+      durationInFrames={TRANSITION_REEL_DURATION}
       fps={formats.reel.fps}
       width={formats.reel.width}
       height={formats.reel.height}
