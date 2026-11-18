@@ -10,6 +10,7 @@ dist/
 
 # renders that are not post outputs (demo, font lab, scratch)
 packages/video/out/
+packages/pipeline/out/
 
 # auto-review frames and caches
 content/posts/*/review/

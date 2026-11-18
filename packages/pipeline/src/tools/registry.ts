@@ -14,6 +14,8 @@ export const pinned = {
   rhubarb: '1.14.0',
   /** Remotion recommends 1.5.5 for token-level timestamps; Windows binaries stop at 1.6.0. */
   whisper: '1.5.5',
+  /** Python of the local TTS venv (kokoro-onnx supports 3.10 to 3.13). */
+  ttsPython: '3.12',
 } as const;
 
 export const WHISPER_MODELS = ['tiny', 'base', 'small', 'medium'] as const;
@@ -50,6 +52,8 @@ export interface InstalledVersions {
   rhubarb?: string;
   whisper?: string;
   whisperModel?: WhisperModelName;
+  /** Pinned Python packages of the local TTS engines. */
+  tts?: string;
 }
 
 const versionsFile = path.join(toolsDir, 'versions.json');
@@ -186,4 +190,85 @@ export async function installWhisperModel(model: WhisperModelName): Promise<Whis
 export async function installBrowser(): Promise<void> {
   const { ensureBrowser } = await import('@remotion/renderer');
   await ensureBrowser();
+}
+
+// ---------------------------------------------------------------------------
+// local text-to-speech (Kokoro, Piper): a Python venv in tools/tts (D-029)
+// ---------------------------------------------------------------------------
+
+/** Python packages of the local TTS engines, pinned like the binaries. */
+export const ttsPackages = [
+  'piper-tts==1.8.0',
+  'kokoro-onnx==0.6.1',
+  'soundfile==0.14.0',
+] as const;
+
+const kokoroRelease =
+  'https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.1';
+
+/** Italian voices of the local engines (Kokoro has two, both graded C by its authors). */
+export const KOKORO_VOICES = ['if_sara', 'im_nicola'] as const;
+export const PIPER_VOICES = ['it_IT-paola-medium', 'it_IT-riccardo-x_low', 'it_IT-serena-high'] as const;
+
+const ttsDir = path.join(toolsDir, 'tts');
+export const tts = {
+  dir: ttsDir,
+  venv: path.join(ttsDir, 'venv'),
+  python:
+    process.platform === 'win32'
+      ? path.join(ttsDir, 'venv', 'Scripts', 'python.exe')
+      : path.join(ttsDir, 'venv', 'bin', 'python'),
+  kokoroModel: path.join(ttsDir, 'kokoro', 'kokoro-v1.0.onnx'),
+  kokoroVoices: path.join(ttsDir, 'kokoro', 'voices-v1.0.bin'),
+  piperDir: path.join(ttsDir, 'piper'),
+} as const;
+
+export function piperModelPath(voice: string): string {
+  return path.join(tts.piperDir, `${voice}.onnx`);
+}
+
+/** True when the venv, the Kokoro files and every Piper voice are in place. */
+export function ttsInstalled(): boolean {
+  return (
+    existsSync(tts.python) &&
+    existsSync(tts.kokoroModel) &&
+    existsSync(tts.kokoroVoices) &&
+    PIPER_VOICES.every((v) => existsSync(piperModelPath(v)))
+  );
+}
+
+function run(cmd: string, args: string[]): void {
+  const res = spawnSync(cmd, args, { stdio: 'inherit' });
+  if (res.status !== 0) throw new Error(`${cmd} ${args.join(' ')} failed`);
+}
+
+/**
+ * Creates tools/tts/venv (with uv when available, otherwise python -m venv), installs the
+ * pinned engines and downloads the Kokoro model and the Italian Piper voices.
+ */
+export async function installTts(): Promise<string> {
+  const uv = hasCommand('uv');
+  // A venv on another Python (for example created before the pin) is rebuilt.
+  const current = firstLine(tts.python, ['--version']);
+  if (current && !current.startsWith('Python ' + pinned.ttsPython)) {
+    rmSync(tts.venv, { recursive: true, force: true });
+  }
+  if (!existsSync(tts.python)) {
+    if (uv) run('uv', ['venv', '--python', pinned.ttsPython, tts.venv]);
+    else {
+      const python = process.platform === 'win32' ? 'python' : 'python3';
+      if (!hasCommand(python)) {
+        throw new Error('Local TTS needs Python 3.10 to 3.13 (or uv): install one and re-run.');
+      }
+      run(python, ['-m', 'venv', tts.venv]);
+    }
+  }
+  if (uv) run('uv', ['pip', 'install', '--python', tts.python, ...ttsPackages]);
+  else run(tts.python, ['-m', 'pip', 'install', ...ttsPackages]);
+
+  for (const file of [tts.kokoroModel, tts.kokoroVoices]) {
+    if (!existsSync(file)) await download(`${kokoroRelease}/${path.basename(file)}`, file);
+  }
+  run(tts.python, ['-m', 'piper.download_voices', ...PIPER_VOICES, '--data-dir', tts.piperDir]);
+  return `python ${pinned.ttsPython} ${ttsPackages.join(' ')}`;
 }

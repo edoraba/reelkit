@@ -9,16 +9,20 @@ import {
   installBrowser,
   installFfmpeg,
   installRhubarb,
+  installTts,
   installWhisper,
   installWhisperModel,
   pinned,
   readInstalled,
+  tts,
+  ttsInstalled,
+  ttsPackages,
   whisperModelPath,
   writeInstalled,
   type WhisperModelName,
 } from './tools/registry';
 
-export const TOOL_NAMES = ['ffmpeg', 'rhubarb', 'whisper', 'browser'] as const;
+export const TOOL_NAMES = ['ffmpeg', 'rhubarb', 'whisper', 'browser', 'tts'] as const;
 export type ToolName = (typeof TOOL_NAMES)[number];
 
 export interface BootstrapOptions {
@@ -88,6 +92,20 @@ export async function bootstrap(opts: BootstrapOptions): Promise<void> {
     console.log('  browser  ready');
   }
 
+  if (want('tts')) {
+    const ok =
+      !opts.force &&
+      installed.tts === `python ${pinned.ttsPython} ${ttsPackages.join(' ')}` &&
+      ttsInstalled();
+    if (ok) console.log('  tts      up to date (Kokoro, Piper)');
+    else {
+      console.log(`  tts      installing local engines in ${rel(tts.venv)}/`);
+      installed.tts = await installTts();
+      writeInstalled(installed);
+      console.log('  tts      installed (Kokoro, Piper)');
+    }
+  }
+
   console.log('\nbootstrap done. Run `pnpm tools:check` to verify.');
 }
 
@@ -130,6 +148,7 @@ export function check(model: WhisperModelName): boolean {
     ['whisper', existsSync(bin.whisperMain), `${rel(bin.whisperMain)} ${installed.whisper ?? ''}`],
     ['model', existsSync(whisperModelPath(model)), rel(whisperModelPath(model))],
     ['git-lfs', lfsHooksInstalled(), '.git/hooks/pre-push'],
+    ['tts', ttsInstalled(), `${rel(tts.dir)}/ Kokoro and Piper (local voices)`],
   ];
   console.log(`tools on ${platform}\n`);
   for (const [name, ok, detail] of rows) {

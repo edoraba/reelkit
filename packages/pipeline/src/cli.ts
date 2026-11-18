@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 /**
  * Pipeline CLI. Every command is idempotent and reads/writes files only.
- *   pnpm bootstrap [--only ffmpeg,rhubarb,whisper,browser] [--model medium] [--force]
+ *   pnpm bootstrap [--only ffmpeg,rhubarb,whisper,browser,tts] [--model medium] [--force]
  *   pnpm tools:check [--model medium]
+ *   pnpm tts:test [--only kokoro,piper,gemini] [--force]
  */
 import { existsSync } from 'node:fs';
 import path from 'node:path';
@@ -10,6 +11,21 @@ import { parseArgs } from 'node:util';
 import { bootstrap, check, TOOL_NAMES, type ToolName } from './bootstrap';
 import { repoRoot } from './paths';
 import { WHISPER_MODELS, type WhisperModelName } from './tools/registry';
+import { listeningTest } from './tts/listening-test';
+import type { TtsProviderName } from './tts/types';
+
+const TTS_PROVIDERS: TtsProviderName[] = ['kokoro', 'piper', 'gemini'];
+
+function parseProviders(raw: string | undefined): TtsProviderName[] {
+  if (!raw) return TTS_PROVIDERS;
+  const names = raw.split(',').map((s) => s.trim());
+  for (const n of names) {
+    if (!(TTS_PROVIDERS as string[]).includes(n)) {
+      throw new Error(`Unknown TTS provider "${n}". Use: ${TTS_PROVIDERS.join(', ')}`);
+    }
+  }
+  return names as TtsProviderName[];
+}
 
 const envFile = path.join(repoRoot, '.env');
 if (existsSync(envFile)) process.loadEnvFile(envFile);
@@ -55,8 +71,11 @@ async function main(): Promise<void> {
     case 'check':
       if (!check(parseModel(values.model))) process.exitCode = 1;
       return;
+    case 'tts-test':
+      await listeningTest({ only: parseProviders(values.only), force: values.force ?? false });
+      return;
     default:
-      console.error(`Unknown command "${command ?? ''}". Commands: bootstrap, check`);
+      console.error(`Unknown command "${command ?? ''}". Commands: bootstrap, check, tts-test`);
       process.exitCode = 1;
   }
 }

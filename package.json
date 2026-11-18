@@ -9,6 +9,7 @@
   "scripts": {
     "bootstrap": "tsx packages/pipeline/src/cli.ts bootstrap",
     "tools:check": "tsx packages/pipeline/src/cli.ts check",
+    "tts:test": "tsx packages/pipeline/src/cli.ts tts-test",
     "studio": "pnpm --filter @reelkit/video studio",
     "render:demo": "pnpm --filter @reelkit/video render:demo",
     "render:test-reels": "pnpm --filter @reelkit/video render:test-reels",
