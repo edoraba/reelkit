@@ -7,6 +7,7 @@
 - Length from 30 to 90 seconds.
 - Hook within the first 2 seconds: always a question or a number.
 - Arc: hook, problem, explanation, concrete example, question to the audience (A or B in the comments), CTA, closing with tagline and logo.
+- The CTA points to the site: "refattura.it" on screen, spoken "refattura punto it" (the pronunciation pass does it). Never "link in bio" (Edoardo, 2026-11-18).
 - 3 to 5 chapters, each with a short uppercase label (`01 / 04 · IL PROBLEMA`) in the top bar. Alternatively a fixed header with the reel title, for reels under 40 seconds.
 
 ## Beats

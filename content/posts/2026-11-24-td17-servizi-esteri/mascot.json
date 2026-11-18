@@ -2,12 +2,8 @@
   "postId": "2026-11-24-td17-servizi-esteri",
   "stretch": [
     {
-      "atMs": 10334,
-      "addMs": 33
-    },
-    {
-      "atMs": 16017,
-      "addMs": 217
+      "atMs": 5832,
+      "addMs": 244
     }
   ],
   "moves": [
@@ -19,28 +15,21 @@
       "depth": "front"
     },
     {
-      "atMs": 2663,
+      "atMs": 3135,
       "durationMs": 1464,
       "x": 130,
       "gait": "walk",
       "depth": "behind"
     },
     {
-      "atMs": 5405,
-      "durationMs": 893,
-      "x": 380,
-      "gait": "walk",
-      "depth": "front"
-    },
-    {
-      "atMs": 15825,
+      "atMs": 5620,
       "durationMs": 1067,
       "x": 1380,
       "gait": "walk",
       "depth": "front"
     },
     {
-      "atMs": 16892,
+      "atMs": 6687,
       "durationMs": 1077,
       "x": 820,
       "gait": "walk",
@@ -49,145 +38,157 @@
   ],
   "cues": [
     {
-      "atMs": 197,
+      "atMs": 224,
       "pose": "wave",
       "eyes": "open",
       "lean": 0
     },
     {
-      "atMs": 1239,
+      "atMs": 1513,
       "pose": "wave",
       "eyes": "happy",
       "lean": 0
     },
     {
-      "atMs": 1839,
+      "atMs": 2113,
       "pose": "wave",
       "eyes": "open",
       "lean": 0
     },
     {
-      "atMs": 2663,
+      "atMs": 3135,
       "pose": "neutral",
       "eyes": "open",
       "lean": 0
     },
     {
-      "atMs": 4127,
+      "atMs": 4599,
       "pose": "hide",
       "eyes": "wide",
       "lean": -6
     },
     {
-      "atMs": 5405,
-      "pose": "arms-up",
-      "eyes": "open",
-      "lean": 0
-    },
-    {
-      "atMs": 7275,
-      "pose": "arms-up",
-      "eyes": "happy",
-      "lean": 0
-    },
-    {
-      "atMs": 7875,
-      "pose": "arms-up",
-      "eyes": "open",
-      "lean": 0
-    },
-    {
-      "atMs": 8228,
-      "pose": "neutral",
-      "eyes": "open",
-      "lean": 0
-    },
-    {
-      "atMs": 9717,
-      "pose": "hold",
-      "eyes": "wide",
-      "lean": 0
-    },
-    {
-      "atMs": 11051,
-      "pose": "neutral",
-      "eyes": "open",
-      "lean": 0
-    },
-    {
-      "atMs": 11051,
-      "pose": "type",
-      "eyes": "half",
-      "lean": 2
-    },
-    {
-      "atMs": 12969,
-      "pose": "neutral",
-      "eyes": "open",
-      "lean": 0
-    },
-    {
-      "atMs": 12969,
-      "pose": "hold",
-      "eyes": "open",
-      "lean": 0
-    },
-    {
-      "atMs": 15385,
-      "pose": "arms-up",
-      "eyes": "happy",
-      "lean": 0
-    },
-    {
-      "atMs": 15785,
+      "atMs": 5220,
       "pose": "pull",
       "eyes": "wide",
       "lean": 8
     },
     {
-      "atMs": 16892,
+      "atMs": 6687,
       "pose": "arms-up",
       "eyes": "open",
       "lean": 0
     },
     {
-      "atMs": 18987,
+      "atMs": 8283,
       "pose": "arms-up",
-      "eyes": "wide",
+      "eyes": "happy",
       "lean": 0
     },
     {
-      "atMs": 19587,
+      "atMs": 8883,
       "pose": "arms-up",
       "eyes": "open",
       "lean": 0
     },
     {
-      "atMs": 19770,
+      "atMs": 9220,
       "pose": "neutral",
       "eyes": "open",
       "lean": 0
     },
     {
-      "atMs": 20830,
+      "atMs": 9859,
+      "pose": "neutral",
+      "eyes": "happy",
+      "lean": 0
+    },
+    {
+      "atMs": 10459,
+      "pose": "neutral",
+      "eyes": "open",
+      "lean": 0
+    },
+    {
+      "atMs": 10950,
+      "pose": "hold",
+      "eyes": "wide",
+      "lean": 0
+    },
+    {
+      "atMs": 12284,
+      "pose": "neutral",
+      "eyes": "open",
+      "lean": 0
+    },
+    {
+      "atMs": 12284,
+      "pose": "type",
+      "eyes": "half",
+      "lean": 2
+    },
+    {
+      "atMs": 14170,
+      "pose": "neutral",
+      "eyes": "open",
+      "lean": 0
+    },
+    {
+      "atMs": 14170,
+      "pose": "hold",
+      "eyes": "open",
+      "lean": 0
+    },
+    {
+      "atMs": 16899,
+      "pose": "arms-up",
+      "eyes": "happy",
+      "lean": 0
+    },
+    {
+      "atMs": 17574,
+      "pose": "arms-up",
+      "eyes": "open",
+      "lean": 0
+    },
+    {
+      "atMs": 20205,
+      "pose": "arms-up",
+      "eyes": "happy",
+      "lean": 0
+    },
+    {
+      "atMs": 20805,
+      "pose": "arms-up",
+      "eyes": "open",
+      "lean": 0
+    },
+    {
+      "atMs": 21062,
+      "pose": "neutral",
+      "eyes": "open",
+      "lean": 0
+    },
+    {
+      "atMs": 22345,
       "pose": "point",
       "eyes": "open",
       "lean": 3
     },
     {
-      "atMs": 22276,
+      "atMs": 23772,
       "pose": "wave",
       "eyes": "open",
       "lean": 0
     },
     {
-      "atMs": 22276,
+      "atMs": 24386,
       "pose": "wave",
       "eyes": "wide",
       "lean": 0
     },
     {
-      "atMs": 22876,
+      "atMs": 24986,
       "pose": "wave",
       "eyes": "open",
       "lean": 0
@@ -199,141 +200,149 @@
       "target": "camera"
     },
     {
-      "atMs": 197,
+      "atMs": 224,
       "target": "headline"
     },
     {
-      "atMs": 797,
+      "atMs": 824,
       "target": "camera"
     },
     {
-      "atMs": 1239,
+      "atMs": 1513,
       "target": "label"
     },
     {
-      "atMs": 1839,
+      "atMs": 2113,
       "target": "camera"
     },
     {
-      "atMs": 2663,
+      "atMs": 3135,
       "target": "headline"
     },
     {
-      "atMs": 3263,
+      "atMs": 3735,
       "target": "camera"
     },
     {
-      "atMs": 5405,
+      "atMs": 6687,
       "target": "headline"
     },
     {
-      "atMs": 6005,
+      "atMs": 7287,
       "target": "camera"
     },
     {
-      "atMs": 7275,
+      "atMs": 8283,
       "target": "label"
     },
     {
-      "atMs": 7875,
+      "atMs": 8883,
       "target": "camera"
     },
     {
-      "atMs": 8228,
+      "atMs": 9220,
       "target": "headline"
     },
     {
-      "atMs": 8828,
+      "atMs": 9820,
       "target": "camera"
     },
     {
-      "atMs": 11051,
-      "target": "headline"
-    },
-    {
-      "atMs": 11651,
-      "target": "camera"
-    },
-    {
-      "atMs": 12969,
-      "target": "headline"
-    },
-    {
-      "atMs": 13569,
-      "target": "camera"
-    },
-    {
-      "atMs": 16892,
-      "target": "headline"
-    },
-    {
-      "atMs": 17492,
-      "target": "camera"
-    },
-    {
-      "atMs": 18987,
+      "atMs": 9859,
       "target": "label"
     },
     {
-      "atMs": 19587,
+      "atMs": 10459,
       "target": "camera"
     },
     {
-      "atMs": 19770,
+      "atMs": 12284,
       "target": "headline"
     },
     {
-      "atMs": 20830,
+      "atMs": 12884,
+      "target": "camera"
+    },
+    {
+      "atMs": 14170,
       "target": "headline"
     },
     {
-      "atMs": 22276,
+      "atMs": 14770,
+      "target": "camera"
+    },
+    {
+      "atMs": 17574,
       "target": "headline"
     },
     {
-      "atMs": 22276,
+      "atMs": 18174,
+      "target": "camera"
+    },
+    {
+      "atMs": 20205,
       "target": "label"
     },
     {
-      "atMs": 22876,
+      "atMs": 20805,
       "target": "camera"
     },
     {
-      "atMs": 22876,
+      "atMs": 21062,
+      "target": "headline"
+    },
+    {
+      "atMs": 22345,
+      "target": "headline"
+    },
+    {
+      "atMs": 23772,
+      "target": "headline"
+    },
+    {
+      "atMs": 24372,
+      "target": "camera"
+    },
+    {
+      "atMs": 24386,
+      "target": "label"
+    },
+    {
+      "atMs": 24986,
       "target": "camera"
     }
   ],
   "props": [
     {
-      "fromMs": 9717,
-      "toMs": 11051,
+      "fromMs": 10950,
+      "toMs": 12284,
       "hand": "right",
       "prop": "scissors"
     },
     {
-      "fromMs": 11051,
-      "toMs": 12969,
+      "fromMs": 12284,
+      "toMs": 14170,
       "hand": "right",
       "prop": "calculator"
     },
     {
-      "fromMs": 12969,
-      "toMs": 15385,
+      "fromMs": 14170,
+      "toMs": 16899,
       "hand": "right",
       "prop": "letter"
     }
   ],
   "gags": [
     {
-      "fromMs": 1239,
-      "toMs": 1839,
+      "fromMs": 1513,
+      "toMs": 2113,
       "kind": "react",
       "source": "auto",
       "beat": "b01"
     },
     {
-      "fromMs": 4127,
-      "toMs": 5405,
+      "fromMs": 4599,
+      "toMs": 6287,
       "kind": "hide",
       "source": "script",
       "beat": "b02",
@@ -341,23 +350,38 @@
       "sfx": "whoosh-soft"
     },
     {
-      "fromMs": 7275,
-      "toMs": 7875,
+      "fromMs": 5220,
+      "toMs": 6687,
+      "kind": "pull",
+      "source": "script",
+      "beat": "b03",
+      "sfx": "paper-pull"
+    },
+    {
+      "fromMs": 8283,
+      "toMs": 8883,
       "kind": "react",
       "source": "auto",
       "beat": "b03"
     },
     {
-      "fromMs": 9717,
-      "toMs": 11051,
+      "fromMs": 9859,
+      "toMs": 10459,
+      "kind": "react",
+      "source": "auto",
+      "beat": "b04"
+    },
+    {
+      "fromMs": 10950,
+      "toMs": 12284,
       "kind": "scissors",
       "source": "script",
       "beat": "b05",
       "sfx": "snip"
     },
     {
-      "fromMs": 11991,
-      "toMs": 12969,
+      "fromMs": 13018,
+      "toMs": 14170,
       "kind": "type",
       "source": "script",
       "beat": "b05",
@@ -365,15 +389,15 @@
       "sfx": "typing"
     },
     {
-      "fromMs": 14397,
-      "toMs": 15197,
+      "fromMs": 15192,
+      "toMs": 15992,
       "kind": "tap",
       "source": "auto",
       "beat": "b06"
     },
     {
-      "fromMs": 15385,
-      "toMs": 16492,
+      "fromMs": 16899,
+      "toMs": 17574,
       "kind": "send",
       "source": "script",
       "beat": "b06",
@@ -381,30 +405,22 @@
       "sfx": "swish"
     },
     {
-      "fromMs": 15425,
-      "toMs": 16892,
-      "kind": "pull",
-      "source": "script",
-      "beat": "b07",
-      "sfx": "paper-pull"
-    },
-    {
-      "fromMs": 18987,
-      "toMs": 19587,
+      "fromMs": 20205,
+      "toMs": 20805,
       "kind": "react",
       "source": "auto",
       "beat": "b07"
     },
     {
-      "fromMs": 20830,
-      "toMs": 22276,
+      "fromMs": 22345,
+      "toMs": 23772,
       "kind": "point",
       "source": "script",
       "beat": "b08"
     },
     {
-      "fromMs": 22276,
-      "toMs": 22876,
+      "fromMs": 24386,
+      "toMs": 24986,
       "kind": "react",
       "source": "auto",
       "beat": "b09"
@@ -413,7 +429,9 @@
   "transitions": [
     {
       "beat": "b03",
-      "kind": "bloom"
+      "kind": "pull",
+      "trigger": "pull",
+      "side": "left"
     },
     {
       "beat": "b05",
@@ -422,14 +440,12 @@
     },
     {
       "beat": "b07",
-      "kind": "pull",
-      "trigger": "pull",
-      "side": "left"
+      "kind": "bloom"
     },
     {
       "beat": "b09",
-      "kind": "bloom"
+      "kind": "cut"
     }
   ],
-  "inputs": "c2628344b64be280"
+  "inputs": "fdeec715716355ea"
 }

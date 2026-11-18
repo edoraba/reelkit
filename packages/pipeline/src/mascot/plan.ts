@@ -513,6 +513,9 @@ export function planMascot(input: { script: Script; report: AlignReport; seed: s
         const back = x < 540 ? 380 : 700;
         // Leave at the beat end if possible; earlier when a mascot gesture comes first.
         const ng = nextGesture(moment);
+        // A pull right after: the mascot runs out from where it is, no need to come back.
+        const pullNext = windows.some((w) => w.trigger === 'pull' && w.gStart === ng);
+        if (pullNext && ng - moment >= 600) continue;
         const start = Math.max(moment + 600, Math.min(to, ng - walkMs(back)));
         if (walkTo(start, back, 'front', { deadline: ng }) === undefined) {
           problems.push(

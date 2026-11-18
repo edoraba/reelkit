@@ -98,6 +98,8 @@ type Rule = [RegExp, (...m: string[]) => string];
  * amounts, percentages, decimals and the remaining numbers. Add new acronyms at the top.
  */
 const RULES: Rule[] = [
+  // The site, as the CTA says it (Edoardo, 2026-11-18: refattura.it, not "link in bio").
+  [/\brefattura\.it\b/gi, () => 'refattura punto it'],
   [/\bTD ?(\d{2})\b/g, (_, n) => `ti di ${numberToWords(Number(n))}`],
   [/\bF24\b/g, () => 'effe ventiquattro'],
   [/\bP\. ?IVA\b/gi, () => 'partita Iva'],

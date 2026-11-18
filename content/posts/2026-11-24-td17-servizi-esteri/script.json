@@ -27,6 +27,9 @@
       "highlight": "TD17",
       "mascot": {
         "pose": "arms-up"
+      },
+      "transition": {
+        "trigger": "pull"
       }
     },
     {
@@ -65,9 +68,6 @@
       "highlight": "pronta",
       "mascot": {
         "pose": "arms-up"
-      },
-      "transition": {
-        "trigger": "pull"
       }
     },
     {
@@ -81,9 +81,9 @@
     },
     {
       "id": "b09",
-      "say": "Provalo: il link è in bio.",
+      "say": "Provalo su refattura.it.",
       "palette": "blu",
-      "highlight": "Provalo",
+      "highlight": "refattura.it",
       "mascot": {
         "pose": "wave"
       }

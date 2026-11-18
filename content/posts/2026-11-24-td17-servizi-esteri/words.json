@@ -1,10 +1,10 @@
 {
-  "durationMs": 23360,
+  "durationMs": 25240,
   "screen": [
     {
       "text": "Paghi",
-      "startMs": 197,
-      "endMs": 627,
+      "startMs": 224,
+      "endMs": 747,
       "words": [
         0,
         0
@@ -13,8 +13,8 @@
     },
     {
       "text": "Google",
-      "startMs": 627,
-      "endMs": 908,
+      "startMs": 747,
+      "endMs": 1043,
       "words": [
         1,
         1
@@ -23,8 +23,8 @@
     },
     {
       "text": "Ads",
-      "startMs": 908,
-      "endMs": 1123,
+      "startMs": 1043,
+      "endMs": 1286,
       "words": [
         2,
         2
@@ -33,8 +33,8 @@
     },
     {
       "text": "o",
-      "startMs": 1123,
-      "endMs": 1239,
+      "startMs": 1286,
+      "endMs": 1513,
       "words": [
         3,
         3
@@ -43,8 +43,8 @@
     },
     {
       "text": "Canva",
-      "startMs": 1239,
-      "endMs": 1470,
+      "startMs": 1513,
+      "endMs": 1931,
       "words": [
         4,
         4
@@ -53,8 +53,8 @@
     },
     {
       "text": "con",
-      "startMs": 1470,
-      "endMs": 1569,
+      "startMs": 1931,
+      "endMs": 2070,
       "words": [
         5,
         5
@@ -63,8 +63,8 @@
     },
     {
       "text": "la",
-      "startMs": 1569,
-      "endMs": 1668,
+      "startMs": 2070,
+      "endMs": 2192,
       "words": [
         6,
         6
@@ -73,8 +73,8 @@
     },
     {
       "text": "partita",
-      "startMs": 1668,
-      "endMs": 1900,
+      "startMs": 2192,
+      "endMs": 2436,
       "words": [
         7,
         7
@@ -83,8 +83,8 @@
     },
     {
       "text": "IVA?",
-      "startMs": 1900,
-      "endMs": 2247,
+      "startMs": 2436,
+      "endMs": 2767,
       "words": [
         8,
         8
@@ -93,8 +93,8 @@
     },
     {
       "text": "Ogni",
-      "startMs": 2663,
-      "endMs": 3098,
+      "startMs": 3135,
+      "endMs": 3619,
       "words": [
         9,
         9
@@ -103,8 +103,8 @@
     },
     {
       "text": "mese",
-      "startMs": 3098,
-      "endMs": 3272,
+      "startMs": 3619,
+      "endMs": 3792,
       "words": [
         10,
         10
@@ -113,8 +113,8 @@
     },
     {
       "text": "ti",
-      "startMs": 3272,
-      "endMs": 3428,
+      "startMs": 3792,
+      "endMs": 3931,
       "words": [
         11,
         11
@@ -123,8 +123,8 @@
     },
     {
       "text": "arriva",
-      "startMs": 3428,
-      "endMs": 3602,
+      "startMs": 3931,
+      "endMs": 4069,
       "words": [
         12,
         12
@@ -133,8 +133,8 @@
     },
     {
       "text": "una",
-      "startMs": 3602,
-      "endMs": 3741,
+      "startMs": 4069,
+      "endMs": 4190,
       "words": [
         13,
         13
@@ -143,8 +143,8 @@
     },
     {
       "text": "fattura",
-      "startMs": 3741,
-      "endMs": 4037,
+      "startMs": 4190,
+      "endMs": 4484,
       "words": [
         14,
         14
@@ -153,8 +153,8 @@
     },
     {
       "text": "estera,",
-      "startMs": 4037,
-      "endMs": 4385,
+      "startMs": 4484,
+      "endMs": 4865,
       "words": [
         15,
         15
@@ -163,8 +163,8 @@
     },
     {
       "text": "senza",
-      "startMs": 4385,
-      "endMs": 4785,
+      "startMs": 5041,
+      "endMs": 5307,
       "words": [
         16,
         16
@@ -173,8 +173,8 @@
     },
     {
       "text": "IVA.",
-      "startMs": 4785,
-      "endMs": 5133,
+      "startMs": 5307,
+      "endMs": 5620,
       "words": [
         17,
         17
@@ -183,8 +183,8 @@
     },
     {
       "text": "L'IVA",
-      "startMs": 5405,
-      "endMs": 5908,
+      "startMs": 6043,
+      "endMs": 6626,
       "words": [
         18,
         18
@@ -193,8 +193,8 @@
     },
     {
       "text": "la",
-      "startMs": 5908,
-      "endMs": 6081,
+      "startMs": 6626,
+      "endMs": 6815,
       "words": [
         19,
         19
@@ -203,8 +203,8 @@
     },
     {
       "text": "integri",
-      "startMs": 6081,
-      "endMs": 6410,
+      "startMs": 6815,
+      "endMs": 7141,
       "words": [
         20,
         20
@@ -213,8 +213,8 @@
     },
     {
       "text": "tu,",
-      "startMs": 6410,
-      "endMs": 6618,
+      "startMs": 7141,
+      "endMs": 7295,
       "words": [
         21,
         21
@@ -223,8 +223,8 @@
     },
     {
       "text": "con",
-      "startMs": 6823,
-      "endMs": 7076,
+      "startMs": 7509,
+      "endMs": 7835,
       "words": [
         22,
         22
@@ -233,8 +233,8 @@
     },
     {
       "text": "il",
-      "startMs": 7076,
-      "endMs": 7275,
+      "startMs": 7835,
+      "endMs": 8039,
       "words": [
         23,
         23
@@ -243,8 +243,8 @@
     },
     {
       "text": "TD17.",
-      "startMs": 7275,
-      "endMs": 8035,
+      "startMs": 8039,
+      "endMs": 8630,
       "words": [
         24,
         26
@@ -253,8 +253,8 @@
     },
     {
       "text": "Cioè",
-      "startMs": 8228,
-      "endMs": 8498,
+      "startMs": 8976,
+      "endMs": 9615,
       "words": [
         27,
         27
@@ -263,8 +263,8 @@
     },
     {
       "text": "l'autofattura",
-      "startMs": 8498,
-      "endMs": 9105,
+      "startMs": 9615,
+      "endMs": 10146,
       "words": [
         28,
         28
@@ -273,8 +273,8 @@
     },
     {
       "text": "per",
-      "startMs": 9105,
-      "endMs": 9257,
+      "startMs": 10146,
+      "endMs": 10302,
       "words": [
         29,
         29
@@ -283,8 +283,8 @@
     },
     {
       "text": "i",
-      "startMs": 9257,
-      "endMs": 9358,
+      "startMs": 10302,
+      "endMs": 10395,
       "words": [
         30,
         30
@@ -293,8 +293,8 @@
     },
     {
       "text": "servizi",
-      "startMs": 9358,
-      "endMs": 9594,
+      "startMs": 10395,
+      "endMs": 10629,
       "words": [
         31,
         31
@@ -303,8 +303,8 @@
     },
     {
       "text": "dall'estero.",
-      "startMs": 9594,
-      "endMs": 10117,
+      "startMs": 10629,
+      "endMs": 11097,
       "words": [
         32,
         32
@@ -313,8 +313,8 @@
     },
     {
       "text": "Esempio:",
-      "startMs": 10551,
-      "endMs": 11129,
+      "startMs": 11573,
+      "endMs": 11971,
       "words": [
         33,
         33
@@ -323,8 +323,8 @@
     },
     {
       "text": "una",
-      "startMs": 11298,
-      "endMs": 11569,
+      "startMs": 12170,
+      "endMs": 12335,
       "words": [
         34,
         34
@@ -333,8 +333,8 @@
     },
     {
       "text": "fattura",
-      "startMs": 11569,
-      "endMs": 11856,
+      "startMs": 12335,
+      "endMs": 12609,
       "words": [
         35,
         35
@@ -343,8 +343,8 @@
     },
     {
       "text": "da",
-      "startMs": 11856,
-      "endMs": 11958,
+      "startMs": 12609,
+      "endMs": 12774,
       "words": [
         36,
         36
@@ -353,8 +353,8 @@
     },
     {
       "text": "120 euro.",
-      "startMs": 11958,
-      "endMs": 12702,
+      "startMs": 12774,
+      "endMs": 13707,
       "words": [
         37,
         38
@@ -363,8 +363,8 @@
     },
     {
       "text": "Integri",
-      "startMs": 12936,
-      "endMs": 13454,
+      "startMs": 13926,
+      "endMs": 14419,
       "words": [
         39,
         39
@@ -373,8 +373,8 @@
     },
     {
       "text": "26,40 euro",
-      "startMs": 13454,
-      "endMs": 14527,
+      "startMs": 14419,
+      "endMs": 15404,
       "words": [
         40,
         43
@@ -383,8 +383,8 @@
     },
     {
       "text": "di",
-      "startMs": 14527,
-      "endMs": 14699,
+      "startMs": 15404,
+      "endMs": 15695,
       "words": [
         44,
         44
@@ -393,8 +393,8 @@
     },
     {
       "text": "IVA",
-      "startMs": 14699,
-      "endMs": 14968,
+      "startMs": 15695,
+      "endMs": 15969,
       "words": [
         45,
         45
@@ -403,8 +403,8 @@
     },
     {
       "text": "e",
-      "startMs": 14968,
-      "endMs": 15050,
+      "startMs": 16127,
+      "endMs": 16330,
       "words": [
         46,
         46
@@ -413,8 +413,8 @@
     },
     {
       "text": "la",
-      "startMs": 15050,
-      "endMs": 15160,
+      "startMs": 16330,
+      "endMs": 16452,
       "words": [
         47,
         47
@@ -423,8 +423,8 @@
     },
     {
       "text": "mandi",
-      "startMs": 15160,
-      "endMs": 15352,
+      "startMs": 16452,
+      "endMs": 16655,
       "words": [
         48,
         48
@@ -433,8 +433,8 @@
     },
     {
       "text": "allo SDI.",
-      "startMs": 15352,
-      "endMs": 15792,
+      "startMs": 16655,
+      "endMs": 17143,
       "words": [
         49,
         51
@@ -443,8 +443,8 @@
     },
     {
       "text": "Con",
-      "startMs": 16242,
-      "endMs": 16760,
+      "startMs": 17330,
+      "endMs": 17949,
       "words": [
         52,
         52
@@ -453,8 +453,8 @@
     },
     {
       "text": "Refattura",
-      "startMs": 16760,
-      "endMs": 17229,
+      "startMs": 17949,
+      "endMs": 18379,
       "words": [
         53,
         53
@@ -463,8 +463,8 @@
     },
     {
       "text": "carichi",
-      "startMs": 17229,
-      "endMs": 17488,
+      "startMs": 18379,
+      "endMs": 18654,
       "words": [
         54,
         54
@@ -473,8 +473,8 @@
     },
     {
       "text": "il",
-      "startMs": 17488,
-      "endMs": 17633,
+      "startMs": 18654,
+      "endMs": 18826,
       "words": [
         55,
         55
@@ -483,8 +483,8 @@
     },
     {
       "text": "PDF",
-      "startMs": 17633,
-      "endMs": 17892,
+      "startMs": 18826,
+      "endMs": 19118,
       "words": [
         56,
         56
@@ -493,8 +493,8 @@
     },
     {
       "text": "e",
-      "startMs": 18044,
-      "endMs": 18256,
+      "startMs": 19118,
+      "endMs": 19376,
       "words": [
         57,
         57
@@ -503,8 +503,8 @@
     },
     {
       "text": "l'autofattura",
-      "startMs": 18256,
-      "endMs": 18638,
+      "startMs": 19376,
+      "endMs": 19823,
       "words": [
         58,
         58
@@ -513,8 +513,8 @@
     },
     {
       "text": "è",
-      "startMs": 18638,
-      "endMs": 18737,
+      "startMs": 19823,
+      "endMs": 19961,
       "words": [
         59,
         59
@@ -523,8 +523,8 @@
     },
     {
       "text": "pronta.",
-      "startMs": 18737,
-      "endMs": 19034,
+      "startMs": 19961,
+      "endMs": 20356,
       "words": [
         60,
         60
@@ -533,8 +533,8 @@
     },
     {
       "text": "E",
-      "startMs": 19520,
-      "endMs": 19602,
+      "startMs": 20818,
+      "endMs": 21070,
       "words": [
         61,
         61
@@ -543,8 +543,8 @@
     },
     {
       "text": "tu",
-      "startMs": 19602,
-      "endMs": 19711,
+      "startMs": 21070,
+      "endMs": 21154,
       "words": [
         62,
         62
@@ -553,8 +553,8 @@
     },
     {
       "text": "come",
-      "startMs": 19711,
-      "endMs": 19866,
+      "startMs": 21154,
+      "endMs": 21266,
       "words": [
         63,
         63
@@ -563,8 +563,8 @@
     },
     {
       "text": "le",
-      "startMs": 19866,
-      "endMs": 19970,
+      "startMs": 21266,
+      "endMs": 21392,
       "words": [
         64,
         64
@@ -573,8 +573,8 @@
     },
     {
       "text": "fai?",
-      "startMs": 19970,
-      "endMs": 20099,
+      "startMs": 21392,
+      "endMs": 21532,
       "words": [
         65,
         65
@@ -583,8 +583,8 @@
     },
     {
       "text": "A",
-      "startMs": 20469,
-      "endMs": 20580,
+      "startMs": 21764,
+      "endMs": 22101,
       "words": [
         66,
         66
@@ -593,8 +593,8 @@
     },
     {
       "text": "mano",
-      "startMs": 20580,
-      "endMs": 20801,
+      "startMs": 22101,
+      "endMs": 22296,
       "words": [
         67,
         67
@@ -603,8 +603,8 @@
     },
     {
       "text": "o",
-      "startMs": 20801,
-      "endMs": 20912,
+      "startMs": 22296,
+      "endMs": 22456,
       "words": [
         68,
         68
@@ -613,8 +613,8 @@
     },
     {
       "text": "col",
-      "startMs": 20912,
-      "endMs": 21097,
+      "startMs": 22456,
+      "endMs": 22651,
       "words": [
         69,
         69
@@ -623,8 +623,8 @@
     },
     {
       "text": "commercialista?",
-      "startMs": 21097,
-      "endMs": 21688,
+      "startMs": 22651,
+      "endMs": 23237,
       "words": [
         70,
         70
@@ -632,9 +632,9 @@
       "beat": "b08"
     },
     {
-      "text": "Provalo:",
-      "startMs": 22026,
-      "endMs": 22317,
+      "text": "Provalo",
+      "startMs": 23528,
+      "endMs": 24029,
       "words": [
         71,
         71
@@ -642,9 +642,9 @@
       "beat": "b09"
     },
     {
-      "text": "il",
-      "startMs": 22513,
-      "endMs": 22620,
+      "text": "su",
+      "startMs": 24029,
+      "endMs": 24142,
       "words": [
         72,
         72
@@ -652,42 +652,12 @@
       "beat": "b09"
     },
     {
-      "text": "link",
-      "startMs": 22620,
-      "endMs": 22781,
+      "text": "refattura.it.",
+      "startMs": 24142,
+      "endMs": 24983,
       "words": [
         73,
-        73
-      ],
-      "beat": "b09"
-    },
-    {
-      "text": "è",
-      "startMs": 22781,
-      "endMs": 22862,
-      "words": [
-        74,
-        74
-      ],
-      "beat": "b09"
-    },
-    {
-      "text": "in",
-      "startMs": 22862,
-      "endMs": 22969,
-      "words": [
-        75,
         75
-      ],
-      "beat": "b09"
-    },
-    {
-      "text": "bio.",
-      "startMs": 22969,
-      "endMs": 23103,
-      "words": [
-        76,
-        76
       ],
       "beat": "b09"
     }
@@ -695,532 +665,540 @@
   "words": [
     {
       "word": "Paghi",
-      "startMs": 197,
-      "endMs": 627,
+      "startMs": 224,
+      "endMs": 747,
       "match": "exact"
     },
     {
       "word": "Google",
-      "startMs": 627,
-      "endMs": 908,
+      "startMs": 747,
+      "endMs": 1043,
       "match": "exact"
     },
     {
       "word": "Ads",
-      "startMs": 908,
-      "endMs": 1123,
+      "startMs": 1043,
+      "endMs": 1286,
       "match": "exact"
     },
     {
       "word": "o",
-      "startMs": 1123,
-      "endMs": 1239,
+      "startMs": 1286,
+      "endMs": 1513,
       "match": "exact"
     },
     {
       "word": "Canva",
-      "startMs": 1239,
-      "endMs": 1470,
+      "startMs": 1513,
+      "endMs": 1931,
       "match": "exact"
     },
     {
       "word": "con",
-      "startMs": 1470,
-      "endMs": 1569,
+      "startMs": 1931,
+      "endMs": 2070,
       "match": "exact"
     },
     {
       "word": "la",
-      "startMs": 1569,
-      "endMs": 1668,
+      "startMs": 2070,
+      "endMs": 2192,
       "match": "exact"
     },
     {
       "word": "partita",
-      "startMs": 1668,
-      "endMs": 1900,
+      "startMs": 2192,
+      "endMs": 2436,
       "match": "exact"
     },
     {
       "word": "Iva?",
-      "startMs": 1900,
-      "endMs": 2247,
+      "startMs": 2436,
+      "endMs": 2767,
       "match": "exact"
     },
     {
       "word": "Ogni",
-      "startMs": 2663,
-      "endMs": 3098,
+      "startMs": 3135,
+      "endMs": 3619,
       "match": "exact"
     },
     {
       "word": "mese",
-      "startMs": 3098,
-      "endMs": 3272,
+      "startMs": 3619,
+      "endMs": 3792,
       "match": "exact"
     },
     {
       "word": "ti",
-      "startMs": 3272,
-      "endMs": 3428,
+      "startMs": 3792,
+      "endMs": 3931,
       "match": "exact"
     },
     {
       "word": "arriva",
-      "startMs": 3428,
-      "endMs": 3602,
+      "startMs": 3931,
+      "endMs": 4069,
       "match": "exact"
     },
     {
       "word": "una",
-      "startMs": 3602,
-      "endMs": 3741,
+      "startMs": 4069,
+      "endMs": 4190,
       "match": "exact"
     },
     {
       "word": "fattura",
-      "startMs": 3741,
-      "endMs": 4037,
+      "startMs": 4190,
+      "endMs": 4484,
       "match": "exact"
     },
     {
       "word": "estera,",
-      "startMs": 4037,
-      "endMs": 4385,
+      "startMs": 4484,
+      "endMs": 4865,
       "match": "exact"
     },
     {
       "word": "senza",
-      "startMs": 4385,
-      "endMs": 4785,
+      "startMs": 5041,
+      "endMs": 5307,
       "match": "exact"
     },
     {
       "word": "Iva.",
-      "startMs": 4785,
-      "endMs": 5133,
+      "startMs": 5307,
+      "endMs": 5620,
       "match": "exact"
     },
     {
       "word": "L'Iva",
-      "startMs": 5405,
-      "endMs": 5908,
+      "startMs": 6043,
+      "endMs": 6626,
       "match": "exact"
     },
     {
       "word": "la",
-      "startMs": 5908,
-      "endMs": 6081,
+      "startMs": 6626,
+      "endMs": 6815,
       "match": "exact"
     },
     {
       "word": "integri",
-      "startMs": 6081,
-      "endMs": 6410,
+      "startMs": 6815,
+      "endMs": 7141,
       "match": "exact"
     },
     {
       "word": "tu,",
-      "startMs": 6410,
-      "endMs": 6618,
+      "startMs": 7141,
+      "endMs": 7295,
       "match": "exact"
     },
     {
       "word": "con",
-      "startMs": 6823,
-      "endMs": 7076,
+      "startMs": 7509,
+      "endMs": 7835,
       "match": "exact"
     },
     {
       "word": "il",
-      "startMs": 7076,
-      "endMs": 7275,
+      "startMs": 7835,
+      "endMs": 8039,
       "match": "exact"
     },
     {
       "word": "ti",
-      "startMs": 7275,
-      "endMs": 7420,
-      "match": "exact"
+      "startMs": 8039,
+      "endMs": 8151,
+      "match": "guessed",
+      "heard": "T17,"
     },
     {
       "word": "di",
-      "startMs": 7420,
-      "endMs": 7565,
-      "match": "exact"
+      "startMs": 8151,
+      "endMs": 8264,
+      "match": "guessed"
     },
     {
       "word": "diciassette.",
-      "startMs": 7565,
-      "endMs": 8035,
-      "match": "exact"
+      "startMs": 8264,
+      "endMs": 8630,
+      "match": "guessed"
     },
     {
       "word": "Cioè",
-      "startMs": 8228,
-      "endMs": 8498,
+      "startMs": 8976,
+      "endMs": 9615,
       "match": "exact"
     },
     {
       "word": "l'autofattura",
-      "startMs": 8498,
-      "endMs": 9105,
+      "startMs": 9615,
+      "endMs": 10146,
       "match": "exact"
     },
     {
       "word": "per",
-      "startMs": 9105,
-      "endMs": 9257,
+      "startMs": 10146,
+      "endMs": 10302,
       "match": "exact"
     },
     {
       "word": "i",
-      "startMs": 9257,
-      "endMs": 9358,
+      "startMs": 10302,
+      "endMs": 10395,
       "match": "exact"
     },
     {
       "word": "servizi",
-      "startMs": 9358,
-      "endMs": 9594,
+      "startMs": 10395,
+      "endMs": 10629,
       "match": "exact"
     },
     {
       "word": "dall'estero.",
-      "startMs": 9594,
-      "endMs": 10117,
+      "startMs": 10629,
+      "endMs": 11097,
       "match": "exact"
     },
     {
       "word": "Esempio:",
-      "startMs": 10551,
-      "endMs": 11129,
+      "startMs": 11573,
+      "endMs": 11971,
       "match": "exact"
     },
     {
       "word": "una",
-      "startMs": 11298,
-      "endMs": 11569,
+      "startMs": 12170,
+      "endMs": 12335,
       "match": "exact"
     },
     {
       "word": "fattura",
-      "startMs": 11569,
-      "endMs": 11856,
+      "startMs": 12335,
+      "endMs": 12609,
       "match": "exact"
     },
     {
       "word": "da",
-      "startMs": 11856,
-      "endMs": 11958,
+      "startMs": 12609,
+      "endMs": 12774,
       "match": "exact"
     },
     {
       "word": "centoventi",
-      "startMs": 11958,
-      "endMs": 12454,
+      "startMs": 12774,
+      "endMs": 13396,
       "match": "exact"
     },
     {
       "word": "euro.",
-      "startMs": 12454,
-      "endMs": 12702,
+      "startMs": 13396,
+      "endMs": 13707,
       "match": "exact"
     },
     {
       "word": "Integri",
-      "startMs": 12936,
-      "endMs": 13454,
+      "startMs": 13926,
+      "endMs": 14419,
       "match": "exact"
     },
     {
       "word": "ventisei",
-      "startMs": 13454,
-      "endMs": 13823,
+      "startMs": 14419,
+      "endMs": 14758,
       "match": "exact"
     },
     {
       "word": "euro",
-      "startMs": 13823,
-      "endMs": 14046,
+      "startMs": 14758,
+      "endMs": 14962,
       "match": "exact"
     },
     {
       "word": "e",
-      "startMs": 14046,
-      "endMs": 14157,
+      "startMs": 14962,
+      "endMs": 15064,
       "match": "exact"
     },
     {
       "word": "quaranta",
-      "startMs": 14157,
-      "endMs": 14527,
+      "startMs": 15064,
+      "endMs": 15404,
       "match": "exact"
     },
     {
       "word": "di",
-      "startMs": 14527,
-      "endMs": 14699,
+      "startMs": 15404,
+      "endMs": 15695,
       "match": "exact"
     },
     {
       "word": "Iva",
-      "startMs": 14699,
-      "endMs": 14968,
+      "startMs": 15695,
+      "endMs": 15969,
       "match": "exact"
     },
     {
       "word": "e",
-      "startMs": 14968,
-      "endMs": 15050,
+      "startMs": 16127,
+      "endMs": 16330,
       "match": "exact"
     },
     {
       "word": "la",
-      "startMs": 15050,
-      "endMs": 15160,
+      "startMs": 16330,
+      "endMs": 16452,
       "match": "exact"
     },
     {
       "word": "mandi",
-      "startMs": 15160,
-      "endMs": 15352,
+      "startMs": 16452,
+      "endMs": 16655,
       "match": "exact"
     },
     {
       "word": "all'esse",
-      "startMs": 15352,
-      "endMs": 15600,
+      "startMs": 16655,
+      "endMs": 16930,
       "match": "close",
       "heard": "all'SD."
     },
     {
       "word": "di",
-      "startMs": 15600,
-      "endMs": 15710,
+      "startMs": 16930,
+      "endMs": 17052,
       "match": "guessed"
     },
     {
       "word": "i.",
-      "startMs": 15710,
-      "endMs": 15792,
+      "startMs": 17052,
+      "endMs": 17143,
       "match": "guessed"
     },
     {
       "word": "Con",
-      "startMs": 16242,
-      "endMs": 16760,
+      "startMs": 17330,
+      "endMs": 17949,
       "match": "exact"
     },
     {
       "word": "Refattura",
-      "startMs": 16760,
-      "endMs": 17229,
+      "startMs": 17949,
+      "endMs": 18379,
       "match": "exact"
     },
     {
       "word": "carichi",
-      "startMs": 17229,
-      "endMs": 17488,
+      "startMs": 18379,
+      "endMs": 18654,
       "match": "exact"
     },
     {
       "word": "il",
-      "startMs": 17488,
-      "endMs": 17633,
+      "startMs": 18654,
+      "endMs": 18826,
       "match": "exact"
     },
     {
       "word": "PDF",
-      "startMs": 17633,
-      "endMs": 17892,
+      "startMs": 18826,
+      "endMs": 19118,
       "match": "exact"
     },
     {
       "word": "e",
-      "startMs": 18044,
-      "endMs": 18256,
+      "startMs": 19118,
+      "endMs": 19376,
       "match": "exact"
     },
     {
       "word": "l'autofattura",
-      "startMs": 18256,
-      "endMs": 18638,
+      "startMs": 19376,
+      "endMs": 19823,
       "match": "exact"
     },
     {
       "word": "è",
-      "startMs": 18638,
-      "endMs": 18737,
+      "startMs": 19823,
+      "endMs": 19961,
       "match": "exact"
     },
     {
       "word": "pronta.",
-      "startMs": 18737,
-      "endMs": 19034,
+      "startMs": 19961,
+      "endMs": 20356,
       "match": "exact"
     },
     {
       "word": "E",
-      "startMs": 19520,
-      "endMs": 19602,
+      "startMs": 20818,
+      "endMs": 21070,
       "match": "exact"
     },
     {
       "word": "tu",
-      "startMs": 19602,
-      "endMs": 19711,
+      "startMs": 21070,
+      "endMs": 21154,
       "match": "exact"
     },
     {
       "word": "come",
-      "startMs": 19711,
-      "endMs": 19866,
+      "startMs": 21154,
+      "endMs": 21266,
       "match": "exact"
     },
     {
       "word": "le",
-      "startMs": 19866,
-      "endMs": 19970,
+      "startMs": 21266,
+      "endMs": 21392,
       "match": "exact"
     },
     {
       "word": "fai?",
-      "startMs": 19970,
-      "endMs": 20099,
+      "startMs": 21392,
+      "endMs": 21532,
       "match": "exact"
     },
     {
       "word": "A",
-      "startMs": 20469,
-      "endMs": 20580,
+      "startMs": 21764,
+      "endMs": 22101,
       "match": "exact"
     },
     {
       "word": "mano",
-      "startMs": 20580,
-      "endMs": 20801,
+      "startMs": 22101,
+      "endMs": 22296,
       "match": "exact"
     },
     {
       "word": "o",
-      "startMs": 20801,
-      "endMs": 20912,
+      "startMs": 22296,
+      "endMs": 22456,
       "match": "exact"
     },
     {
       "word": "col",
-      "startMs": 20912,
-      "endMs": 21097,
+      "startMs": 22456,
+      "endMs": 22651,
       "match": "exact"
     },
     {
       "word": "commercialista?",
-      "startMs": 21097,
-      "endMs": 21688,
+      "startMs": 22651,
+      "endMs": 23237,
       "match": "exact"
     },
     {
-      "word": "Provalo:",
-      "startMs": 22026,
-      "endMs": 22317,
+      "word": "Provalo",
+      "startMs": 23528,
+      "endMs": 24029,
       "match": "exact"
     },
     {
-      "word": "il",
-      "startMs": 22513,
-      "endMs": 22620,
+      "word": "su",
+      "startMs": 24029,
+      "endMs": 24142,
       "match": "exact"
     },
     {
-      "word": "link",
-      "startMs": 22620,
-      "endMs": 22781,
+      "word": "refattura",
+      "startMs": 24142,
+      "endMs": 24563,
       "match": "exact"
     },
     {
-      "word": "è",
-      "startMs": 22781,
-      "endMs": 22862,
+      "word": "punto",
+      "startMs": 24563,
+      "endMs": 24830,
       "match": "exact"
     },
     {
-      "word": "in",
-      "startMs": 22862,
-      "endMs": 22969,
-      "match": "exact"
-    },
-    {
-      "word": "bio.",
-      "startMs": 22969,
-      "endMs": 23103,
+      "word": "it.",
+      "startMs": 24830,
+      "endMs": 24983,
       "match": "exact"
     }
   ],
   "pauses": [
     {
       "startMs": 0,
-      "endMs": 197
+      "endMs": 224
     },
     {
-      "startMs": 2247,
-      "endMs": 2663
+      "startMs": 2767,
+      "endMs": 3135
     },
     {
-      "startMs": 5133,
-      "endMs": 5405
+      "startMs": 4865,
+      "endMs": 5041
     },
     {
-      "startMs": 6618,
-      "endMs": 6823
+      "startMs": 5620,
+      "endMs": 6043
     },
     {
-      "startMs": 8035,
-      "endMs": 8228
+      "startMs": 7295,
+      "endMs": 7509
     },
     {
-      "startMs": 10117,
-      "endMs": 10551
+      "startMs": 8630,
+      "endMs": 8976
     },
     {
-      "startMs": 11129,
-      "endMs": 11298
+      "startMs": 11097,
+      "endMs": 11573
     },
     {
-      "startMs": 12702,
-      "endMs": 12936
+      "startMs": 11971,
+      "endMs": 12170
     },
     {
-      "startMs": 15792,
-      "endMs": 16242
+      "startMs": 13707,
+      "endMs": 13926
     },
     {
-      "startMs": 17892,
-      "endMs": 18044
+      "startMs": 15969,
+      "endMs": 16127
     },
     {
-      "startMs": 19034,
-      "endMs": 19520
+      "startMs": 17143,
+      "endMs": 17330
     },
     {
-      "startMs": 20099,
-      "endMs": 20469
+      "startMs": 20356,
+      "endMs": 20818
     },
     {
-      "startMs": 21688,
-      "endMs": 22026
+      "startMs": 21532,
+      "endMs": 21764
     },
     {
-      "startMs": 22317,
-      "endMs": 22513
+      "startMs": 23237,
+      "endMs": 23528
     },
     {
-      "startMs": 23103,
-      "endMs": 23360
+      "startMs": 24983,
+      "endMs": 25240
     }
   ],
-  "heardRatio": 0.974025974025974,
+  "heardRatio": 0.9342105263157895,
   "issues": [
+    {
+      "index": 24,
+      "word": "ti",
+      "heard": "T17,"
+    },
+    {
+      "index": 25,
+      "word": "di"
+    },
+    {
+      "index": 26,
+      "word": "diciassette."
+    },
     {
       "index": 49,
       "word": "all'esse",
