@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { MascotPlan } from './mascot';
 import { PostId } from './post';
 
 /**
@@ -26,5 +27,7 @@ export const ReelTimeline = z.object({
   beats: z.array(TimelineBeat),
   /** Stretches where the voice speaks (mouth moves); outside them the mouth is closed. */
   speech: z.array(Span),
+  /** Mascot choreography (mascot.json), when the post has one. */
+  mascot: MascotPlan.optional(),
 });
 export type ReelTimeline = z.infer<typeof ReelTimeline>;
