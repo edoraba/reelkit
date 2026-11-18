@@ -146,3 +146,7 @@ Edoardo prefers the Matisse cut-out direction (D-020, moodboard 1) and asked for
 ## D-022 Cut-paper rules: sticker border, no white, paper transitions (2026-11-18)
 
 Feedback on the cut-paper reel: keep the white sticker border on the mascot, never use a pure white background (cream instead), and drop the sliding transition. The mascot now uses `CutoutStickerFilter` (boiling cut edge plus a sticker border that boils with it); the paper scene became cream; limbs are never white. Four paper transitions replace the slide (`packages/video/src/lab/cutouts/transitions.tsx`, `pnpm render:cutouts`): bloom (layered organic shapes growing out of a motif), cut (dashed scissor line, then the two pieces fall away), collage (stacking sheets with shadows, accent pieces fly off), star (turning cut-paper star iris). Each transition has explicit accent colors that contrast with both scenes. Rules recorded in `guidelines/brand.md`.
+
+## D-023 Cut-paper choices: bloom and cut, outlined sticker mascot (2026-11-18)
+
+Edoardo kept two of the four paper transitions, **bloom** and **cut**, to alternate between scenes (collage and star stay in the code, unused). The cut-paper mascot goes back to the graphite outline under the white sticker border, as in the sticker test reel (D-019): outline, sticker border and limbs all boil with the scissor-cut edge.
