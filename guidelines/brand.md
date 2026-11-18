@@ -33,17 +33,18 @@ Highlighting the key word:
 
 The rotated lime box is retired. Not chosen: ruled ledger paper with margin, minimal flat counter (kept in `pnpm render:lab` for reference only).
 
-### Cut-paper direction (exploring, D-020 to D-025)
+### Cut-paper direction (exploring, D-020 to D-027)
 
 Edoardo prefers the Matisse papiers découpés direction. Rules so far (2026-11-18):
 
 - The mascot always keeps its graphite outline and the white sticker border around it, also in the cut-paper style; both boil together with the scissor-cut edge.
-- Never a pure white background: use cream (`oklch(95% 0.03 90)`), kraft or a saturated paper color. White is only for small cut pieces.
+- Never a pure white background: use ice (`oklch(93% 0.035 255)`) or a saturated paper color. White is only for small cut pieces.
 - Limbs are never white: they would disappear on the sticker border.
 - No sliding between scenes. Transitions are paper actions, alternated: **bloom** (layered organic shapes growing out of a motif) and **cut** (a dashed scissor line, then the two pieces fall away). Collage and star exist but are not used.
 - Motifs move by changing shape (growing, opening, branching, flapping), not only by moving or rotating; motion runs on twos and edges boil every four frames.
 - Headline font: **Sour Gummy 800** (D-024); DM Mono for numbers and labels.
-- Colors come only from the six cut-paper palettes in `@reelkit/brand` (D-025, draft): Blu Refattura, Corallo, Panna, Limone, Smeraldo, Rosa. Consecutive scenes never share a palette; a reel alternates dark (Blu Refattura, Smeraldo) and light palettes.
+- Colors come only from the six cut-paper palettes in `@reelkit/brand` (D-027, draft), all in Refattura tones: Blu Refattura, Notte, Azzurro, Ghiaccio, Viola, Lavanda. No warm colors: coral, lemon, pink and emerald made it look like a primary school (Edoardo, 2026-11-18). Stamp green, amber and red appear only on stamps, with their meaning. Consecutive scenes never share a palette; a reel alternates dark (Blu Refattura, Notte, Viola) and light (Azzurro, Ghiaccio, Lavanda) palettes.
+- Visibility (D-026): every cut piece needs at least 2:1 luminance contrast with what it sits on (the background or another piece), text 4.5:1. With only blues and violets, luminance is the only separation: never blue with violet (1.16:1), sky with lavender (1.36:1), white on ice (1.22:1). Office objects choose the color of each piece with `pickerFor(palette)`, bloom transitions take their layers from `bloomLayers(from, to)`, and `pnpm brand:contrast` fails on a palette that breaks the rule.
 - Motifs mix organic cut-outs (fronds, stars, blobs, coral, waves, kelp) with office objects (calculator, scissors, stapler, binders, stamp, pencil, envelope, coins, calendar, coffee, magnifier, pinned note), each animated by what it does.
 
 Token source: `refattura/DESIGN.md`, copied to `packages/brand/src/tokens.ts`. In code, colors always come from `@reelkit/brand`, never written by hand.

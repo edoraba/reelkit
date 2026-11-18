@@ -157,7 +157,23 @@ Edoardo asked whether Bricolage Grotesque suits the cut-paper style. Ten OFL can
 
 **Chosen:** Sour Gummy 800 (puffy, friendly, legible at reel size), now the default headline type of the cut-paper scenes. DM Mono stays for numbers and labels.
 
-## D-025 Cut-paper palettes and office objects (2026-11-18, palettes to approve)
+## D-025 Cut-paper palettes and office objects (2026-11-18, palettes replaced by D-027)
 
 - **Palettes** in `@reelkit/brand` (`paper`, `cutoutPalettes`, draft): six palettes, each with background, text, three motif colors, highlight, limb color, mascot roll and pill colors, bloom transition layers and a dark/light tone for alternation: Blu Refattura, Corallo, Panna, Limone, Smeraldo, Rosa. `pnpm brand:contrast` checks text on background (min 4.5:1, lowest 4.97 on Blu Refattura) and the highlight (marker text 4.5:1, underline visibility 3:1). Coral fails with light text (2.67:1), so Corallo uses dark text. Board: `palettes.png` from `pnpm render:cutouts`.
 - **Office objects** as animated cut-paper motifs, asked by Edoardo: calculator (keys press, display counts), scissors (snip), stapler (bites), binders (slide in and lean), rubber stamp (stamps a check), pencil (writes a line), envelope (opens, the letter comes out), coins (drop and stack), calendar page (flips), coffee cup (steams), magnifier (searches), pinned note (flutters). Colors come from the palette. Code in `packages/video/src/lab/cutouts/office.tsx`.
+
+## D-026 Visibility rule for cut pieces (2026-11-18)
+
+- **Problem** (Edoardo): some pieces had the same or a similar color as the background or as the piece under them (for example an emerald piece on ultramarine, 1.03:1) and disappeared.
+- **Rule**: a cut piece needs at least 2:1 luminance contrast (WCAG formula) with what it sits on, text 4.5:1. Same color is never allowed. `visibleOn(color, base)` and `MIN_GRAPHIC_CONTRAST` in `@reelkit/brand`.
+- **Two ways to apply it**: palettes only list motif colors visible on their background (`pnpm brand:contrast` exits 1 otherwise, and also checks the mascot limbs, roll and pill against the white sheet); pieces that sit on other pieces (calendar header on its page, envelope letter, stamp mark) choose their color at render time with `pickerFor(palette)`: the first preferred color that is visible, otherwise the palette color with the most contrast.
+- **Boards**: `visibility.png` (every paper color on every palette, with ratio and verdict) and `objects-palettes.png` (the twelve office objects on the six palettes) from `pnpm render:cutouts`.
+
+## D-027 Cut-paper palettes in Refattura tones only (2026-11-18, palettes to approve)
+
+- **Why**: Edoardo, on the D-025 palettes: too many colors, it looked like a primary school. Stay on the Refattura tones: blues, light blues, violets, whites.
+- **Papers** (`paper` in `@reelkit/brand`): blue (`inkBlue` of the app, #0052ff), navy `oklch(26% 0.11 266)` #0b1c58, sky `oklch(75% 0.13 264)` #84acff, ice `oklch(93% 0.035 255)` #d9eaff, violet `oklch(50% 0.22 292)` #6c38d2, lavender `oklch(84% 0.08 292)` #cbc2fb, white, graphite. Coral, cream, lemon, emerald and pink are gone. Stamp green, amber and red stay only on stamps, with their meaning.
+- **Six palettes**: Blu Refattura (blue, white text 5.75:1), Notte (navy, white text 15.9:1), Viola (violet, white text 6.7:1) are dark; Azzurro (sky, graphite text 7.9:1), Ghiaccio (ice, graphite text 14.5:1), Lavanda (lavender, graphite text 10.7:1) are light. Every palette passes D-026; the weakest motif is white on sky (2.25:1).
+- **Consequences of a single hue family**: luminance is the only separation, so some pairs are forbidden: blue with violet (1.16:1), sky with lavender (1.36:1), white on ice (1.22:1). On Ghiaccio the white sticker border of the mascot barely shows; the graphite outline carries the shape.
+- **Transitions**: the bloom layers are no longer written by hand per transition; `bloomLayers(from, to)` picks two layers so that the outer one shows on the old background, the inner one on the outer, and the new background on the inner. The cut line takes the text color of the old scene. Test reel: Blu, Lavanda, Notte, Azzurro, Viola, Ghiaccio (dark and light alternated).
+- **Lab**: the motif catalogue and the transition reel now use the palettes; the warm backgrounds sheet (D-021, `CutoutBackgrounds`) stays in code as history but is no longer rendered by `pnpm render:cutouts`.
