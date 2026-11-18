@@ -25,6 +25,7 @@ import { InvoiceRoll } from '../mascot/InvoiceRoll';
 import { poses, type PoseName } from '../mascot/poses';
 import { mascotAt } from '../mascot/choreo';
 import { MascotLayer } from './reel/MascotLayer';
+import { Outro } from './reel/Outro';
 
 /** Where a mascot-triggered transition comes from: its mouth, its scissors, its walk. */
 function triggerGeometry(s: Scene, plan?: MascotPlan) {
@@ -65,7 +66,9 @@ export const reelDefaults: ReelProps = {
 const FPS = formats.reel.fps;
 const toFrame = (ms: number) => Math.round((ms / 1000) * FPS);
 
-export const reelDuration = (p: ReelProps) => toFrame(p.durationMs) + 12;
+/** The voice plus a short tail, or the end of the closing when there is one (D-033). */
+export const reelDuration = (p: ReelProps) =>
+  Math.max(toFrame(p.durationMs) + 12, p.outro ? toFrame(p.outro.startMs + p.outro.durationMs) : 0);
 
 const palette = (key: string): CutoutPalette => cutoutPalette(key as CutoutPaletteKey);
 
@@ -161,7 +164,10 @@ export const Reel: React.FC<ReelProps> = (props) => {
   // Palette of the scene being spoken now (switches at the first word of a scene).
   const current =
     [...scenes].reverse().find((s) => frame >= toFrame(s.beats[0]!.startMs) - 2) ?? scenes[0];
-  const cp = current?.p ?? palette('blu');
+  const outroFrom = props.outro ? toFrame(props.outro.startMs) : undefined;
+  const op = props.outro ? palette(props.outro.palette) : undefined;
+  const inOutro = outroFrom !== undefined && frame >= outroFrom + 4;
+  const cp = inOutro && op ? op : (current?.p ?? palette('blu'));
   const talk = speech.map((s) => ({ from: toFrame(s.startMs), to: toFrame(s.endMs) }));
   const altBeat = plan?.alternate && beats.find((b) => b.id === plan.alternate!.beat);
   const alt =
@@ -174,7 +180,11 @@ export const Reel: React.FC<ReelProps> = (props) => {
     const next = beats[i + 1];
     const nextScene = scenes.find((s) => s.beats[0] === next);
     const from = toFrame(b.startMs) - 3;
-    const to = next ? (nextScene ? nextScene.from : toFrame(next.startMs) - 3) : total;
+    const to = next
+      ? nextScene
+        ? nextScene.from
+        : toFrame(next.startMs) - 3
+      : (outroFrom ?? total);
     const stamp = plan?.gags.find((g) => g.beat === b.id && g.kind === 'stamp');
     return {
       b,
@@ -189,9 +199,12 @@ export const Reel: React.FC<ReelProps> = (props) => {
   const pass = (layer: 'all' | 'back' | 'front') =>
     scenes.map((s, i) => {
       const next = scenes[i + 1];
-      const tail = next ? next.from + transitionTiming[next.kind ?? 'bloom'].frames : total;
+      // The closing follows the last scene like one more scene change.
+      const nextFrom = next ? next.from : outroFrom;
+      const nextFrames = transitionTiming[next?.kind ?? 'bloom'].frames;
+      const tail = nextFrom !== undefined ? nextFrom + nextFrames : total;
       // Front motifs leave at the next transition start: the incoming pass covers them.
-      const until = layer === 'front' && next ? next.from : tail;
+      const until = layer === 'front' && nextFrom !== undefined ? nextFrom + (next ? 0 : 12) : tail;
       const prev = scenes[i - 1];
       const fx = sceneEffects(s, plan);
       const backdrop = (p: CutoutPalette, suffix: string, effects: typeof fx) => (
@@ -221,6 +234,25 @@ export const Reel: React.FC<ReelProps> = (props) => {
       );
     });
 
+  // Closing (D-033): a bloom into a dark palette, the logo card, tagline and site.
+  const last = scenes.at(-1);
+  const closing =
+    outroFrom !== undefined && op && props.outro ? (
+      <Sequence from={outroFrom} durationInFrames={Math.max(1, total - outroFrom)}>
+        <PaperIn
+          to={op}
+          from={last?.p}
+          kind="bloom"
+          scene={
+            <AbsoluteFill>
+              <PaletteBackdrop p={op} idSuffix="outro" layer="back" hideObject />
+              <Outro p={op} />
+            </AbsoluteFill>
+          }
+        />
+      </Sequence>
+    ) : null;
+
   // Without a plan: the mascot of D-031, standing in the middle, pose per beat.
   const cues = [
     { at: 0, pose: 'neutral' as PoseName },
@@ -238,6 +270,7 @@ export const Reel: React.FC<ReelProps> = (props) => {
           {pass('back')}
           <MascotLayer plan={plan} talk={talk} p={cp} seed={postId} depth="behind" alt={alt} />
           {pass('front')}
+          {closing}
           <MascotLayer plan={plan} talk={talk} p={cp} seed={postId} depth="front" alt={alt} />
         </>
       ) : (
@@ -248,7 +281,8 @@ export const Reel: React.FC<ReelProps> = (props) => {
           <Headline beat={b} p={p} from={from} pulseAt={pulseAt} />
         </Sequence>
       ))}
-      {kicker && (
+      {!plan && closing}
+      {kicker && !inOutro && (
         <div
           style={{
             position: 'absolute',

@@ -34,6 +34,13 @@
       "x": 820,
       "gait": "walk",
       "depth": "front"
+    },
+    {
+      "atMs": 25477,
+      "durationMs": 538,
+      "x": 540,
+      "gait": "walk",
+      "depth": "front"
     }
   ],
   "cues": [
@@ -192,6 +199,12 @@
       "pose": "wave",
       "eyes": "open",
       "lean": 0
+    },
+    {
+      "atMs": 25777,
+      "pose": "wave",
+      "eyes": "happy",
+      "lean": 0
     }
   ],
   "gaze": [
@@ -309,6 +322,10 @@
     },
     {
       "atMs": 24986,
+      "target": "camera"
+    },
+    {
+      "atMs": 25477,
       "target": "camera"
     }
   ],

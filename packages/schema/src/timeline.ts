@@ -27,6 +27,8 @@ export const ReelTimeline = z.object({
   beats: z.array(TimelineBeat),
   /** Stretches where the voice speaks (mouth moves); outside them the mouth is closed. */
   speech: z.array(Span),
+  /** Closing with the logo (D-033): when it starts, how long it lasts, its palette. */
+  outro: z.object({ startMs: z.number(), durationMs: z.number(), palette: z.string() }).optional(),
   /** Mascot choreography (mascot.json), when the post has one. */
   mascot: MascotPlan.optional(),
 });
