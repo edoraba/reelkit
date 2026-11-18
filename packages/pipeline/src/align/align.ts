@@ -299,24 +299,30 @@ function fitSegment(seg: TimedWord[], from: number, to: number): void {
     (w) => from + ((Math.min(Math.max(w.endMs, o0), o1) - o0) / (o1 - o0)) * span,
   );
   ends[ends.length - 1] = from + span;
-  let start = from;
-  const tooShort = ends.some((e, i) => e - (i ? ends[i - 1]! : from) < MIN_WORD_MS);
-  if (tooShort) {
-    // Positions unreliable here (whisper squeezed some words): share the stretch by length.
-    share(
-      from,
-      from + span,
-      seg.map((w) => w.word),
-    ).forEach(([, s, e], i) => {
-      seg[i]!.startMs = s;
-      seg[i]!.endMs = e;
-    });
-    return;
+  const startOf = (i: number) => (i > 0 ? ends[i - 1]! : from);
+  // Words squeezed under the minimum (whisper missed them, or crammed them together) share a
+  // window with their neighbours by length; the window grows until every word fits. The other
+  // words keep their heard times (sharing the whole stretch moved them by 0.3 s).
+  for (let guard = 0; guard < seg.length; guard++) {
+    const k = ends.findIndex((e, i) => e - startOf(i) < MIN_WORD_MS);
+    if (k < 0) break;
+    let lo = k;
+    let hi = k;
+    for (;;) {
+      lo = Math.max(0, lo - 1);
+      hi = Math.min(seg.length - 1, hi + 1);
+      const words = seg.slice(lo, hi + 1).map((w) => w.word);
+      const pieces = share(startOf(lo), ends[hi]!, words);
+      const fits = pieces.every(([, s, e]) => e - s >= MIN_WORD_MS);
+      if (fits || (lo === 0 && hi === seg.length - 1)) {
+        pieces.forEach(([, , e], r) => (ends[lo + r] = e));
+        break;
+      }
+    }
   }
   seg.forEach((w, i) => {
-    w.startMs = Math.round(start);
+    w.startMs = Math.round(startOf(i));
     w.endMs = Math.round(ends[i]!);
-    start = ends[i]!;
   });
 }
 
