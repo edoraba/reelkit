@@ -33,8 +33,12 @@ export interface CutoutPalette {
   text: string;
   /** Three motif colors, most used first. All visible on the background. */
   motifs: readonly [string, string, string];
-  /** Key word highlight: marker band behind the word (with its text color), or pen underline. */
-  highlight: { kind: 'marker' | 'underline'; color: string; text?: string };
+  /**
+   * Key word highlight, with the text color on the band. label: cut-paper strip behind the whole
+   * word (default). marker: band on the lower half only, the top of the letters stays on the
+   * background, so its text color must also read there. underline: pen stroke.
+   */
+  highlight: { kind: 'label' | 'marker' | 'underline'; color: string; text?: string };
   /** Mascot limbs: visible on the background and on the white sticker border (never white). */
   pen: string;
   /** Mascot roll and total pill, visible on the white invoice sheet. */
@@ -53,7 +57,7 @@ export const cutoutPalettes = [
     bg: paper.blue,
     text: paper.white,
     motifs: [paper.white, paper.lavender, paper.navy],
-    highlight: { kind: 'marker', color: paper.sky, text: paper.ink },
+    highlight: { kind: 'label', color: paper.sky, text: paper.ink },
     pen: paper.navy,
     roll: paper.sky,
     pill: paper.blue,
@@ -66,7 +70,7 @@ export const cutoutPalettes = [
     bg: paper.navy,
     text: paper.white,
     motifs: [paper.sky, paper.lavender, paper.blue],
-    highlight: { kind: 'marker', color: paper.sky, text: paper.ink },
+    highlight: { kind: 'label', color: paper.sky, text: paper.ink },
     pen: paper.blue,
     roll: paper.sky,
     pill: paper.violet,
@@ -79,7 +83,7 @@ export const cutoutPalettes = [
     bg: paper.sky,
     text: paper.ink,
     motifs: [paper.navy, paper.blue, paper.white],
-    highlight: { kind: 'marker', color: paper.white, text: paper.ink },
+    highlight: { kind: 'label', color: paper.white, text: paper.ink },
     pen: paper.navy,
     roll: paper.violet,
     pill: paper.blue,
@@ -92,7 +96,7 @@ export const cutoutPalettes = [
     bg: paper.ice,
     text: paper.ink,
     motifs: [paper.blue, paper.violet, paper.navy],
-    highlight: { kind: 'marker', color: paper.blue, text: paper.white },
+    highlight: { kind: 'label', color: paper.blue, text: paper.white },
     pen: paper.blue,
     roll: paper.sky,
     pill: paper.violet,
@@ -105,7 +109,7 @@ export const cutoutPalettes = [
     bg: paper.violet,
     text: paper.white,
     motifs: [paper.lavender, paper.white, paper.navy],
-    highlight: { kind: 'marker', color: paper.lavender, text: paper.ink },
+    highlight: { kind: 'label', color: paper.lavender, text: paper.ink },
     pen: paper.navy,
     roll: paper.sky,
     pill: paper.blue,
@@ -118,7 +122,7 @@ export const cutoutPalettes = [
     bg: paper.lavender,
     text: paper.ink,
     motifs: [paper.violet, paper.blue, paper.navy],
-    highlight: { kind: 'marker', color: paper.violet, text: paper.white },
+    highlight: { kind: 'label', color: paper.violet, text: paper.white },
     pen: paper.violet,
     roll: paper.sky,
     pill: paper.blue,

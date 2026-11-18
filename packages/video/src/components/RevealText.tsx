@@ -1,7 +1,7 @@
 import { seededRandom } from '@reelkit/schema';
 import { interpolate, spring, useCurrentFrame, useVideoConfig } from 'remotion';
 import type { ResolvedFont } from '../brand/fonts';
-import { Highlight, type HighlightKind } from '../highlights/Highlight';
+import { Highlight, hasDescender, type HighlightKind } from '../highlights/Highlight';
 
 /**
  * A headline that appears word by word, as the voice says it. Each word rises in with a
@@ -93,16 +93,16 @@ export const RevealText: React.FC<{
           extrapolateRight: 'clamp',
         });
         const word = w.highlight ? (
-          <span style={{ color: w.highlight.textColor }}>
-            <Highlight
-              kind={w.highlight.kind}
-              color={w.highlight.color}
-              progress={mark}
-              strokeWidth={11}
-            >
-              {piece(w.text)}
-            </Highlight>
-          </span>
+          <Highlight
+            kind={w.highlight.kind}
+            color={w.highlight.color}
+            textColor={w.highlight.textColor}
+            descender={hasDescender(w.text)}
+            progress={mark}
+            strokeWidth={11}
+          >
+            {piece(w.text)}
+          </Highlight>
         ) : (
           piece(w.text)
         );
@@ -169,16 +169,16 @@ export const PopWords: React.FC<{
       }}
     >
       {w.highlight ? (
-        <span style={{ color: w.highlight.textColor }}>
-          <Highlight
-            kind={w.highlight.kind}
-            color={w.highlight.color}
-            progress={mark}
-            strokeWidth={13}
-          >
-            {w.text}
-          </Highlight>
-        </span>
+        <Highlight
+          kind={w.highlight.kind}
+          color={w.highlight.color}
+          textColor={w.highlight.textColor}
+          descender={hasDescender(w.text)}
+          progress={mark}
+          strokeWidth={13}
+        >
+          {w.text}
+        </Highlight>
       ) : (
         w.text
       )}

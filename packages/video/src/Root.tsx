@@ -12,6 +12,7 @@ import {
   FONT_TEST,
   SPECIMEN_ROW,
 } from './lab/cutouts/FontTest';
+import { HighlightCheck, HIGHLIGHT_CHECK } from './lab/cutouts/HighlightCheck';
 import { OfficeLab, OFFICE_LAB_DURATION } from './lab/cutouts/OfficeLab';
 import { PaletteBoard, PALETTE_BOARD } from './lab/cutouts/PaletteBoard';
 import { CutoutBackgrounds, CUTOUT_SHEET } from './lab/cutouts/scenes';
@@ -133,7 +134,18 @@ export const RemotionRoot: React.FC = () => (
       width={PALETTE_BOARD.width}
       height={PALETTE_BOARD.height}
     />
-    <Still id="CutoutVisibility" component={VisibilityMatrix} width={VISIBILITY.width} height={VISIBILITY.height} />
+    <Still
+      id="CutoutHighlights"
+      component={HighlightCheck}
+      width={HIGHLIGHT_CHECK.width}
+      height={HIGHLIGHT_CHECK.height}
+    />
+    <Still
+      id="CutoutVisibility"
+      component={VisibilityMatrix}
+      width={VISIBILITY.width}
+      height={VISIBILITY.height}
+    />
     <Composition
       id="CutoutObjectsPalettes"
       component={ObjectsOnPalettes}

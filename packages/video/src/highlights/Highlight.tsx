@@ -2,13 +2,16 @@ import { useId } from 'react';
 
 /**
  * Ways to mark the key word of a line, all taken from working on paper documents:
- * - marker: highlighter stroke behind the word
+ * - marker: highlighter stroke behind the lower part of the word (the top of the letters stays
+ *   on the background, so the text color must read on both)
+ * - label: cut-paper strip behind the whole word; the word never touches the background
  * - underline: hand-drawn pen stroke under the word
  * - circle: pen loop around the word, like a correction
  * - color: the word changes color, nothing else
  * `progress` (0..1) animates the mark: the highlighter sweeps left to right, the pen draws.
+ * `textColor` (marker, label) recolors the word only where the band has already passed.
  */
-export type HighlightKind = 'marker' | 'underline' | 'circle' | 'color';
+export type HighlightKind = 'marker' | 'label' | 'underline' | 'circle' | 'color';
 
 export interface HighlightProps {
   kind: HighlightKind;
@@ -18,7 +21,38 @@ export interface HighlightProps {
   strokeWidth?: number;
   /** 0 = not drawn yet, 1 = complete. */
   progress?: number;
+  /** Text color on the band (marker, label); before the band arrives the word keeps its color. */
+  textColor?: string;
+  /** The word has descenders (g, p, q, y): the label strip reaches lower to cover them. */
+  descender?: boolean;
 }
+
+/** Letters that go below the baseline. */
+export const hasDescender = (text: string): boolean => /[gjpqy]/.test(text);
+
+/** Band geometry relative to the word box (line-height around 1). */
+const BANDS = {
+  marker: {
+    top: '0.36em',
+    bottom: '0.02em',
+    pad: '0.1em',
+    shape: undefined,
+    radius: '0.06em 0.22em 0.1em 0.28em',
+    rotate: -1.2,
+    skew: -8,
+  },
+  // A hand-cut strip: covers ascenders and baseline (descenders too, see the descender prop),
+  // corners not square.
+  label: {
+    top: '0.06em',
+    bottom: '-0.04em',
+    pad: '0.16em',
+    shape: 'polygon(0% 7%, 52% 0%, 100% 4%, 99% 95%, 47% 100%, 1% 92%)',
+    radius: undefined,
+    rotate: -1.6,
+    skew: 0,
+  },
+} as const;
 
 /** Slight wobble so pen strokes do not look like vector shapes. */
 const PenFilter: React.FC<{ id: string }> = ({ id }) => (
@@ -40,8 +74,11 @@ export const Highlight: React.FC<HighlightProps> = ({
   children,
   strokeWidth = 12,
   progress = 1,
+  textColor,
+  descender = false,
 }) => {
   const filterId = `pen${useId().replace(/[^a-zA-Z0-9]/g, '')}`;
+  const band = kind === 'marker' || kind === 'label' ? BANDS[kind] : undefined;
   const p = Math.max(0, Math.min(1, progress));
   const pen = {
     fill: 'none',
@@ -68,23 +105,47 @@ export const Highlight: React.FC<HighlightProps> = ({
         margin: kind === 'circle' ? '0 0.24em' : undefined,
       }}
     >
-      {kind === 'marker' && (
+      {band && (
         <span
           style={{
             position: 'absolute',
-            left: '-0.1em',
-            width: 'calc(100% + 0.2em)',
-            top: '0.36em',
-            bottom: '0.02em',
+            left: `-${band.pad}`,
+            width: `calc(100% + 2 * ${band.pad})`,
+            top: band.top,
+            bottom: kind === 'label' && descender ? '-0.2em' : band.bottom,
             backgroundColor: color,
-            borderRadius: '0.06em 0.22em 0.1em 0.28em',
-            transform: `rotate(-1.2deg) skewX(-8deg) scaleX(${p})`,
+            borderRadius: band.radius,
+            clipPath: band.shape,
+            transform: `rotate(${band.rotate}deg) skewX(${band.skew}deg) scaleX(${p})`,
             transformOrigin: 'left center',
             zIndex: -1,
           }}
         />
       )}
-      {children}
+      {band && textColor ? (
+        <>
+          {/* The word in its own color where the band has not arrived yet... */}
+          <span style={{ display: 'inline-block', clipPath: `inset(-40% -30% -40% ${p * 100}%)` }}>
+            {children}
+          </span>
+          {/* ...and in the band text color where it has. */}
+          <span
+            aria-hidden
+            style={{
+              position: 'absolute',
+              left: 0,
+              top: 0,
+              whiteSpace: 'nowrap',
+              color: textColor,
+              clipPath: `inset(-40% ${(1 - p) * 100}% -40% -30%)`,
+            }}
+          >
+            {children}
+          </span>
+        </>
+      ) : (
+        <span style={{ color: textColor }}>{children}</span>
+      )}
       {kind === 'underline' && (
         <svg
           viewBox="0 0 100 20"

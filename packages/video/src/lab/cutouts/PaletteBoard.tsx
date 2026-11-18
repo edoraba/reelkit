@@ -142,6 +142,19 @@ const LAYOUTS: Record<string, Layout> = {
   },
 };
 
+/** Sample headline of a palette, word by word, with its key word highlighted. */
+export function headlineWords(p: CutoutPalette): RevealWord[] {
+  const layout = LAYOUTS[p.key]!;
+  return layout.headline.split(' ').map((text, i) => ({
+    text,
+    at: 8 + i * 5,
+    highlight:
+      i === layout.mark
+        ? { kind: p.highlight.kind, color: p.highlight.color, textColor: p.highlight.text }
+        : undefined,
+  }));
+}
+
 /** One cut-paper scene driven entirely by a palette. */
 export const PaletteScene: React.FC<{ p: CutoutPalette; idSuffix?: string }> = ({
   p,
@@ -151,14 +164,7 @@ export const PaletteScene: React.FC<{ p: CutoutPalette; idSuffix?: string }> = (
   const layout = LAYOUTS[p.key]!;
   const id = `pal${p.key}${idSuffix}`;
   const Obj = layout.object;
-  const words: RevealWord[] = layout.headline.split(' ').map((text, i) => ({
-    text,
-    at: 8 + i * 5,
-    highlight:
-      i === layout.mark
-        ? { kind: p.highlight.kind, color: p.highlight.color, textColor: p.highlight.text }
-        : undefined,
-  }));
+  const words = headlineWords(p);
   return (
     <AbsoluteFill style={{ backgroundColor: p.bg, overflow: 'hidden' }}>
       <svg width={1080} height={1920} style={{ position: 'absolute', inset: 0 }}>
@@ -249,10 +255,10 @@ export const PaletteBoard: React.FC = () => (
   <AbsoluteFill
     style={{ backgroundColor: 'oklch(97% 0.005 90)', flexDirection: 'row', padding: GAP, gap: GAP }}
   >
-    {cutoutPalettes.map((p) => {
+    {(cutoutPalettes as readonly CutoutPalette[]).map((p) => {
       const textC = contrast(p.bg, p.text);
       const markC =
-        p.highlight.kind === 'marker'
+        p.highlight.kind !== 'underline'
           ? contrast(p.highlight.color, p.highlight.text ?? p.text)
           : contrast(p.bg, p.highlight.color);
       return (

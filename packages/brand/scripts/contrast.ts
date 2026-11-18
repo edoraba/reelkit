@@ -4,7 +4,15 @@
  *   pnpm brand:contrast
  */
 import { clampChroma, formatHex, parse, wcagContrast } from 'culori';
-import { backgrounds, contrast, cutoutPalettes, refattura, social, visibleOn } from '../src/index';
+import {
+  backgrounds,
+  contrast,
+  cutoutPalettes,
+  refattura,
+  social,
+  visibleOn,
+  type CutoutPalette,
+} from '../src/index';
 
 const MIN = 4.5;
 
@@ -50,12 +58,15 @@ if (failures > 0) {
 // ------------------------------------------------------------------ cut-paper palettes (D-025)
 let paletteFailures = 0;
 const paletteRows: Record<string, Record<string, string>> = {};
-for (const p of cutoutPalettes) {
+for (const p of cutoutPalettes as readonly CutoutPalette[]) {
   const text = wcagContrast(hex(p.bg), hex(p.text));
-  const mark =
-    p.highlight.kind === 'marker'
-      ? wcagContrast(hex(p.highlight.color), hex(p.highlight.text ?? p.text))
-      : wcagContrast(hex(p.bg), hex(p.highlight.color));
+  const band = p.highlight.kind !== 'underline';
+  const onBand = p.highlight.text ?? p.text;
+  const mark = band
+    ? wcagContrast(hex(p.highlight.color), hex(onBand))
+    : wcagContrast(hex(p.bg), hex(p.highlight.color));
+  // A marker covers only the lower half: the top of the letters sits on the background.
+  if (p.highlight.kind === 'marker' && wcagContrast(hex(p.bg), hex(onBand)) < 3) paletteFailures++;
   const fmt = (ratio: number, min: number) => {
     if (ratio < min) paletteFailures++;
     return `${ratio.toFixed(2)}${ratio < min ? ' FAIL' : ''}`;
@@ -69,8 +80,8 @@ for (const p of cutoutPalettes) {
   paletteRows[p.name] = {
     bg: hex(p.bg),
     'text on bg': fmt(text, MIN),
-    // An underline only needs to be visible (3:1), a marker carries text (4.5:1).
-    highlight: fmt(mark, p.highlight.kind === 'marker' ? MIN : 3),
+    // An underline only needs to be visible (3:1), a band carries text (4.5:1).
+    highlight: `${p.highlight.kind} ${fmt(mark, band ? MIN : 3)}`,
     'weakest motif': weakest.toFixed(2),
     visibility: hidden.length > 0 ? `FAIL ${hidden.map(hex).join(' ')}` : 'ok',
   };
