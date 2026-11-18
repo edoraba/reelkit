@@ -1,19 +1,23 @@
-import { contrast, cutoutPalettes, pickerFor, toHex, type CutoutPalette } from '@reelkit/brand';
+import {
+  contrast,
+  cutoutPalettes,
+  pickerFor,
+  sceneLayouts,
+  toHex,
+  type CutoutPalette,
+  type CutoutPaletteKey,
+  type Interaction,
+  type MotifKind,
+  type MotifSpot,
+  type OfficeObjectKey,
+} from '@reelkit/brand';
 import { AbsoluteFill, useCurrentFrame } from 'remotion';
 import { fontsOf } from '../../brand/fonts';
 import { RevealText, type RevealWord } from '../../components/RevealText';
 import { InvoiceRoll } from '../../mascot/InvoiceRoll';
 import { Grain } from '../moodboards/kit';
 import { Blob, Frond, Kelp, Palmette, Spiral, StarBloom, Sun, WaveBand } from './motifs';
-import {
-  Calculator,
-  CalendarPage,
-  CoffeeCup,
-  Envelope,
-  RubberStamp,
-  Stapler,
-  type ObjectProps,
-} from './office';
+import { OFFICE_OBJECTS, type ObjectProps } from './office';
 import { BoilFilter, CutoutStickerFilter } from './paper';
 import { DEFAULT_TYPE } from './scenes';
 
@@ -24,170 +28,120 @@ import { DEFAULT_TYPE } from './scenes';
  *   pnpm render:cutouts  ->  packages/video/out/lab/cutouts/palettes.png
  */
 
-interface Layout {
-  headline: string;
-  mark: number;
-  object: React.FC<ObjectProps>;
-  motifs: (f: number, p: CutoutPalette) => React.ReactNode;
+type AnyMotif = React.FC<Record<string, unknown>>;
+
+const MOTIFS: Record<MotifKind, AnyMotif> = {
+  frond: Frond as unknown as AnyMotif,
+  blob: Blob as unknown as AnyMotif,
+  kelp: Kelp as unknown as AnyMotif,
+  starBloom: StarBloom as unknown as AnyMotif,
+  spiral: Spiral as unknown as AnyMotif,
+  sun: Sun as unknown as AnyMotif,
+  waveBand: WaveBand as unknown as AnyMotif,
+  palmette: Palmette as unknown as AnyMotif,
+};
+
+const OBJECTS = Object.fromEntries(OFFICE_OBJECTS.map((o) => [o.key, o.C])) as Record<
+  OfficeObjectKey,
+  React.FC<ObjectProps>
+>;
+
+/** A motif touched by the mascot answers for about 24 frames: it sways, shakes or grows. */
+export interface MotifReaction {
+  motifId: string;
+  kind: Interaction;
+  frame: number;
 }
 
-const LAYOUTS: Record<string, Layout> = {
-  blu: {
-    headline: 'Paghi software esteri?',
-    mark: 2,
-    object: Calculator,
-    motifs: (f, p) => (
-      <>
-        <StarBloom f={f} x={890} y={300} r={120} color={p.motifs[1]} start={8} seed="pb1" />
-        <Frond
-          f={f}
-          x={130}
-          y={1760}
-          scale={1.5}
-          rotate={-6}
-          color={p.motifs[0]}
-          start={4}
-          seed="pb2"
-        />
-        <Blob f={f} x={950} y={1700} r={80} color={p.motifs[2]} start={12} seed="pb3" />
-      </>
-    ),
-  },
-  notte: {
-    headline: 'Ogni fattura estera vuole la sua autofattura.',
-    mark: 6,
-    object: Stapler,
-    motifs: (f, p) => (
-      <>
-        <Spiral f={f} x={890} y={300} r={105} color={p.motifs[1]} start={6} />
-        <Kelp f={f} x={110} y={1930} scale={1.5} color={p.motifs[0]} start={4} />
-        <Kelp f={f} x={950} y={1930} scale={1.4} color={p.motifs[2]} start={12} phase={2} />
-      </>
-    ),
-  },
-  azzurro: {
-    headline: 'Tu come le fai?',
-    mark: 1,
-    object: CalendarPage,
-    motifs: (f, p) => (
-      <>
-        <Sun f={f} x={880} y={300} scale={1.5} color={p.motifs[1]} start={8} />
-        <Frond
-          f={f}
-          x={120}
-          y={1680}
-          scale={1.5}
-          rotate={-8}
-          color={p.motifs[0]}
-          start={4}
-          seed="pp1"
-        />
-        <WaveBand f={f} x={0} y={1800} color={p.motifs[0]} width={1080} scallops={9} h={40} />
-      </>
-    ),
-  },
-  ghiaccio: {
-    headline: 'L’IVA la integri tu con il TD17.',
-    mark: 6,
-    object: RubberStamp,
-    motifs: (f, p) => (
-      <>
-        <Palmette f={f} x={900} y={340} scale={1.1} color={p.motifs[0]} start={6} />
-        <Blob f={f} x={150} y={1600} r={90} color={p.motifs[2]} start={14} seed="pl1" />
-        <StarBloom f={f} x={940} y={1640} r={80} color={p.motifs[1]} start={10} seed="pl2" />
-      </>
-    ),
-  },
-  viola: {
-    headline: 'Refattura legge il PDF e prepara l’autofattura.',
-    mark: 6,
-    object: Envelope,
-    motifs: (f, p) => (
-      <>
-        <StarBloom
-          f={f}
-          x={900}
-          y={290}
-          r={95}
-          color={p.motifs[1]}
-          start={8}
-          points={7}
-          seed="ps1"
-        />
-        <Frond
-          f={f}
-          x={950}
-          y={1780}
-          scale={1.4}
-          rotate={10}
-          color={p.motifs[0]}
-          start={12}
-          seed="ps2"
-        />
-        <Blob f={f} x={150} y={1640} r={85} color={p.motifs[2]} start={16} seed="ps3" />
-      </>
-    ),
-  },
-  lavanda: {
-    headline: 'Provalo: link in bio.',
-    mark: 1,
-    object: CoffeeCup,
-    motifs: (f, p) => (
-      <>
-        <Blob f={f} x={890} y={290} r={95} color={p.motifs[0]} start={8} seed="pr1" />
-        <Kelp f={f} x={120} y={1930} scale={1.4} color={p.motifs[1]} start={4} phase={0.5} />
-        <Palmette f={f} x={930} y={1720} scale={1.1} color={p.motifs[1]} start={12} />
-      </>
-    ),
-  },
+const REACTION_FRAMES = 24;
+
+const Motif: React.FC<{
+  m: MotifSpot;
+  f: number;
+  p: CutoutPalette;
+  reaction?: MotifReaction;
+}> = ({ m, f, p, reaction }) => {
+  const C = MOTIFS[m.kind];
+  const el = <C f={f} x={m.x} y={m.y} color={p.motifs[m.color]} start={m.start} {...m.params} />;
+  const t = reaction ? f - reaction.frame : -1;
+  if (!reaction || t < 0 || t > REACTION_FRAMES) return el;
+  const decay = 1 - t / REACTION_FRAMES;
+  if (reaction.kind === 'water') {
+    const s = 1 + 0.1 * Math.sin((t / REACTION_FRAMES) * Math.PI);
+    return (
+      <g transform={`translate(${m.x} ${m.y}) scale(${s}) translate(${-m.x} ${-m.y})`}>{el}</g>
+    );
+  }
+  const amp = reaction.kind === 'tickle' ? 10 : reaction.kind === 'lean' ? 6 : 4;
+  const angle = Math.sin(Math.floor(t / 2) * 1.8) * amp * decay;
+  return <g transform={`rotate(${angle} ${m.x} ${m.y})`}>{el}</g>;
 };
 
 /** Sample headline of a palette, word by word, with its key word highlighted. */
 export function headlineWords(p: CutoutPalette): RevealWord[] {
-  const layout = LAYOUTS[p.key]!;
-  return layout.headline.split(' ').map((text, i) => ({
+  const { sample } = sceneLayouts[p.key as CutoutPaletteKey];
+  return sample.headline.split(' ').map((text, i) => ({
     text,
     at: 8 + i * 5,
     highlight:
-      i === layout.mark
+      i === sample.mark
         ? { kind: p.highlight.kind, color: p.highlight.color, textColor: p.highlight.text }
         : undefined,
   }));
 }
 
-/** The paper background of a palette: color, animated motifs and the office object. */
-export const PaletteBackdrop: React.FC<{ p: CutoutPalette; idSuffix?: string }> = ({
-  p,
-  idSuffix = '',
-}) => {
+/**
+ * The paper background of a palette, drawn from `sceneLayouts`: color, motifs and the office
+ * object. `layer` splits it around the mascot: `back` (color, back motifs, object, grain) and
+ * `front` (front motifs only, transparent), `all` draws both.
+ */
+export const PaletteBackdrop: React.FC<{
+  p: CutoutPalette;
+  idSuffix?: string;
+  layer?: 'all' | 'back' | 'front';
+  /** Hide the office object (the mascot holds its own copy for a gag). */
+  hideObject?: boolean;
+  reactions?: MotifReaction[];
+}> = ({ p, idSuffix = '', layer = 'all', hideObject = false, reactions = [] }) => {
   const f = useCurrentFrame();
-  const layout = LAYOUTS[p.key]!;
-  const id = `bd${p.key}${idSuffix}`;
-  const Obj = layout.object;
+  const layout = sceneLayouts[p.key as CutoutPaletteKey];
+  const id = `bd${p.key}${idSuffix}${layer}`;
+  const Obj = OBJECTS[layout.object];
+  const back = layer !== 'front';
+  const front = layer !== 'back';
+  const motifs = (depth: 'back' | 'front') =>
+    layout.motifs
+      .filter((m) => m.depth === depth)
+      .map((m) => (
+        <Motif key={m.id} m={m} f={f} p={p} reaction={reactions.find((r) => r.motifId === m.id)} />
+      ));
   return (
-    <AbsoluteFill style={{ backgroundColor: p.bg, overflow: 'hidden' }}>
+    <AbsoluteFill style={{ backgroundColor: back ? p.bg : 'transparent', overflow: 'hidden' }}>
       <svg width={1080} height={1920} style={{ position: 'absolute', inset: 0 }}>
         <defs>
           <BoilFilter id={id} frame={f} />
         </defs>
         <g filter={`url(#${id})`}>
-          {layout.motifs(f, p)}
-          <Obj
-            f={f}
-            x={220}
-            y={290}
-            scale={0.8}
-            start={4}
-            a={p.motifs[0]}
-            b={p.motifs[1]}
-            c={p.motifs[2]}
-            hole={p.bg}
-            ink={p.text}
-            pick={pickerFor(p)}
-          />
+          {back && motifs('back')}
+          {back && !hideObject && (
+            <Obj
+              f={f}
+              x={layout.objectAt.x}
+              y={layout.objectAt.y}
+              scale={layout.objectAt.scale}
+              start={4}
+              a={p.motifs[0]}
+              b={p.motifs[1]}
+              c={p.motifs[2]}
+              hole={p.bg}
+              ink={p.text}
+              pick={pickerFor(p)}
+            />
+          )}
+          {front && motifs('front')}
         </g>
       </svg>
-      <Grain id={`${id}g`} opacity={0.16} width={1080} height={1920} />
+      {back && <Grain id={`${id}g`} opacity={0.16} width={1080} height={1920} />}
     </AbsoluteFill>
   );
 };
