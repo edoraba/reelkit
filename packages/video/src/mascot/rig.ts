@@ -7,27 +7,31 @@
  */
 export const RIG_VIEWBOX = { width: 400, height: 600 } as const;
 
+/**
+ * Layer ids of the invoice roll, as in the guidelines/brand.md table (the reference). The
+ * provisional mascot's pupils, lids and brows are gone: the character has dot eyes and no
+ * eyebrows (D-016, D-018). Legs have a shin segment and each hand a prop slot (D-032).
+ */
 export const RIG_LAYERS = [
   'mascot',
   'leg-l',
   'leg-r',
+  'shin-l',
+  'shin-r',
   'body',
+  'roll',
   'arm-l-upper',
   'arm-l-lower',
   'hand-l',
+  'prop-l',
   'arm-r-upper',
   'arm-r-lower',
   'hand-r',
+  'prop-r',
   'sheet',
   'head',
   'eye-l',
   'eye-r',
-  'pupil-l',
-  'pupil-r',
-  'lid-l',
-  'lid-r',
-  'brow-l',
-  'brow-r',
   'mouth',
 ] as const;
 export type RigLayer = (typeof RIG_LAYERS)[number];

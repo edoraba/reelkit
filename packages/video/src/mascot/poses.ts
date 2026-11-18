@@ -3,7 +3,8 @@ import { spring } from 'remotion';
 /**
  * Poses as rotations (degrees) of the arm segments: [upper, lower]. 0 = arm hanging down,
  * positive = clockwise. The left arm goes outward with positive angles, the right with negative.
- * Phase 0 has only two poses; the full library (point-left, shrug, facepalm...) is phase 2.
+ * The arms are drawn behind the sheet, so poses keep the hands beside the body, never in front.
+ * The drawing is never mirrored: poses that point to a side exist in both versions.
  */
 export interface Pose {
   armL: readonly [number, number];
@@ -15,6 +16,29 @@ export const poses = {
   'arms-up': { armL: [122, 34], armR: [-122, -34] },
   /** Right arm raised; the character adds the hand oscillation on top. */
   wave: { armL: [24, -12], armR: [-145, -25] },
+  /** Right arm up toward the headline. */
+  point: { armL: [24, -12], armR: [-158, 8] },
+  shrug: { armL: [62, 84], armR: [-62, -84] },
+  /** Right hand up beside the head. */
+  think: { armL: [24, -12], armR: [-96, -112] },
+  /** Right hand forward at the side, holding a prop. */
+  hold: { armL: [24, -12], armR: [-48, -52] },
+  /** Left arm reaching out to the left (leans on a motif). */
+  lean: { armL: [84, 8], armR: [-24, 12] },
+  /** Right arm reaching out to the right. */
+  'lean-r': { armL: [24, -12], armR: [-84, -8] },
+  /** Hands up by the face, peeking from behind a motif. */
+  hide: { armL: [138, 58], armR: [-138, -58] },
+  /** Right hand holds the calculator; the character adds the tapping on top. */
+  type: { armL: [24, -12], armR: [-56, -40] },
+  /** Right arm raised with the stamp, before the hit. */
+  stamp: { armL: [24, -12], armR: [-128, -24] },
+  /** Arms relaxed; the walk swing is added by the character. */
+  walk: { armL: [14, -6], armR: [-14, 6] },
+  /** Both arms toward the right, pushing. */
+  push: { armL: [40, -60], armR: [-88, -6] },
+  /** Both arms toward the left, pulling a sheet. */
+  pull: { armL: [88, 6], armR: [-40, 60] },
 } as const satisfies Record<string, Pose>;
 
 export type PoseName = keyof typeof poses;

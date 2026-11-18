@@ -153,17 +153,19 @@ Expressions (Phase 2): `happy`, `worried`, `skeptical`, `surprised`. With dot ey
 
 ### SVG layer naming
 
-Every animated part is a `<g>` group with this `id`. An SVG exported from Figma with the same layer names attaches to the rig without code changes. ViewBox 400×600, feet at y 566. Target contract for the invoice roll; Phase 2 aligns `InvoiceRoll.tsx` and `rig.ts` to it (today `rig.ts` still describes the old provisional mascot).
+Every animated part is a `<g>` group with this `id`. An SVG exported from Figma with the same layer names attaches to the rig without code changes. ViewBox 400×600, feet at y 566. `rig.ts` (`RIG_LAYERS`) and `InvoiceRoll.tsx` follow this table (D-032).
 
 | id                           | Content                                                | Pivot (rotation)              |
 | ---------------------------- | ------------------------------------------------------ | ----------------------------- |
 | `mascot`                     | the whole character                                    | 200, 566 (feet)               |
-| `leg-l`, `leg-r`             | pen leg and foot                                       | hip                           |
+| `leg-l`, `leg-r`             | pen thigh, contains the shin                           | hip                           |
+| `shin-l`, `shin-r`           | pen shin and foot (pointing outward)                   | knee                          |
 | `body`                       | sheet, roll, arms and face (breathes)                  | 200, 470 (bottom edge)        |
 | `roll`                       | rolled paper on top (squash on pose change, idle sway) | roll center                   |
 | `arm-l-upper`, `arm-r-upper` | pen upper arm, contains the forearm                    | shoulders at mid sheet height |
 | `arm-l-lower`, `arm-r-lower` | pen forearm, contains the hand                         | elbow                         |
 | `hand-l`, `hand-r`           | loop hand                                              | wrist                         |
+| `prop-l`, `prop-r`           | held prop, kept upright (scissors, stamp, calculator)  | hand                          |
 | `sheet`                      | A4 sheet: FATTURA header, number, table rows, TOT pill |                               |
 | `head`                       | the face area                                          |                               |
 | `eye-l`, `eye-r`             | dot eye (blink, happy arcs, gaze offset)               | eye center                    |
