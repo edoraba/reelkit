@@ -3,40 +3,6 @@
   "files": [
     {
       "tag": "music",
-      "mood": "ukulele",
-      "file": "music/ukulele/fs-395037.mp3",
-      "durationMs": 48485,
-      "impactMs": 3055,
-      "lufs": -20.3,
-      "peakDb": -3.8,
-      "source": {
-        "site": "freesound",
-        "id": 395037,
-        "name": "simple relaxing guitar loop",
-        "author": "Kodack",
-        "url": "https://freesound.org/s/395037/"
-      },
-      "license": "CC0-1.0"
-    },
-    {
-      "tag": "music",
-      "mood": "ukulele",
-      "file": "music/ukulele/fs-383023.mp3",
-      "durationMs": 15209,
-      "impactMs": 5005,
-      "lufs": -17,
-      "peakDb": -0.3,
-      "source": {
-        "site": "freesound",
-        "id": 383023,
-        "name": "short ukulele loop by rea.mp3",
-        "author": "reasanka",
-        "url": "https://freesound.org/s/383023/"
-      },
-      "license": "CC0-1.0"
-    },
-    {
-      "tag": "music",
       "mood": "marimba",
       "file": "music/marimba/fs-425971.mp3",
       "durationMs": 18065,
@@ -49,23 +15,6 @@
         "name": "BirdFish Happy Loop.mp3",
         "author": "pinkinblue",
         "url": "https://freesound.org/s/425971/"
-      },
-      "license": "CC0-1.0"
-    },
-    {
-      "tag": "music",
-      "mood": "marimba",
-      "file": "music/marimba/fs-573973.mp3",
-      "durationMs": 34839,
-      "impactMs": 1450,
-      "lufs": -21.4,
-      "peakDb": -7,
-      "source": {
-        "site": "freesound",
-        "id": 573973,
-        "name": "Tropical Cruise",
-        "author": "code_box",
-        "url": "https://freesound.org/s/573973/"
       },
       "license": "CC0-1.0"
     },
@@ -88,18 +37,154 @@
     },
     {
       "tag": "music",
-      "mood": "upbeat",
-      "file": "music/upbeat/fs-398941.mp3",
-      "durationMs": 13717,
-      "impactMs": 5,
-      "lufs": -7,
-      "peakDb": 0,
+      "mood": "marimba",
+      "file": "music/marimba/fs-521607.mp3",
+      "durationMs": 24000,
+      "impactMs": 15,
+      "lufs": -15.3,
+      "peakDb": -1.4,
       "source": {
         "site": "freesound",
-        "id": 398941,
-        "name": "HappyLoop.wav",
-        "author": "envirOmaniac2",
-        "url": "https://freesound.org/s/398941/"
+        "id": 521607,
+        "name": "Minimalist Monkey",
+        "author": "code_box",
+        "url": "https://freesound.org/s/521607/"
+      },
+      "license": "CC0-1.0"
+    },
+    {
+      "tag": "music",
+      "mood": "marimba",
+      "file": "music/marimba/fs-575759.mp3",
+      "durationMs": 38400,
+      "impactMs": 1250,
+      "lufs": -17.5,
+      "peakDb": -1.9,
+      "source": {
+        "site": "freesound",
+        "id": 575759,
+        "name": "Rabbit Bop",
+        "author": "code_box",
+        "url": "https://freesound.org/s/575759/"
+      },
+      "license": "CC0-1.0"
+    },
+    {
+      "tag": "music",
+      "mood": "marimba",
+      "file": "music/marimba/fs-614726.mp3",
+      "durationMs": 35000,
+      "impactMs": 35,
+      "lufs": -16.3,
+      "peakDb": -4.2,
+      "source": {
+        "site": "freesound",
+        "id": 614726,
+        "name": "Trotting Along",
+        "author": "code_box",
+        "url": "https://freesound.org/s/614726/"
+      },
+      "license": "CC0-1.0"
+    },
+    {
+      "tag": "music",
+      "mood": "upbeat",
+      "file": "music/upbeat/fs-512340.mp3",
+      "durationMs": 57640,
+      "impactMs": 30,
+      "lufs": -7.2,
+      "peakDb": -0.8,
+      "source": {
+        "site": "freesound",
+        "id": 512340,
+        "name": "Upbeat loop",
+        "author": "mistermender",
+        "url": "https://freesound.org/s/512340/"
+      },
+      "license": "CC0-1.0"
+    },
+    {
+      "tag": "music",
+      "mood": "piano",
+      "file": "music/piano/fs-238748.mp3",
+      "durationMs": 21200,
+      "impactMs": 540,
+      "lufs": -13.9,
+      "peakDb": -6,
+      "source": {
+        "site": "freesound",
+        "id": 238748,
+        "name": "[20] s-piano.flac",
+        "author": "arseniiv",
+        "url": "https://freesound.org/s/238748/"
+      },
+      "license": "CC0-1.0"
+    },
+    {
+      "tag": "music",
+      "mood": "lofi",
+      "file": "music/lofi/fs-670039.mp3",
+      "durationMs": 150000,
+      "impactMs": 14620,
+      "lufs": -17.9,
+      "peakDb": -1,
+      "source": {
+        "site": "freesound",
+        "id": 670039,
+        "name": "Chill Background Music",
+        "author": "Seth_Makes_Sounds",
+        "url": "https://freesound.org/s/670039/"
+      },
+      "license": "CC0-1.0"
+    },
+    {
+      "tag": "music",
+      "mood": "lofi",
+      "file": "music/lofi/fs-587897.mp3",
+      "durationMs": 24000,
+      "impactMs": 2630,
+      "lufs": -17.6,
+      "peakDb": -0.2,
+      "source": {
+        "site": "freesound",
+        "id": 587897,
+        "name": "lofi.wav",
+        "author": "Seth_Makes_Sounds",
+        "url": "https://freesound.org/s/587897/"
+      },
+      "license": "CC0-1.0"
+    },
+    {
+      "tag": "music",
+      "mood": "funk",
+      "file": "music/funk/fs-50719.mp3",
+      "durationMs": 12975,
+      "impactMs": 1400,
+      "lufs": -20.1,
+      "peakDb": -0.7,
+      "source": {
+        "site": "freesound",
+        "id": 50719,
+        "name": "Drums Funk Groove 4 Drumroll Ride.wav",
+        "author": "RutgerMuller",
+        "url": "https://freesound.org/s/50719/"
+      },
+      "license": "CC0-1.0"
+    },
+    {
+      "tag": "music",
+      "mood": "funk",
+      "file": "music/funk/fs-567487.mp3",
+      "durationMs": 32000,
+      "impactMs": 15,
+      "lufs": -19.2,
+      "peakDb": -8,
+      "source": {
+        "site": "freesound",
+        "id": 567487,
+        "name": "Disco funk loops 001 simple mix 1 short loop 120 bpm.wav",
+        "author": "josefpres",
+        "url": "https://freesound.org/s/567487/"
       },
       "license": "CC0-1.0"
     }
