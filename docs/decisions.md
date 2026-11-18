@@ -150,3 +150,7 @@ Feedback on the cut-paper reel: keep the white sticker border on the mascot, nev
 ## D-023 Cut-paper choices: bloom and cut, outlined sticker mascot (2026-11-18)
 
 Edoardo kept two of the four paper transitions, **bloom** and **cut**, to alternate between scenes (collage and star stay in the code, unused). The cut-paper mascot goes back to the graphite outline under the white sticker border, as in the sticker test reel (D-019): outline, sticker border and limbs all boil with the scissor-cut edge.
+
+## D-024 Headline font for the cut-paper direction (2026-11-18, open)
+
+Edoardo asked whether Bricolage Grotesque suits the cut-paper style. Ten OFL candidates were added to `assets/fonts/` (each with its `OFL.txt`) and compared on the same scene and in a real-size specimen (`pnpm render:cutouts`, `packages/video/src/lab/cutouts/FontTest.tsx`): Bricolage Grotesque, Bricolage with "cut letters" (each letter a slightly rotated, shifted piece with a boiling edge, a treatment that works with any font), Fraunces with the SOFT and WONK axes, Young Serif, Gloock, Instrument Serif (already used by the Refattura app), Bagel Fat One, Gluten, Sour Gummy and Caveat Brush. Choice open.
