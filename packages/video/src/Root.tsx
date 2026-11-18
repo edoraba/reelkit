@@ -4,6 +4,13 @@ import './brand/fonts';
 import { Demo, DEMO_DURATION, demoDefaultProps } from './compositions/Demo';
 import { FontLab, FONTLAB_HEIGHT } from './compositions/FontLab';
 import { TestReel, TEST_REEL_DURATION } from './compositions/TestReel';
+import { MotifLab, MOTIF_LAB_DURATION } from './lab/cutouts/MotifLab';
+import {
+  CutoutBackgrounds,
+  CutoutReel,
+  CUTOUT_REEL_DURATION,
+  CUTOUT_SHEET,
+} from './lab/cutouts/scenes';
 import { HighlightLab, HIGHLIGHT_LAB_HEIGHT } from './lab/HighlightLab';
 import { InvoiceRollLab, INVOICE_ROLL_LAB_DURATION } from './lab/InvoiceRollLab';
 import { MascotLab, MASCOT_SHEETS, sheetHeight, type MascotSheet } from './lab/mascots/MascotLab';
@@ -56,6 +63,30 @@ export const RemotionRoot: React.FC = () => (
       fps={formats.reel.fps}
       width={formats.reel.width}
       height={formats.reel.height}
+    />
+    <Composition
+      id="CutoutMotifs"
+      component={MotifLab}
+      durationInFrames={MOTIF_LAB_DURATION}
+      fps={formats.reel.fps}
+      width={formats.reel.width}
+      height={formats.reel.height}
+    />
+    <Composition
+      id="CutoutReel"
+      component={CutoutReel}
+      durationInFrames={CUTOUT_REEL_DURATION}
+      fps={formats.reel.fps}
+      width={formats.reel.width}
+      height={formats.reel.height}
+    />
+    <Composition
+      id="CutoutBackgrounds"
+      component={CutoutBackgrounds}
+      durationInFrames={CUTOUT_SHEET.frame + 1}
+      fps={formats.reel.fps}
+      width={CUTOUT_SHEET.width}
+      height={CUTOUT_SHEET.height}
     />
     <Still id="FontLab" component={FontLab} width={1080} height={FONTLAB_HEIGHT} />
     <Still id="HighlightLab" component={HighlightLab} width={1080} height={HIGHLIGHT_LAB_HEIGHT} />
