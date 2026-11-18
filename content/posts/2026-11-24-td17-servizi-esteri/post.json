@@ -1,0 +1,24 @@
+{
+  "id": "2026-11-24-td17-servizi-esteri",
+  "date": "2026-11-24",
+  "status": "rendered",
+  "format": "reel",
+  "rubric": "TD in 30 secondi",
+  "title": "TD17: servizi dall'estero",
+  "caption": "Paghi software esteri con la partita IVA? Allora il TD17 ti riguarda.\n\nQuando un fornitore estero ti fattura un servizio senza IVA, l'IVA la integri tu: con il TD17 integri la fattura (fornitore UE) o emetti un'autofattura (fornitore extra UE), e la invii allo SDI.\n\nEsempio: fattura da 120 €, IVA da integrare al 22% = 26,40 €.\n\nE tu come le gestisci oggi: a mano o col commercialista?",
+  "hashtags": [
+    "#autofattura",
+    "#TD17",
+    "#partitaiva",
+    "#fatturaelettronica",
+    "#reversecharge"
+  ],
+  "firstComment": "Fonte: Agenzia delle Entrate, Guida alla compilazione delle fatture elettroniche e dell'esterometro, versione 1.10 del 1 aprile 2025, paragrafo TD17.",
+  "sources": [
+    {
+      "title": "Agenzia delle Entrate, Guida alla compilazione delle fatture elettroniche e dell'esterometro v1.10 (1 aprile 2025), TD17 pp. 11-12",
+      "url": "https://www.agenziaentrate.gov.it/portale/documents/d/guest/guida_compilazione-fe-esterometro-v1-10_aprile_2025",
+      "checked": "2026-11-18"
+    }
+  ]
+}

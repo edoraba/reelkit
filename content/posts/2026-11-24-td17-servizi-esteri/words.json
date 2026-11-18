@@ -1,0 +1,1238 @@
+{
+  "durationMs": 23360,
+  "screen": [
+    {
+      "text": "Paghi",
+      "startMs": 197,
+      "endMs": 627,
+      "words": [
+        0,
+        0
+      ],
+      "beat": "b01"
+    },
+    {
+      "text": "Google",
+      "startMs": 627,
+      "endMs": 908,
+      "words": [
+        1,
+        1
+      ],
+      "beat": "b01"
+    },
+    {
+      "text": "Ads",
+      "startMs": 908,
+      "endMs": 1123,
+      "words": [
+        2,
+        2
+      ],
+      "beat": "b01"
+    },
+    {
+      "text": "o",
+      "startMs": 1123,
+      "endMs": 1239,
+      "words": [
+        3,
+        3
+      ],
+      "beat": "b01"
+    },
+    {
+      "text": "Canva",
+      "startMs": 1239,
+      "endMs": 1470,
+      "words": [
+        4,
+        4
+      ],
+      "beat": "b01"
+    },
+    {
+      "text": "con",
+      "startMs": 1470,
+      "endMs": 1569,
+      "words": [
+        5,
+        5
+      ],
+      "beat": "b01"
+    },
+    {
+      "text": "la",
+      "startMs": 1569,
+      "endMs": 1668,
+      "words": [
+        6,
+        6
+      ],
+      "beat": "b01"
+    },
+    {
+      "text": "partita",
+      "startMs": 1668,
+      "endMs": 1900,
+      "words": [
+        7,
+        7
+      ],
+      "beat": "b01"
+    },
+    {
+      "text": "IVA?",
+      "startMs": 1900,
+      "endMs": 2247,
+      "words": [
+        8,
+        8
+      ],
+      "beat": "b01"
+    },
+    {
+      "text": "Ogni",
+      "startMs": 2663,
+      "endMs": 3098,
+      "words": [
+        9,
+        9
+      ],
+      "beat": "b02"
+    },
+    {
+      "text": "mese",
+      "startMs": 3098,
+      "endMs": 3272,
+      "words": [
+        10,
+        10
+      ],
+      "beat": "b02"
+    },
+    {
+      "text": "ti",
+      "startMs": 3272,
+      "endMs": 3428,
+      "words": [
+        11,
+        11
+      ],
+      "beat": "b02"
+    },
+    {
+      "text": "arriva",
+      "startMs": 3428,
+      "endMs": 3602,
+      "words": [
+        12,
+        12
+      ],
+      "beat": "b02"
+    },
+    {
+      "text": "una",
+      "startMs": 3602,
+      "endMs": 3741,
+      "words": [
+        13,
+        13
+      ],
+      "beat": "b02"
+    },
+    {
+      "text": "fattura",
+      "startMs": 3741,
+      "endMs": 4037,
+      "words": [
+        14,
+        14
+      ],
+      "beat": "b02"
+    },
+    {
+      "text": "estera,",
+      "startMs": 4037,
+      "endMs": 4385,
+      "words": [
+        15,
+        15
+      ],
+      "beat": "b02"
+    },
+    {
+      "text": "senza",
+      "startMs": 4385,
+      "endMs": 4785,
+      "words": [
+        16,
+        16
+      ],
+      "beat": "b02"
+    },
+    {
+      "text": "IVA.",
+      "startMs": 4785,
+      "endMs": 5133,
+      "words": [
+        17,
+        17
+      ],
+      "beat": "b02"
+    },
+    {
+      "text": "L'IVA",
+      "startMs": 5405,
+      "endMs": 5908,
+      "words": [
+        18,
+        18
+      ],
+      "beat": "b03"
+    },
+    {
+      "text": "la",
+      "startMs": 5908,
+      "endMs": 6081,
+      "words": [
+        19,
+        19
+      ],
+      "beat": "b03"
+    },
+    {
+      "text": "integri",
+      "startMs": 6081,
+      "endMs": 6410,
+      "words": [
+        20,
+        20
+      ],
+      "beat": "b03"
+    },
+    {
+      "text": "tu,",
+      "startMs": 6410,
+      "endMs": 6618,
+      "words": [
+        21,
+        21
+      ],
+      "beat": "b03"
+    },
+    {
+      "text": "con",
+      "startMs": 6823,
+      "endMs": 7076,
+      "words": [
+        22,
+        22
+      ],
+      "beat": "b03"
+    },
+    {
+      "text": "il",
+      "startMs": 7076,
+      "endMs": 7275,
+      "words": [
+        23,
+        23
+      ],
+      "beat": "b03"
+    },
+    {
+      "text": "TD17.",
+      "startMs": 7275,
+      "endMs": 8035,
+      "words": [
+        24,
+        26
+      ],
+      "beat": "b03"
+    },
+    {
+      "text": "Cioè",
+      "startMs": 8228,
+      "endMs": 8498,
+      "words": [
+        27,
+        27
+      ],
+      "beat": "b04"
+    },
+    {
+      "text": "l'autofattura",
+      "startMs": 8498,
+      "endMs": 9105,
+      "words": [
+        28,
+        28
+      ],
+      "beat": "b04"
+    },
+    {
+      "text": "per",
+      "startMs": 9105,
+      "endMs": 9257,
+      "words": [
+        29,
+        29
+      ],
+      "beat": "b04"
+    },
+    {
+      "text": "i",
+      "startMs": 9257,
+      "endMs": 9358,
+      "words": [
+        30,
+        30
+      ],
+      "beat": "b04"
+    },
+    {
+      "text": "servizi",
+      "startMs": 9358,
+      "endMs": 9594,
+      "words": [
+        31,
+        31
+      ],
+      "beat": "b04"
+    },
+    {
+      "text": "dall'estero.",
+      "startMs": 9594,
+      "endMs": 10117,
+      "words": [
+        32,
+        32
+      ],
+      "beat": "b04"
+    },
+    {
+      "text": "Esempio:",
+      "startMs": 10551,
+      "endMs": 11129,
+      "words": [
+        33,
+        33
+      ],
+      "beat": "b05"
+    },
+    {
+      "text": "una",
+      "startMs": 11298,
+      "endMs": 11569,
+      "words": [
+        34,
+        34
+      ],
+      "beat": "b05"
+    },
+    {
+      "text": "fattura",
+      "startMs": 11569,
+      "endMs": 11856,
+      "words": [
+        35,
+        35
+      ],
+      "beat": "b05"
+    },
+    {
+      "text": "da",
+      "startMs": 11856,
+      "endMs": 11958,
+      "words": [
+        36,
+        36
+      ],
+      "beat": "b05"
+    },
+    {
+      "text": "120 euro.",
+      "startMs": 11958,
+      "endMs": 12702,
+      "words": [
+        37,
+        38
+      ],
+      "beat": "b05"
+    },
+    {
+      "text": "Integri",
+      "startMs": 12936,
+      "endMs": 13454,
+      "words": [
+        39,
+        39
+      ],
+      "beat": "b06"
+    },
+    {
+      "text": "26,40 euro",
+      "startMs": 13454,
+      "endMs": 14527,
+      "words": [
+        40,
+        43
+      ],
+      "beat": "b06"
+    },
+    {
+      "text": "di",
+      "startMs": 14527,
+      "endMs": 14699,
+      "words": [
+        44,
+        44
+      ],
+      "beat": "b06"
+    },
+    {
+      "text": "IVA",
+      "startMs": 14699,
+      "endMs": 14968,
+      "words": [
+        45,
+        45
+      ],
+      "beat": "b06"
+    },
+    {
+      "text": "e",
+      "startMs": 14968,
+      "endMs": 15050,
+      "words": [
+        46,
+        46
+      ],
+      "beat": "b06"
+    },
+    {
+      "text": "la",
+      "startMs": 15050,
+      "endMs": 15160,
+      "words": [
+        47,
+        47
+      ],
+      "beat": "b06"
+    },
+    {
+      "text": "mandi",
+      "startMs": 15160,
+      "endMs": 15352,
+      "words": [
+        48,
+        48
+      ],
+      "beat": "b06"
+    },
+    {
+      "text": "allo SDI.",
+      "startMs": 15352,
+      "endMs": 15792,
+      "words": [
+        49,
+        51
+      ],
+      "beat": "b06"
+    },
+    {
+      "text": "Con",
+      "startMs": 16242,
+      "endMs": 16760,
+      "words": [
+        52,
+        52
+      ],
+      "beat": "b07"
+    },
+    {
+      "text": "Refattura",
+      "startMs": 16760,
+      "endMs": 17229,
+      "words": [
+        53,
+        53
+      ],
+      "beat": "b07"
+    },
+    {
+      "text": "carichi",
+      "startMs": 17229,
+      "endMs": 17488,
+      "words": [
+        54,
+        54
+      ],
+      "beat": "b07"
+    },
+    {
+      "text": "il",
+      "startMs": 17488,
+      "endMs": 17633,
+      "words": [
+        55,
+        55
+      ],
+      "beat": "b07"
+    },
+    {
+      "text": "PDF",
+      "startMs": 17633,
+      "endMs": 17892,
+      "words": [
+        56,
+        56
+      ],
+      "beat": "b07"
+    },
+    {
+      "text": "e",
+      "startMs": 18044,
+      "endMs": 18256,
+      "words": [
+        57,
+        57
+      ],
+      "beat": "b07"
+    },
+    {
+      "text": "l'autofattura",
+      "startMs": 18256,
+      "endMs": 18638,
+      "words": [
+        58,
+        58
+      ],
+      "beat": "b07"
+    },
+    {
+      "text": "è",
+      "startMs": 18638,
+      "endMs": 18737,
+      "words": [
+        59,
+        59
+      ],
+      "beat": "b07"
+    },
+    {
+      "text": "pronta.",
+      "startMs": 18737,
+      "endMs": 19034,
+      "words": [
+        60,
+        60
+      ],
+      "beat": "b07"
+    },
+    {
+      "text": "E",
+      "startMs": 19520,
+      "endMs": 19602,
+      "words": [
+        61,
+        61
+      ],
+      "beat": "b08"
+    },
+    {
+      "text": "tu",
+      "startMs": 19602,
+      "endMs": 19711,
+      "words": [
+        62,
+        62
+      ],
+      "beat": "b08"
+    },
+    {
+      "text": "come",
+      "startMs": 19711,
+      "endMs": 19866,
+      "words": [
+        63,
+        63
+      ],
+      "beat": "b08"
+    },
+    {
+      "text": "le",
+      "startMs": 19866,
+      "endMs": 19970,
+      "words": [
+        64,
+        64
+      ],
+      "beat": "b08"
+    },
+    {
+      "text": "fai?",
+      "startMs": 19970,
+      "endMs": 20099,
+      "words": [
+        65,
+        65
+      ],
+      "beat": "b08"
+    },
+    {
+      "text": "A",
+      "startMs": 20469,
+      "endMs": 20580,
+      "words": [
+        66,
+        66
+      ],
+      "beat": "b08"
+    },
+    {
+      "text": "mano",
+      "startMs": 20580,
+      "endMs": 20801,
+      "words": [
+        67,
+        67
+      ],
+      "beat": "b08"
+    },
+    {
+      "text": "o",
+      "startMs": 20801,
+      "endMs": 20912,
+      "words": [
+        68,
+        68
+      ],
+      "beat": "b08"
+    },
+    {
+      "text": "col",
+      "startMs": 20912,
+      "endMs": 21097,
+      "words": [
+        69,
+        69
+      ],
+      "beat": "b08"
+    },
+    {
+      "text": "commercialista?",
+      "startMs": 21097,
+      "endMs": 21688,
+      "words": [
+        70,
+        70
+      ],
+      "beat": "b08"
+    },
+    {
+      "text": "Provalo:",
+      "startMs": 22026,
+      "endMs": 22317,
+      "words": [
+        71,
+        71
+      ],
+      "beat": "b09"
+    },
+    {
+      "text": "il",
+      "startMs": 22513,
+      "endMs": 22620,
+      "words": [
+        72,
+        72
+      ],
+      "beat": "b09"
+    },
+    {
+      "text": "link",
+      "startMs": 22620,
+      "endMs": 22781,
+      "words": [
+        73,
+        73
+      ],
+      "beat": "b09"
+    },
+    {
+      "text": "è",
+      "startMs": 22781,
+      "endMs": 22862,
+      "words": [
+        74,
+        74
+      ],
+      "beat": "b09"
+    },
+    {
+      "text": "in",
+      "startMs": 22862,
+      "endMs": 22969,
+      "words": [
+        75,
+        75
+      ],
+      "beat": "b09"
+    },
+    {
+      "text": "bio.",
+      "startMs": 22969,
+      "endMs": 23103,
+      "words": [
+        76,
+        76
+      ],
+      "beat": "b09"
+    }
+  ],
+  "words": [
+    {
+      "word": "Paghi",
+      "startMs": 197,
+      "endMs": 627,
+      "match": "exact"
+    },
+    {
+      "word": "Google",
+      "startMs": 627,
+      "endMs": 908,
+      "match": "exact"
+    },
+    {
+      "word": "Ads",
+      "startMs": 908,
+      "endMs": 1123,
+      "match": "exact"
+    },
+    {
+      "word": "o",
+      "startMs": 1123,
+      "endMs": 1239,
+      "match": "exact"
+    },
+    {
+      "word": "Canva",
+      "startMs": 1239,
+      "endMs": 1470,
+      "match": "exact"
+    },
+    {
+      "word": "con",
+      "startMs": 1470,
+      "endMs": 1569,
+      "match": "exact"
+    },
+    {
+      "word": "la",
+      "startMs": 1569,
+      "endMs": 1668,
+      "match": "exact"
+    },
+    {
+      "word": "partita",
+      "startMs": 1668,
+      "endMs": 1900,
+      "match": "exact"
+    },
+    {
+      "word": "Iva?",
+      "startMs": 1900,
+      "endMs": 2247,
+      "match": "exact"
+    },
+    {
+      "word": "Ogni",
+      "startMs": 2663,
+      "endMs": 3098,
+      "match": "exact"
+    },
+    {
+      "word": "mese",
+      "startMs": 3098,
+      "endMs": 3272,
+      "match": "exact"
+    },
+    {
+      "word": "ti",
+      "startMs": 3272,
+      "endMs": 3428,
+      "match": "exact"
+    },
+    {
+      "word": "arriva",
+      "startMs": 3428,
+      "endMs": 3602,
+      "match": "exact"
+    },
+    {
+      "word": "una",
+      "startMs": 3602,
+      "endMs": 3741,
+      "match": "exact"
+    },
+    {
+      "word": "fattura",
+      "startMs": 3741,
+      "endMs": 4037,
+      "match": "exact"
+    },
+    {
+      "word": "estera,",
+      "startMs": 4037,
+      "endMs": 4385,
+      "match": "exact"
+    },
+    {
+      "word": "senza",
+      "startMs": 4385,
+      "endMs": 4785,
+      "match": "exact"
+    },
+    {
+      "word": "Iva.",
+      "startMs": 4785,
+      "endMs": 5133,
+      "match": "exact"
+    },
+    {
+      "word": "L'Iva",
+      "startMs": 5405,
+      "endMs": 5908,
+      "match": "exact"
+    },
+    {
+      "word": "la",
+      "startMs": 5908,
+      "endMs": 6081,
+      "match": "exact"
+    },
+    {
+      "word": "integri",
+      "startMs": 6081,
+      "endMs": 6410,
+      "match": "exact"
+    },
+    {
+      "word": "tu,",
+      "startMs": 6410,
+      "endMs": 6618,
+      "match": "exact"
+    },
+    {
+      "word": "con",
+      "startMs": 6823,
+      "endMs": 7076,
+      "match": "exact"
+    },
+    {
+      "word": "il",
+      "startMs": 7076,
+      "endMs": 7275,
+      "match": "exact"
+    },
+    {
+      "word": "ti",
+      "startMs": 7275,
+      "endMs": 7420,
+      "match": "exact"
+    },
+    {
+      "word": "di",
+      "startMs": 7420,
+      "endMs": 7565,
+      "match": "exact"
+    },
+    {
+      "word": "diciassette.",
+      "startMs": 7565,
+      "endMs": 8035,
+      "match": "exact"
+    },
+    {
+      "word": "Cioè",
+      "startMs": 8228,
+      "endMs": 8498,
+      "match": "exact"
+    },
+    {
+      "word": "l'autofattura",
+      "startMs": 8498,
+      "endMs": 9105,
+      "match": "exact"
+    },
+    {
+      "word": "per",
+      "startMs": 9105,
+      "endMs": 9257,
+      "match": "exact"
+    },
+    {
+      "word": "i",
+      "startMs": 9257,
+      "endMs": 9358,
+      "match": "exact"
+    },
+    {
+      "word": "servizi",
+      "startMs": 9358,
+      "endMs": 9594,
+      "match": "exact"
+    },
+    {
+      "word": "dall'estero.",
+      "startMs": 9594,
+      "endMs": 10117,
+      "match": "exact"
+    },
+    {
+      "word": "Esempio:",
+      "startMs": 10551,
+      "endMs": 11129,
+      "match": "exact"
+    },
+    {
+      "word": "una",
+      "startMs": 11298,
+      "endMs": 11569,
+      "match": "exact"
+    },
+    {
+      "word": "fattura",
+      "startMs": 11569,
+      "endMs": 11856,
+      "match": "exact"
+    },
+    {
+      "word": "da",
+      "startMs": 11856,
+      "endMs": 11958,
+      "match": "exact"
+    },
+    {
+      "word": "centoventi",
+      "startMs": 11958,
+      "endMs": 12454,
+      "match": "exact"
+    },
+    {
+      "word": "euro.",
+      "startMs": 12454,
+      "endMs": 12702,
+      "match": "exact"
+    },
+    {
+      "word": "Integri",
+      "startMs": 12936,
+      "endMs": 13454,
+      "match": "exact"
+    },
+    {
+      "word": "ventisei",
+      "startMs": 13454,
+      "endMs": 13823,
+      "match": "exact"
+    },
+    {
+      "word": "euro",
+      "startMs": 13823,
+      "endMs": 14046,
+      "match": "exact"
+    },
+    {
+      "word": "e",
+      "startMs": 14046,
+      "endMs": 14157,
+      "match": "exact"
+    },
+    {
+      "word": "quaranta",
+      "startMs": 14157,
+      "endMs": 14527,
+      "match": "exact"
+    },
+    {
+      "word": "di",
+      "startMs": 14527,
+      "endMs": 14699,
+      "match": "exact"
+    },
+    {
+      "word": "Iva",
+      "startMs": 14699,
+      "endMs": 14968,
+      "match": "exact"
+    },
+    {
+      "word": "e",
+      "startMs": 14968,
+      "endMs": 15050,
+      "match": "exact"
+    },
+    {
+      "word": "la",
+      "startMs": 15050,
+      "endMs": 15160,
+      "match": "exact"
+    },
+    {
+      "word": "mandi",
+      "startMs": 15160,
+      "endMs": 15352,
+      "match": "exact"
+    },
+    {
+      "word": "all'esse",
+      "startMs": 15352,
+      "endMs": 15600,
+      "match": "close",
+      "heard": "all'SD."
+    },
+    {
+      "word": "di",
+      "startMs": 15600,
+      "endMs": 15710,
+      "match": "guessed"
+    },
+    {
+      "word": "i.",
+      "startMs": 15710,
+      "endMs": 15792,
+      "match": "guessed"
+    },
+    {
+      "word": "Con",
+      "startMs": 16242,
+      "endMs": 16760,
+      "match": "exact"
+    },
+    {
+      "word": "Refattura",
+      "startMs": 16760,
+      "endMs": 17229,
+      "match": "exact"
+    },
+    {
+      "word": "carichi",
+      "startMs": 17229,
+      "endMs": 17488,
+      "match": "exact"
+    },
+    {
+      "word": "il",
+      "startMs": 17488,
+      "endMs": 17633,
+      "match": "exact"
+    },
+    {
+      "word": "PDF",
+      "startMs": 17633,
+      "endMs": 17892,
+      "match": "exact"
+    },
+    {
+      "word": "e",
+      "startMs": 18044,
+      "endMs": 18256,
+      "match": "exact"
+    },
+    {
+      "word": "l'autofattura",
+      "startMs": 18256,
+      "endMs": 18638,
+      "match": "exact"
+    },
+    {
+      "word": "è",
+      "startMs": 18638,
+      "endMs": 18737,
+      "match": "exact"
+    },
+    {
+      "word": "pronta.",
+      "startMs": 18737,
+      "endMs": 19034,
+      "match": "exact"
+    },
+    {
+      "word": "E",
+      "startMs": 19520,
+      "endMs": 19602,
+      "match": "exact"
+    },
+    {
+      "word": "tu",
+      "startMs": 19602,
+      "endMs": 19711,
+      "match": "exact"
+    },
+    {
+      "word": "come",
+      "startMs": 19711,
+      "endMs": 19866,
+      "match": "exact"
+    },
+    {
+      "word": "le",
+      "startMs": 19866,
+      "endMs": 19970,
+      "match": "exact"
+    },
+    {
+      "word": "fai?",
+      "startMs": 19970,
+      "endMs": 20099,
+      "match": "exact"
+    },
+    {
+      "word": "A",
+      "startMs": 20469,
+      "endMs": 20580,
+      "match": "exact"
+    },
+    {
+      "word": "mano",
+      "startMs": 20580,
+      "endMs": 20801,
+      "match": "exact"
+    },
+    {
+      "word": "o",
+      "startMs": 20801,
+      "endMs": 20912,
+      "match": "exact"
+    },
+    {
+      "word": "col",
+      "startMs": 20912,
+      "endMs": 21097,
+      "match": "exact"
+    },
+    {
+      "word": "commercialista?",
+      "startMs": 21097,
+      "endMs": 21688,
+      "match": "exact"
+    },
+    {
+      "word": "Provalo:",
+      "startMs": 22026,
+      "endMs": 22317,
+      "match": "exact"
+    },
+    {
+      "word": "il",
+      "startMs": 22513,
+      "endMs": 22620,
+      "match": "exact"
+    },
+    {
+      "word": "link",
+      "startMs": 22620,
+      "endMs": 22781,
+      "match": "exact"
+    },
+    {
+      "word": "è",
+      "startMs": 22781,
+      "endMs": 22862,
+      "match": "exact"
+    },
+    {
+      "word": "in",
+      "startMs": 22862,
+      "endMs": 22969,
+      "match": "exact"
+    },
+    {
+      "word": "bio.",
+      "startMs": 22969,
+      "endMs": 23103,
+      "match": "exact"
+    }
+  ],
+  "pauses": [
+    {
+      "startMs": 0,
+      "endMs": 197
+    },
+    {
+      "startMs": 2247,
+      "endMs": 2663
+    },
+    {
+      "startMs": 5133,
+      "endMs": 5405
+    },
+    {
+      "startMs": 6618,
+      "endMs": 6823
+    },
+    {
+      "startMs": 8035,
+      "endMs": 8228
+    },
+    {
+      "startMs": 10117,
+      "endMs": 10551
+    },
+    {
+      "startMs": 11129,
+      "endMs": 11298
+    },
+    {
+      "startMs": 12702,
+      "endMs": 12936
+    },
+    {
+      "startMs": 15792,
+      "endMs": 16242
+    },
+    {
+      "startMs": 17892,
+      "endMs": 18044
+    },
+    {
+      "startMs": 19034,
+      "endMs": 19520
+    },
+    {
+      "startMs": 20099,
+      "endMs": 20469
+    },
+    {
+      "startMs": 21688,
+      "endMs": 22026
+    },
+    {
+      "startMs": 22317,
+      "endMs": 22513
+    },
+    {
+      "startMs": 23103,
+      "endMs": 23360
+    }
+  ],
+  "heardRatio": 0.974025974025974,
+  "issues": [
+    {
+      "index": 49,
+      "word": "all'esse",
+      "heard": "all'SD."
+    },
+    {
+      "index": 50,
+      "word": "di"
+    },
+    {
+      "index": 51,
+      "word": "i."
+    }
+  ]
+}
