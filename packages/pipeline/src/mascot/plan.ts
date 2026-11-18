@@ -1,4 +1,5 @@
 import {
+  outroTiming,
   sceneLayouts,
   transitionTiming,
   type CutoutPaletteKey,
@@ -667,7 +668,12 @@ export function planMascot(input: { script: Script; report: AlignReport; seed: s
       autoAt.push(mid);
     }
   }
-  const end = sh(report.durationMs);
+  // The closing (D-033): to the middle, then a wave until the end.
+  const outroStart = sh(report.words.at(-1)!.endMs) + outroTiming.gapMs;
+  const end = outroStart + outroTiming.durationMs;
+  walkTo(outroStart, 540, 'front', { speed: 520 });
+  cues.push({ atMs: outroStart + 300, pose: 'wave', eyes: 'happy', lean: 0 });
+  gaze.push({ atMs: outroStart, target: 'camera' });
   for (let guard = 0; guard < 20; guard++) {
     const marks = [0, ...gags.map((g) => g.fromMs), ...moves.map((m) => m.atMs), end].sort(
       (a, b) => a - b,

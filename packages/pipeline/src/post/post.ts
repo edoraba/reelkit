@@ -2,6 +2,7 @@ import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
+import { outroPalette, outroTiming } from '@reelkit/brand';
 import { MascotPlan, Post, ReelTimeline, Script, type PostStatus } from '@reelkit/schema';
 import { alignAudio, type AlignReport } from '../align/align';
 import { shiftMs, stretchVoice, type Stretch } from '../audio/stretch';
@@ -116,6 +117,12 @@ export function timelineOf(id: string, audio: string, mascot?: MascotPlan): Reel
     durationMs: report.durationMs,
     beats,
     speech,
+    // Closing with the logo after the last word (D-033).
+    outro: {
+      startMs: report.words.at(-1)!.endMs + outroTiming.gapMs,
+      durationMs: outroTiming.durationMs,
+      palette: outroPalette(beats.at(-1)!.palette),
+    },
     ...(mascot ? { mascot } : {}),
   });
 }

@@ -11,11 +11,13 @@
  *   pnpm pipeline align <id>                words.json from voice.wav
  *   pnpm pipeline mascot <id>               mascot.json, the mascot choreography (D-032)
  *   pnpm pipeline render <id> [--scale 0.5] out/reel.mp4 (full size sets status rendered)
+ *   pnpm pipeline audio-fetch [--force]     CC0 sound effects and music from Freesound (D-034)
  */
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { parseArgs } from 'node:util';
 import { alignAudio, type AlignReport } from './align/align';
+import { fetchLibrary } from './audio/library';
 import { bootstrap, check, TOOL_NAMES, type ToolName } from './bootstrap';
 import { rel, repoRoot } from './paths';
 import { alignPost, mascotPost, postPaths, renderPost, ttsPost } from './post/post';
@@ -154,6 +156,9 @@ async function main(): Promise<void> {
       );
       return;
     }
+    case 'audio-fetch':
+      await fetchLibrary({ force: values.force ?? false });
+      return;
     case 'tts':
       await ttsPost(postIdArg());
       return;
@@ -163,7 +168,7 @@ async function main(): Promise<void> {
     default:
       console.error(
         `Unknown command "${command ?? ''}". ` +
-          'Commands: bootstrap, check, tts-test, say, tts, align, mascot, render',
+          'Commands: bootstrap, check, tts-test, say, tts, align, mascot, render, audio-fetch',
       );
       process.exitCode = 1;
   }
