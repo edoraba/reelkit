@@ -73,7 +73,7 @@ tools/ffmpeg/bin/ffmpeg -v error -y -i packages/video/out/demo.mp4 -vf "select='
 
 ```
 CLAUDE.md, README.md, LICENSE (MIT, code), ASSETS-LICENSE (brand reserved)
-docs/            brief.md, decisions.md
+docs/            brief.md, decisions.md, known-issues.md (deferred small problems)
 guidelines/      brand.md, generation.md, strategy.md (drafts to approve)
 packages/
   schema/        Zod: post state and ids, deterministic seed (beats and manifest from Phase 1)
