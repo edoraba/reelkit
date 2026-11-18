@@ -140,6 +140,8 @@ export interface InvoiceRollProps {
   hold?: { left?: PropKind; right?: PropKind };
   /** Palette for the colors of held props. */
   palette?: CutoutPalette;
+  /** Drawn on the face, moving with it (glasses of an alternative scene, D-032). */
+  faceOverlay?: (face: { eyeY: number; eyeDx: number; ink: string }) => React.ReactNode;
 }
 
 const mono = fontsOf('brand').mono;
@@ -311,6 +313,7 @@ export const InvoiceRoll: React.FC<InvoiceRollProps> = ({
   swing = 0,
   hold,
   palette,
+  faceOverlay,
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -626,6 +629,7 @@ export const InvoiceRoll: React.FC<InvoiceRollProps> = ({
                     tongue={look.tongue}
                   />
                 </g>
+                {faceOverlay?.({ eyeY, eyeDx, ink: look.ink })}
               </g>
             )}
 

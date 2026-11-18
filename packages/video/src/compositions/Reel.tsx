@@ -162,6 +162,11 @@ export const Reel: React.FC<ReelProps> = (props) => {
     [...scenes].reverse().find((s) => frame >= toFrame(s.beats[0]!.startMs) - 2) ?? scenes[0];
   const cp = current?.p ?? palette('blu');
   const talk = speech.map((s) => ({ from: toFrame(s.startMs), to: toFrame(s.endMs) }));
+  const altBeat = plan?.alternate && beats.find((b) => b.id === plan.alternate!.beat);
+  const alt =
+    plan?.alternate && altBeat
+      ? { scene: plan.alternate.scene, from: toFrame(altBeat.startMs), to: toFrame(altBeat.endMs) }
+      : undefined;
 
   // Every headline lasts until the next beat starts, or until the next scene's transition.
   const headlines = beats.map((b, i) => {
@@ -230,9 +235,9 @@ export const Reel: React.FC<ReelProps> = (props) => {
       {plan ? (
         <>
           {pass('back')}
-          <MascotLayer plan={plan} talk={talk} p={cp} seed={postId} depth="behind" />
+          <MascotLayer plan={plan} talk={talk} p={cp} seed={postId} depth="behind" alt={alt} />
           {pass('front')}
-          <MascotLayer plan={plan} talk={talk} p={cp} seed={postId} depth="front" />
+          <MascotLayer plan={plan} talk={talk} p={cp} seed={postId} depth="front" alt={alt} />
         </>
       ) : (
         pass('all')
